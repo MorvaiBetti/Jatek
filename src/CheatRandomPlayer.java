@@ -1,64 +1,63 @@
 import java.util.*;
 
 public class CheatRandomPlayer extends RandomPlayer{
-	public ArrayList<Move> csalok;
+	public ArrayList<Move> cheat;
 	public double epsz=5;
 	
-	public int getSzin(){
-		return szinem;
+	public int getColor(){
+		return color;
 	}
-
-	public void beallitTablat(QuixoBoard qt) {
-		tabla=qt;
+	
+	public void setTable(QuixoBoard qt) {
+		table=qt;
 	}
 	
 	public Move kovLepes(Move elozoLepes, long ido){
-	  // wait for a moment
-    System.out.println(getSzin() + " alszik!");
-    for (long qqq = 0; qqq < Integer.MAX_VALUE; qqq ++) { 
-    }
-    //
-    /*
+	// wait for a moment
+	   /* System.out.println(getSzin() + " alszik!");
+	    for (long qqq = 0; qqq < Integer.MAX_VALUE; qqq ++) {
+	    }*/
+		/*System.out.println("CRP Sztem az elozo lepes: "+elozoLepes);
+		if(elozoLepes!=null){
+			table.lepestVegrehajt(elozoLepes.x, elozoLepes.y, eSzin, elozoLepes.xn, elozoLepes.yn);
+		}
+		System.out.println("Kukucs CheatRP ellen");*/
+		table.kiir();
 		int db=0;
 		Move m=null;
-		csalok=new ArrayList<Move>(75);
-		lepesek.clear();
-		csalok.clear();
+		cheat=new ArrayList<Move>(75);
+		steps.clear();
+		cheat.clear();
 		for(int i=0; i<5; i++){
-			
 			//ha az elso sorbol valasztok
-			if(tabla.szabalyos(0, i, szinem, 0, 4)){lepesek.add(new Move(0, i, 0, 4)); db++;}else {csalok.add(new Move(0, i, 0, 4));}
-			if(tabla.szabalyos(0, i, szinem, 0, 0)){lepesek.add(new Move(0, i, 0, 0)); db++;}else {csalok.add(new Move(0, i, 0, 0));}
-			if(tabla.szabalyos(0, i, szinem, 4, i)){lepesek.add(new Move(0, i, 4, i)); db++;}else {csalok.add(new Move(0, i, 4, i));}
+			if(table.legal(0, i, color, 0, 4)){steps.add(new Move(0, i, 0, 4)); db++;}else {cheat.add(new Move(0, i, 0, 4));}
+			if(table.legal(0, i, color, 0, 0)){steps.add(new Move(0, i, 0, 0)); db++;}else {cheat.add(new Move(0, i, 0, 0));}
+			if(table.legal(0, i, color, 4, i)){steps.add(new Move(0, i, 4, i)); db++;}else {cheat.add(new Move(0, i, 4, i));}
 			//ha az utolso sorbol valasztok
-			if(tabla.szabalyos(4, i, szinem, 4, 0)){lepesek.add(new Move(4, i, 4, 0)); db++;}else {csalok.add(new Move(4, i, 4, 0));}
-			if(tabla.szabalyos(4, i, szinem, 4, 4)){lepesek.add(new Move(4, i, 4, 4)); db++;}else {csalok.add(new Move(4, i, 4, 4));}
-			if(tabla.szabalyos(4, i, szinem, 0, i)){lepesek.add(new Move(4, i, 0, i)); db++;}else {csalok.add(new Move(4, i, 0, i));}
-				
+			if(table.legal(4, i, color, 4, 0)){steps.add(new Move(4, i, 4, 0)); db++;}else {cheat.add(new Move(4, i, 4, 0));}
+			if(table.legal(4, i, color, 4, 4)){steps.add(new Move(4, i, 4, 4)); db++;}else {cheat.add(new Move(4, i, 4, 4));}
+			if(table.legal(4, i, color, 0, i)){steps.add(new Move(4, i, 0, i)); db++;}else {cheat.add(new Move(4, i, 0, i));}
 			//ha az elso oszlopbol valasztok
-			if(tabla.szabalyos(i, 0, szinem, 4, 0)){lepesek.add(new Move(i, 0, 4, 0)); db++;}else {csalok.add(new Move(i, 0, 4, 0));}
-			if(tabla.szabalyos(i, 0, szinem, 0, 0)){lepesek.add(new Move(i, 0, 0, 0)); db++;}else {csalok.add(new Move(i, 0, 0, 0));}
-			if(tabla.szabalyos(i, 0, szinem, i, 4)){lepesek.add(new Move(i, 0, i, 4)); db++;}else {csalok.add(new Move(i, 0, i, 4));}
+			if(table.legal(i, 0, color, 4, 0)){steps.add(new Move(i, 0, 4, 0)); db++;}else {cheat.add(new Move(i, 0, 4, 0));}
+			if(table.legal(i, 0, color, 0, 0)){steps.add(new Move(i, 0, 0, 0)); db++;}else {cheat.add(new Move(i, 0, 0, 0));}
+			if(table.legal(i, 0, color, i, 4)){steps.add(new Move(i, 0, i, 4)); db++;}else {cheat.add(new Move(i, 0, i, 4));}
 			//ha az utolso oszlopbol valasztok
-			if(tabla.szabalyos(i, 4, szinem, 0, 4)){lepesek.add(new Move(i, 4, 0, 4)); db++;}else {csalok.add(new Move(i, 4, 0, 4));}
-			if(tabla.szabalyos(i, 4, szinem, 4, 4)){lepesek.add(new Move(i, 4, 4, 4)); db++;}else {csalok.add(new Move(i, 4, 4, 4));}
-			if(tabla.szabalyos(i, 4, szinem, i, 0)){lepesek.add(new Move(i, 4, i, 0)); db++;}else {csalok.add(new Move(i, 4, i, 0));}
+			if(table.legal(i, 4, color, 0, 4)){steps.add(new Move(i, 4, 0, 4)); db++;}else {cheat.add(new Move(i, 4, 0, 4));}
+			if(table.legal(i, 4, color, 4, 4)){steps.add(new Move(i, 4, 4, 4)); db++;}else {cheat.add(new Move(i, 4, 4, 4));}
+			if(table.legal(i, 4, color, i, 0)){steps.add(new Move(i, 4, i, 0)); db++;}else {cheat.add(new Move(i, 4, i, 0));}
 		}
-		
-		Collections.shuffle(csalok);
-		Collections.shuffle(lepesek);
-		m=lepesek.remove(0);
-		*/
+		Collections.shuffle(cheat);
+		Collections.shuffle(steps);
+		m=steps.remove(0);
 		/*if((db%2)==0){
-			m=csalok.remove(0);
-			System.out.println(db+" Csalok: "+m);
+			m=cheat.remove(0);
+			System.out.println(db+" cheat: "+m);
 			return m;
 		}*/
-		//return m;
-    return null;
+	    return m;
 	}
 	
 	public String toString(){
-		return "CheatRandomPlayer";
+	return "CheatRandomPlayer";
 	}
 }
