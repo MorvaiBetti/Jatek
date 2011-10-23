@@ -5,18 +5,18 @@ public class Move {
 	public final int y;
 	
 	//hova teszem a babut
-	public final int xn;
-	public final int yn;
+	public final int nx;
+	public final int ny;
 	
-	public Move(int x, int y, int xn, int yn){
+	public Move(int x, int y, int nx, int ny){
 		this.x=x;
 		this.y=y;
-		this.xn=xn;
-		this.yn=yn;
+		this.nx=nx;
+		this.ny=ny;
 	}
 	
 	public String toString(){
-		return x +" "+ y +" "+ xn +" "+ yn;
+		return x +" "+ y +" "+ nx +" "+ ny;
 	};
 
 }
