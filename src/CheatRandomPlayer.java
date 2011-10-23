@@ -17,12 +17,7 @@ public class CheatRandomPlayer extends RandomPlayer{
 	   /* System.out.println(getSzin() + " alszik!");
 	    for (long qqq = 0; qqq < Integer.MAX_VALUE; qqq ++) {
 	    }*/
-		/*System.out.println("CRP Sztem az elozo lepes: "+elozoLepes);
-		if(elozoLepes!=null){
-			table.lepestVegrehajt(elozoLepes.x, elozoLepes.y, eSzin, elozoLepes.xn, elozoLepes.yn);
-		}
-		System.out.println("Kukucs CheatRP ellen");*/
-		table.kiir();
+
 		int db=0;
 		Move m=null;
 		cheat=new ArrayList<Move>(75);
