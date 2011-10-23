@@ -1,13 +1,13 @@
 public interface Player{
-	
-	public void beallitTablat(QuixoBoard qt);
-	
+
+	public void setTable(QuixoBoard qt);
+
 	//hanyadik jatekos, ideje
-	public void adatok(int sorrend, long ido);
+	public void datas(int sequence, long time);
 	
 	//megkapja az ellenfel utolso lepeset, idejet es a sajat idejet
-	public Move kovLepes(Move elozoLepes, long ido);
+	public Move nextMove(Move prevStep, long oTime);
 	
 	//A jatekos szinet/mintajat adja vissza
-	public int getSzin();
+	public int getColor();
 }
