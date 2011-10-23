@@ -6,55 +6,55 @@ public class QuixoGame{
 	
 	public static void main(String[] args){
 		QuixoBoard t=new QuixoBoard();
-		t.kiir();
+		t.toString();
 		//Lepesek beolvasasahoz
 		BufferedReader reader = new BufferedReader(new InputStreamReader (System.in));
-		String be;
+		String in;
 		StringTokenizer st;
-		boolean megy=true; 		//megy: a jatek folyamatban van, ha false, akkor vege a jateknak
+		boolean go=true; 		//megy: a jatek folyamatban van, ha false, akkor vege a jateknak
 		int[] m=new int[4]; 	//m: a lepesek lementesehez
 		int i, j; 				//i: bemeno parameterek letarolasahoz; j: melyik jatekos a soron kovetkezo
 		j=1;
 
 		
-		//Addig lepnek felvaltva a jatekosok, amig valamelyikuk nem nyer vagy elfogynak a kovetkezo jatekos szabalyos lepesei
-		while(megy){
-			if(!t.vanSzabalyosLepes(j)){
-				megy=false; 
+		//Addig lepnek felvaltva a jatekosok, amig valamelyikuk nem nyer vagy elfogynak a kovetkezo jatekos legal lepesei
+		while(go){
+			if(!t.existLegalStep(j)){
+				go=false; 
 				break;
 			}
 			i=0;
 			if(j==1){
-	    		System.out.println("X lép: ");
-	    	} else {System.out.println("O lép: ");}
+	    		System.out.println("X steps: ");
+	    	} else {System.out.println("O steps: ");}
 			try {
-				be = reader.readLine();
-				st = new StringTokenizer(be);
+				in = reader.readLine();
+				st = new StringTokenizer(in);
 			    while (st.hasMoreTokens()) {
 			         m[i]=Integer.parseInt(st.nextToken());
 			         i++;
 			    }
-			    //Addig kerem be a lepes koordinatait, amig azok szabalyosak nem lesznek
-			    while(!t.szabalyos(m[0], m[1], j, m[2], m[3])){
+			    //Addig kerem be a lepes koordinatait, amig azok legalak nem lesznek
+			    while(!t.legal(m[0], m[1], j, m[2], m[3])){
 			    	i=0;
 			    	if(j==1){
-			    		System.out.println("X lép: ");
-			    	} else {System.out.println("O lép: ");}
-					be = reader.readLine();
-					st = new StringTokenizer(be);
+			    		System.out.println("X steps: ");
+			    	} else {System.out.println("O steps: ");}
+					in = reader.readLine();
+					st = new StringTokenizer(in);
 				    while (st.hasMoreTokens()) {
 				         m[i]=Integer.parseInt(st.nextToken());
 				         i++;
 				    }
 			    }
 			    //Vegrehajtom a lepest, kiirom a tablat, ellenorzom, hogy nyert-e valamelyik jatekos
-			    t.lepestVegrehajt(m[0], m[1], j, m[2], m[3]);
-			    t.kiir();
-			    if(t.nyert(j)){ 	//Ha valamelyik jatekos nyert, akkor vege a jateknak
-			    	megy=false;
+			    t.makeStep(m[0], m[1], j, m[2], m[3]);
+			    t.toString();
+			    if(t.win(j)){ 	//Ha valamelyik jatekos nyert, akkor vege a jateknak
+			    	go=false;
 			    	if(j==1){
-			    		System.out.println("X megnyerte a jatekot");
-			    	} else {System.out.println("O megnyerte a jatekot");}
+			    		System.out.println("X win this game");
+			    	} else {System.out.println("O win this game");}
 			    	break;
 			    }
 			} catch (IOException e) {
