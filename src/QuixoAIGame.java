@@ -8,7 +8,7 @@ public QuixoAIGame(){}
 	QuixoBoard t=new QuixoBoard();
 	
 	Move m = null; //elozo lepes lementese
-	int i=-1; //hanyadik lepesnel tart
+	int i=0; //hanyadik lepesnel tart
 	int ind, next_ind;
 	
 	//ket random jatekos
@@ -26,7 +26,7 @@ public QuixoAIGame(){}
 	pt[1].setTable(t);
 	
 	t.toString();
-	System.out.println("IdÅ‘k: " + pt[0].getElapsedTime() + "\t" + pt[1].getElapsedTime());
+	System.out.println("Idõk: " + pt[0].getElapsedTime() + "\t" + pt[1].getElapsedTime());
 	while(maxTime > pt[0].getElapsedTime() && maxTime > pt[1].getElapsedTime()){
 		
 		i ++;
@@ -34,25 +34,24 @@ public QuixoAIGame(){}
 		next_ind = (i+1) % 2;
 		
 		System.out.println("\n----------------------------------");
-		//System.out.println(ind + " jÃ¡tÃ©kos lÃ©p, idÅ‘k: " + pt[0].getElapsedTime() + "\t" + pt[1].getElapsedTime());
-		//System.out.println(ind + " jÃ¡tÃ©kos lÃ©p, Ã¡llapotok: " + pt[0].allapot + "\t" + pt[1].allapot);
-		System.out.println("aktualis m: "+m);
+		//System.out.println(ind + " játékos lép, idõk: " + pt[0].getElapsedTime() + "\t" + pt[1].getElapsedTime());
+		//System.out.println(ind + " játékos lép, állapotok: " + pt[0].allapot + "\t" + pt[1].allapot);
 		m = pt[ind].nextMove(m, pt[next_ind].getElapsedTime());
 		System.out.println("\n"+i+". lepes ("+ind+") | "+ m +" ido: "+pt[ind].getElapsedTime()+" szinem "+pt[ind].getColor()+" || "+pt[ind].sequence+" nevem "+pt[ind].playerName);
 	
 		if (m != null) {
-		   // 'lejÃ¡rt-e valaki ideje?' ellenÅ‘rzÃ©se
+		   // 'lejárt-e valaki ideje?' ellenõrzése
 		   if (pt[ind].getElapsedTime() > maxTime) {
 			   if(pt[ind].getColor()==QuixoBoard.X){
-			            System.out.println("X ideje lejÃ¡rt, ezÃ©rt O nyert!");
+			            System.out.println("X ideje lejárt, ezért O nyert!");
 			            break;
 			          } else {
-			            System.out.println("O ideje lejÃ¡rt, ezÃ©rt X nyert!");
+			            System.out.println("O ideje lejárt, ezért X nyert!");
 			            break;
 			          }
 		   }
 		  
-		   // 'csalt-e valaki?' ellenÅ‘rzÃ©se
+		   // 'csalt-e valaki?' ellenõrzése
 		   if(t.legal(m.x, m.y, pt[ind].getColor(), m.nx, m.ny)){
 			   t.makeStep(m.x, m.y, pt[ind].sequence, m.nx, m.ny);
 		   } else {
@@ -64,9 +63,9 @@ public QuixoAIGame(){}
 			   break;
 		   		}
 		   }
-		   t.toString();
+		  // System.out.println(t.toString());
 		   
-		  // 'nyert-e valaki?' ellenÅ‘rzÃ©se
+		  // 'nyert-e valaki?' ellenõrzése
 		   if(t.win(pt[ind].getColor())){
 			   if(pt[ind].getColor()==QuixoBoard.X){
 				   System.out.println("X nyert!");
@@ -85,12 +84,12 @@ public QuixoAIGame(){}
 			   		}
 		   		}
 		} else {
-			// ind jatÃ©kos null-t lÃ©pett => lÃ©pÃ©s kÃ©nyszer miatt kikapott
+			// ind jatékos null-t lépett => lépés kényszer miatt kikapott
 			if(pt[ind].getColor()==QuixoBoard.X){
-				System.out.println("X nem lÃ©pett, ezÃ©rt O nyert!");
+				System.out.println("X nem lépett, ezért O nyert!");
 		        break;
 		    } else {
-		          System.out.println("O nem lÃ©pett, ezÃ©rt X nyert!");
+		          System.out.println("O nem lépett, ezért X nyert!");
 		          break;
 		        }
 			}

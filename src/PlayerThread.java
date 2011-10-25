@@ -1,16 +1,15 @@
 import java.lang.management.ManagementFactory;
 
-public class PlayerThread extends Thread implements Player{
+public class PlayerThread extends Thread implements Player {
 	public String playerName;
 	public int sequence;
 	public Player p;
 	public long maxTime;
-	public long elapsedTime=0;
 	public Move prevStep=null;
 	public Move nextStep;
 	public QuixoBoard t;
-	public static final int passive=1;
-	public static final int active=0;
+	public static final int passive=0;
+	public static final int active=1;
 	public static final int exit=2;
 	public int status=passive;
 	
@@ -24,24 +23,24 @@ public class PlayerThread extends Thread implements Player{
 	
 	//Az adott szal adott futasa mennyi idot vett igenybe
 	public long getElapsedTime(){
-		return ManagementFactory.getThreadMXBean().getThreadUserTime(getId()) / 1000000;
+		return ManagementFactory.getThreadMXBean().getThreadUserTime(getId())/1000000;
 	}
 	
 	public void run(){
 		try {
-		while(true){
-			switch(status){
-				case active: {
-					break;
-				}
-				case exit: {
-					return;
-				}
-				default: {
-					sleep(1);
+			while(true){
+				switch(status){
+					case active: {
+						break;
+					}
+					case exit: {
+						return;
+					}
+					default: {
+						sleep(1);
+					}
 				}
 			}
-		}
 		} catch (Exception e) {
 		e.printStackTrace();
 		}
@@ -49,13 +48,14 @@ public class PlayerThread extends Thread implements Player{
 	
 	public void datas(int sequence, long time) {
 		status=active;
+		System.out.println("na valyon mi "+sequence);
 		p.datas(sequence, time);
 		status=passive;
 	}
 	
 	public Move nextMove(Move pS, long oTime) {
 		status=active;
-		System.out.println(getName() + ", status: " + status);
+	//	System.out.println(getName() + ", status: " + status);
 		nextStep=p.nextMove(pS, oTime);
 		status=passive;
 		return nextStep;

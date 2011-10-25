@@ -13,10 +13,10 @@ public class CheatRandomPlayer extends RandomPlayer{
 	}
 	
 	public Move kovLepes(Move elozoLepes, long ido){
-	// wait for a moment
-	   /* System.out.println(getSzin() + " alszik!");
+		// wait for a moment
+	    System.out.println(getColor() + " alszik!");
 	    for (long qqq = 0; qqq < Integer.MAX_VALUE; qqq ++) {
-	    }*/
+	    }
 
 		int db=0;
 		Move m=null;

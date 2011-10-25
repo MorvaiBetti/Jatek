@@ -66,7 +66,7 @@ public class PlayerVsAi {
 			if(t.legal(m0.x, m0.y, rp.color, m0.nx, m0.ny)){
 				t.makeStep(m0.x, m0.y, rp.color, m0.nx, m0.ny);
 			}else {
-				System.out.println("Szabalytalan lÃ©ps X=crp1, O nyert!");
+				System.out.println("Szabalytalan léps X=crp1, O nyert!");
 				return;
 			}
 			System.out.println("crp1: \t ");
