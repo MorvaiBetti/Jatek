@@ -48,14 +48,12 @@ public class PlayerThread extends Thread implements Player {
 	
 	public void datas(int sequence, long time) {
 		status=active;
-		System.out.println("na valyon mi "+sequence);
 		p.datas(sequence, time);
 		status=passive;
 	}
 	
 	public Move nextMove(Move pS, long oTime) {
 		status=active;
-	//	System.out.println(getName() + ", status: " + status);
 		nextStep=p.nextMove(pS, oTime);
 		status=passive;
 		return nextStep;

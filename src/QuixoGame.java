@@ -6,7 +6,7 @@ public class QuixoGame{
 	
 	public static void main(String[] args){
 		QuixoBoard t=new QuixoBoard();
-		t.toString();
+		System.out.println(t);
 		//Lepesek beolvasasahoz
 		BufferedReader reader = new BufferedReader(new InputStreamReader (System.in));
 		String in;
@@ -49,7 +49,7 @@ public class QuixoGame{
 			    }
 			    //Vegrehajtom a lepest, kiirom a tablat, ellenorzom, hogy nyert-e valamelyik jatekos
 			    t.makeStep(m[0], m[1], j, m[2], m[3]);
-			    t.toString();
+			    System.out.println(t);
 			    if(t.win(j)){ 	//Ha valamelyik jatekos nyert, akkor vege a jateknak
 			    	go=false;
 			    	if(j==1){

@@ -25,7 +25,7 @@ public QuixoAIGame(){}
 	pt[1].datas(QuixoBoard.X, maxTime);
 	pt[1].setTable(t);
 	
-	t.toString();
+	System.out.println(t);
 	System.out.println("Idõk: " + pt[0].getElapsedTime() + "\t" + pt[1].getElapsedTime());
 	while(maxTime > pt[0].getElapsedTime() && maxTime > pt[1].getElapsedTime()){
 		
@@ -63,7 +63,6 @@ public QuixoAIGame(){}
 			   break;
 		   		}
 		   }
-		  // System.out.println(t.toString());
 		   
 		  // 'nyert-e valaki?' ellenõrzése
 		   if(t.win(pt[ind].getColor())){

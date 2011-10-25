@@ -14,14 +14,19 @@ public class Game{
 		try {
 			System.out.println("Kerem a(z) "+i+" jatekos tipusat: ");
 			name=reader.readLine();
-			if(name.equalsIgnoreCase("RandomPlayer") || name.equalsIgnoreCase("CheatRandomPlayer") || name.equalsIgnoreCase("Human")){
-				pt[i-1]=new PlayerThread(i, maxTime, name);
-				pt[i-1].start();
-				pt[i-1].datas(i, maxTime);
-				pt[i-1].setTable(t);
-				System.out.println("Szinem i: "+i);
-				return;
-			}else player(i, maxTime);
+			if(name.equalsIgnoreCase("RandomPlayer")){
+				pt[i-1]=new PlayerThread(i, maxTime, "RandomPlayer");
+			}else if(name.equalsIgnoreCase("CheatRandomPlayer")){
+					pt[i-1]=new PlayerThread(i, maxTime, "CheatRandomPlayer");
+				}else if(name.equalsIgnoreCase("Human")){
+						pt[i-1]=new PlayerThread(i, maxTime, "Human");
+					}else {player(i, maxTime);
+						return;
+					}
+			pt[i-1].start();
+			pt[i-1].datas(i, maxTime);
+			pt[i-1].setTable(t);
+			return;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -49,11 +54,9 @@ public class Game{
 				
 				ind=i%2;
 				next_ind=(i+1)%2;
-				System.out.println("A(z) "+(ind+1)+". jatekos lep! "+(i+1)+". lepes.");
 	
 				m = pt[ind].nextMove(m, pt[next_ind].getElapsedTime());
-				System.out.println("\n"+i+". lepes ("+ind+") | "+ m +" ido: "+pt[ind].getElapsedTime()+" szinem: "+pt[ind].getColor()+" || "+pt[ind].sequence+" nevem "+pt[ind].playerName);
-				System.out.println("Kovilepes: "+m);
+				System.out.println("\n"+i+". lepes "+ind+". jatekos lep | "+ m +" ido: "+pt[ind].getElapsedTime()+" szinem: "+pt[ind].getColor()+" || "+pt[ind].sequence+" nevem "+pt[ind].playerName);
 				if (m != null) {
 				   // 'lejárt-e valaki ideje?' ellenõrzése
 				   if (pt[ind].getElapsedTime() > maxTime) {
@@ -78,6 +81,7 @@ public class Game{
 					   break;
 				   		}
 				   }
+				   System.out.println(t);
 				   
 				  // 'nyert-e valaki?' ellenõrzése
 				   if(t.win(pt[ind].getColor())){
@@ -107,7 +111,6 @@ public class Game{
 				          break;
 				        }
 					}
-				System.out.println(t);
 				i++;
 			}
 			
