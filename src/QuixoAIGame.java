@@ -63,7 +63,7 @@ public QuixoAIGame(){}
 			   break;
 		   		}
 		   }
-		   
+		   System.out.println(t);
 		  // 'nyert-e valaki?' ellenõrzése
 		   if(t.win(pt[ind].getColor())){
 			   if(pt[ind].getColor()==QuixoBoard.X){

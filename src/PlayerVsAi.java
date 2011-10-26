@@ -57,12 +57,13 @@ public class PlayerVsAi {
 		a=rp.color;
 		b=rp.opponentColor;
 
-		t.toString();
+		System.out.println(t);
 		while(go){
+			System.out.println("----------------------------------");
 			//------------------- RandomAI ---------------------------
 			m0=rp.kovLepes(m1, 0);
 			System.out.println();
-			m0.toString();
+			System.out.println(m0);
 			if(t.legal(m0.x, m0.y, rp.color, m0.nx, m0.ny)){
 				t.makeStep(m0.x, m0.y, rp.color, m0.nx, m0.ny);
 			}else {
@@ -70,7 +71,7 @@ public class PlayerVsAi {
 				return;
 			}
 			System.out.println("crp1: \t ");
-			t.toString();
+			System.out.println(t);
 			System.out.println();
 				
 			//Ha az elso jatekos nyer
@@ -84,10 +85,11 @@ public class PlayerVsAi {
 		    		continue;
 	    	}
 				
-				
+			System.out.println("----------------------------------");
 			//--------------------- player -------------------------
+			System.out.println("Kerem a koordinatakat");
 			playerStep();
-			t.toString();
+			System.out.println(t);
 			if(t.win(b)){
 			  	go=false;
 			   	System.out.println("X megnyerte a jatekot");
