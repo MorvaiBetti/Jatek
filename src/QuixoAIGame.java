@@ -13,7 +13,7 @@ public QuixoAIGame(){}
 	
 	//ket random jatekos
 	PlayerThread pt[]=new PlayerThread[2];
-	pt[1]=new PlayerThread(QuixoBoard.X, maxTime, "Human");
+	pt[1]=new PlayerThread(QuixoBoard.X, maxTime, "RandomPlayer");
 	pt[0]=new PlayerThread(QuixoBoard.O, maxTime, "CheatRandomPlayer");
 	
 	pt[0].start();
@@ -21,7 +21,7 @@ public QuixoAIGame(){}
 	pt[0].setTable(t);
 	
 	
-	//pt[1].start();
+	pt[1].start();
 	pt[1].datas(QuixoBoard.X, maxTime);
 	pt[1].setTable(t);
 	
