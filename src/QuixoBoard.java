@@ -164,18 +164,6 @@ public class QuixoBoard implements Cloneable {
 		}
 	}
 	
-	//adott jatekosnak van-e meg szabalyos lepese
-	public boolean existLegalStep(int model){
-		for(int i=0; i<5; i++){
-			for(int j=0; j<5; j++){
-				if(getField(i,j)==model ||getField(i,j)==empty){
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-	
 	public String toString(){
 		String s="     0  1  2  3  4\n\n 0  ";
 		for(int i=0; i<5; i++){
