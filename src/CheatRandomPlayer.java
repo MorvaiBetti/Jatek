@@ -4,19 +4,23 @@ public class CheatRandomPlayer extends RandomPlayer{
 	public ArrayList<Move> cheat;
 	public double epsz=5;
 	
-	public int getColor(){
-		return color;
-	}
-	
 	public void setTable(QuixoBoard qt) {
 		table=qt;
 	}
 	
-	public Move kovLepes(Move elozoLepes, long ido){
+	public int getColor(){
+		return color;
+	}
+	
+	public String toString(){
+		return "CheatRandomPlayer";
+	}
+	
+	public Move nextMove(Move prevStep, long time){
 		// wait for a moment
-	    System.out.println(getColor() + " alszik!");
+	 /*   System.out.println(getColor() + " alszik!");
 	    for (long qqq = 0; qqq < Integer.MAX_VALUE; qqq ++) {
-	    }
+	    }*/
 
 		int db=0;
 		Move m=null;
@@ -52,7 +56,5 @@ public class CheatRandomPlayer extends RandomPlayer{
 	    return m;
 	}
 	
-	public String toString(){
-	return "CheatRandomPlayer";
-	}
+
 }
