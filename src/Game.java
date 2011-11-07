@@ -28,21 +28,27 @@ public class Game{
 					pt[ai].setTable(t);
 					ai++;
 					return;
-				}else if(name.equalsIgnoreCase("Human")){
-						p[people]=new Human();
-						p[people].datas(i, maxTime);
-						p[people].setTable(t);
-						people++;
+				}else if(name.equalsIgnoreCase("DefendPlayer")){
+						pt[ai]=new PlayerThread(i, maxTime, "DefendPlayer");
+						pt[ai].start();
+						pt[ai].datas(i, maxTime);
+						pt[ai].setTable(t);
+						ai++;
 						return;
-					}else player(i, maxTime);
+					}else if(name.equalsIgnoreCase("Human")){
+							p[people]=new Human();
+							p[people].datas(i, maxTime);
+							p[people].setTable(t);
+							people++;
 							return;
+						}else player(i, maxTime);
+								return;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public static void aiStep(int i, long oTime){
+	public static boolean aiStep(int i, long oTime){
 		m = pt[i].nextMove(m, oTime);
 		System.out.println("\n"+j+". lepes "+ind+". jatekos lep | "+ m +" ido: "+pt[i].getElapsedTime()+" szinem: "+pt[i].getColor()+" || "+pt[ind].sequence+" nevem "+pt[i].playerName);
 		if (m != null) {
@@ -50,10 +56,10 @@ public class Game{
 		   if (pt[i].getElapsedTime() > maxTime) {
 			   if(pt[i].getColor()==QuixoBoard.X){
 			            System.out.println("X ideje lejárt, ezért O nyert!");
-			            return;
+			            return false;
 			          } else {
 			            System.out.println("O ideje lejárt, ezért X nyert!");
-			            return;
+			            return false;
 			          }
 		   }
 		   
@@ -63,10 +69,10 @@ public class Game{
 		   } else {
 			   if(pt[i].getColor()==QuixoBoard.X){
 				   	System.out.println("X csalni probalt, azert O nyert!");
-				   	return;
+				   	return false;
 		   } else {
 			   System.out.println("O csalni probalt, azert X nyert!");
-			   return;
+			   return false;
 		   		}
 		   }
 		   System.out.println(t);
@@ -75,13 +81,13 @@ public class Game{
 			// ind jatékos null-t lépett => lépés kényszer miatt kikapott
 			if(pt[i].getColor()==QuixoBoard.X){
 				System.out.println("X nem lépett, ezért O nyert!");
-				return;
+				return false;
 		    } else {
 		          System.out.println("O nem lépett, ezért X nyert!");
-		          return;
+		          return false;
 		        }
 			}
-		return;
+		return true;
 	}
 	
 	public static void humanStep(int i){
@@ -98,10 +104,14 @@ public class Game{
 			ind=j%2;
 			nextInd=(j+1)%2;
 			
-			System.out.println("----------------------------------");
+		//	System.out.println("----------------------------------");
 			humanStep(ind);
 					   
 			// 'nyert-e valaki?' ellenõrzése
+			if(t.win(p[ind].getColor()) && t.win(p[nextInd].getColor())){
+				System.out.println("Dontetlen!");
+				return;
+			}
 			if(t.win(p[ind].getColor())){
 			   if(p[ind].getColor()==QuixoBoard.X){
 				   System.out.println("X nyert!");
@@ -130,8 +140,14 @@ public class Game{
 			nextInd=(j+1)%2;
 			
 			System.out.println("----------------------------------");
-			aiStep(ind, pt[nextInd].getElapsedTime());
+			if(!aiStep(ind, pt[nextInd].getElapsedTime())){
+				return;
+			}
 			// 'nyert-e valaki?' ellenõrzése
+			if(t.win(pt[ind].getColor()) && t.win(pt[nextInd].getColor())){
+				System.out.println("Dontetlen!!");
+				return;
+			}
 			if(t.win(pt[ind].getColor())){
 			   if(pt[ind].getColor()==QuixoBoard.X){
 				   System.out.println("X nyert!");
@@ -153,7 +169,7 @@ public class Game{
 		}
 	}
 	
-	//good
+	//Human vs AI
 	public static void humanvsAI(){
 		if(pt[0].getColor()==QuixoBoard.X){
 			while(!t.win(pt[0].getColor()) && !t.win(p[0].getColor())){
@@ -161,6 +177,10 @@ public class Game{
 				
 				aiStep(0, 0);
 				//nyert-e?
+				if(t.win(pt[0].getColor()) && t.win(p[0].getColor())){
+					System.out.println("Dontetlen!");
+					return;
+				}
 				if(t.win(pt[0].getColor())){
 				   if(pt[0].getColor()==QuixoBoard.X){
 					   System.out.println("X nyert!");
@@ -181,6 +201,10 @@ public class Game{
 				j++;
 				humanStep(0);
 				// 'nyert-e valaki?' ellenõrzése
+				if(t.win(pt[0].getColor()) && t.win(p[0].getColor())){
+					System.out.println("Dontetlen!");
+					return;
+				}
 				if(t.win(p[0].getColor())){
 					if(p[0].getColor()==QuixoBoard.X){
 						System.out.println("X nyert!");
@@ -255,6 +279,7 @@ public class Game{
 		System.out.println("Human: Emberi jatekos");
 		System.out.println("RandomPlayer: Gepi jatekos, aki veletlen valaszt egy szabalyos lepest.");
 		System.out.println("CheatRandomPlayer: Gepi jatekos, aki veletlen valaszt egy szabalyos lepest, elofordulhat, hogy csalni probal.");
+		System.out.println("DefendPlayer: Ha az ellenfelnek egy babu hianyzik, hogy nyerjen, akkor vedekezik. Egyebkent random lep.");
 		System.out.println();
 		
 		try {
