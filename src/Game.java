@@ -21,28 +21,38 @@ public class Game{
 				pt[ai].setTable(t);
 				ai++;
 				return;
-			}else if(name.equalsIgnoreCase("CheatRandomPlayer")){
-					pt[ai]=new PlayerThread(i, maxTime, "CheatRandomPlayer");
-					pt[ai].start();
-					pt[ai].datas(i, maxTime);
-					pt[ai].setTable(t);
-					ai++;
-					return;
-				}else if(name.equalsIgnoreCase("DefendPlayer")){
-						pt[ai]=new PlayerThread(i, maxTime, "DefendPlayer");
-						pt[ai].start();
-						pt[ai].datas(i, maxTime);
-						pt[ai].setTable(t);
-						ai++;
-						return;
-					}else if(name.equalsIgnoreCase("Human")){
-							p[people]=new Human();
-							p[people].datas(i, maxTime);
-							p[people].setTable(t);
-							people++;
-							return;
-						}else player(i, maxTime);
-								return;
+			}
+			if(name.equalsIgnoreCase("CheatRandomPlayer")){
+				pt[ai]=new PlayerThread(i, maxTime, "CheatRandomPlayer");
+				pt[ai].start();
+				pt[ai].datas(i, maxTime);
+				pt[ai].setTable(t);
+				ai++;
+				return;
+			}
+			if(name.equalsIgnoreCase("DefendPlayer")){
+				pt[ai]=new PlayerThread(i, maxTime, "DefendPlayer");
+				pt[ai].start();
+				pt[ai].datas(i, maxTime);
+				pt[ai].setTable(t);
+				ai++;
+				return;
+			}
+			if(name.equalsIgnoreCase("CollectorPlayer")){
+				pt[ai]=new PlayerThread(i, maxTime, "CollectorPlayer");
+				pt[ai].start();
+				pt[ai].datas(i, maxTime);
+				pt[ai].setTable(t);
+				ai++;
+				return;
+			}
+			if(name.equalsIgnoreCase("Human")){
+				p[people]=new Human();
+				p[people].datas(i, maxTime);
+				p[people].setTable(t);
+				people++;
+				return;
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -280,6 +290,7 @@ public class Game{
 		System.out.println("RandomPlayer: Gepi jatekos, aki veletlen valaszt egy szabalyos lepest.");
 		System.out.println("CheatRandomPlayer: Gepi jatekos, aki veletlen valaszt egy szabalyos lepest, elofordulhat, hogy csalni probal.");
 		System.out.println("DefendPlayer: Ha az ellenfelnek egy babu hianyzik, hogy nyerjen, akkor vedekezik. Egyebkent random lep.");
+		System.out.println("CollectorPlayer: Ha van rá lehetosege, akkor egy uj babut tesz le, egyebkent random.");
 		System.out.println();
 		
 		try {
