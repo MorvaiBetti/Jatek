@@ -61,7 +61,7 @@ public class PlayerVsAi {
 		while(go){
 			System.out.println("----------------------------------");
 			//------------------- RandomAI ---------------------------
-			m0=rp.kovLepes(m1, 0);
+			m0=rp.nextMove(m1, 0);
 			System.out.println();
 			System.out.println(m0);
 			if(t.legal(m0.x, m0.y, rp.color, m0.nx, m0.ny)){

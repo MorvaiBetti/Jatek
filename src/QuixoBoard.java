@@ -11,7 +11,7 @@ public class QuixoBoard implements Cloneable {
 		table=new int[5][5];
 		for(int i=0; i<5; i++){
 			for(int j=0; j<5; j++){
-				table[i][j]=0;
+				table[i][j]=empty;
 			}
 		}
 	}
@@ -29,6 +29,7 @@ public class QuixoBoard implements Cloneable {
 	
 	//a table egy adott mezojenek erteket adja vissza
 	public int getField(int x, int y){
+	//	System.out.println("VAGYOK");
 		return table[x][y];
 	}
 	
@@ -162,6 +163,24 @@ public class QuixoBoard implements Cloneable {
 				return;
 			}
 		}
+	}
+	
+	public void piece(){
+		int x=0, o=0, e=0;
+		for(int i=0; i<5; i++){
+			for(int j=0; j<5; j++){
+				if(table[i][j]==X){
+					x++;
+				}
+				if(table[i][j]==O){
+					o++;
+				}
+				if(table[i][j]==empty){
+					e++;
+				}
+			}
+		}
+		System.out.println("X="+x+" O="+o+" Empty="+e);
 	}
 	
 	public String toString(){

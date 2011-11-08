@@ -46,6 +46,14 @@ public class Game{
 				ai++;
 				return;
 			}
+			if(name.equalsIgnoreCase("CalculatPlayer")){
+				pt[ai]=new PlayerThread(i, maxTime, "CalculatPlayer");
+				pt[ai].start();
+				pt[ai].datas(i, maxTime);
+				pt[ai].setTable(t);
+				ai++;
+				return;
+			}
 			if(name.equalsIgnoreCase("Human")){
 				p[people]=new Human();
 				p[people].datas(i, maxTime);
@@ -291,6 +299,7 @@ public class Game{
 		System.out.println("CheatRandomPlayer: Gepi jatekos, aki veletlen valaszt egy szabalyos lepest, elofordulhat, hogy csalni probal.");
 		System.out.println("DefendPlayer: Ha az ellenfelnek egy babu hianyzik, hogy nyerjen, akkor vedekezik. Egyebkent random lep.");
 		System.out.println("CollectorPlayer: Ha van rá lehetosege, akkor egy uj babut tesz le, egyebkent random.");
+		System.out.println("CalculatPlayer: Kiszamol egy tablat, hogy hova mennyire erdemes lepni. Kiirja a tablat, majd randomlep.");
 		System.out.println();
 		
 		try {
