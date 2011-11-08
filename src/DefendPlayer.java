@@ -1,38 +1,21 @@
 public class DefendPlayer extends RandomPlayer{
-	public QuixoBoard table;
-	public Move step; 			//lehetseges steps letarolasara
-	public int color; 						//A jatekos sajat mintaja
-	public int opponentColor; 				//Az ellenfel mintaja
-	public long maxTime;
 	public int[][] line;
-	
-	public void setTable(QuixoBoard qt) {
-		table=qt;
-	}
 
-	public int getColor() {
-		return color;
-	}
-	
-	public void datas(int sequence, long time) {
-		maxTime=time;
-		if(sequence==QuixoBoard.X){ 				//A jatekosnak melyik a mintaja, es az ellenfele melyik
-			color=QuixoBoard.X;
-			opponentColor=QuixoBoard.O;
-		}else if(sequence==QuixoBoard.O){color=QuixoBoard.O;
-		opponentColor=QuixoBoard.X;
-		}		
-	}
-
-	public Move nextMove(Move prevStep, long oTime) {
+	public DefendPlayer() {
+		super();
 		line=new int[4][2];
+	}
+	
+	public Move nextMove(Move prevStep, long oTime) {
+		//System.out.println("ellenfel: "+opponentColor);
 		empty();
 		step=null;
+		
 		if(winner(color)){
 			winnerStep();
 		}
 		if(step!=null){
-			System.out.println("winner");
+		//	System.out.println("winner");
 			return step;
 		}
 		
@@ -41,11 +24,10 @@ public class DefendPlayer extends RandomPlayer{
 		}
 		
 		if(step!=null){
-			System.out.println("mifene "+step);
+		//	System.out.println("mifene "+step);
 			return step;
 		}
 
-		System.out.println("Lepes: "+super.nextMove(prevStep, oTime));
 		return super.nextMove(prevStep, oTime);
 	}
 	
