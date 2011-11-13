@@ -14,7 +14,7 @@ public class Game{
 		try {
 			System.out.println("Kerem a(z) "+i+" jatekos tipusat: ");
 			name=reader.readLine();
-			if(name.equalsIgnoreCase("RandomPlayer")){
+			if(name.equalsIgnoreCase("1")){
 				pt[ai]=new PlayerThread(i, maxTime, "RandomPlayer");
 				pt[ai].start();
 				pt[ai].datas(i, maxTime);
@@ -22,7 +22,7 @@ public class Game{
 				ai++;
 				return;
 			}
-			if(name.equalsIgnoreCase("CheatRandomPlayer")){
+			if(name.equalsIgnoreCase("2")){
 				pt[ai]=new PlayerThread(i, maxTime, "CheatRandomPlayer");
 				pt[ai].start();
 				pt[ai].datas(i, maxTime);
@@ -30,7 +30,7 @@ public class Game{
 				ai++;
 				return;
 			}
-			if(name.equalsIgnoreCase("DefendPlayer")){
+			if(name.equalsIgnoreCase("3")){
 				pt[ai]=new PlayerThread(i, maxTime, "DefendPlayer");
 				pt[ai].start();
 				pt[ai].datas(i, maxTime);
@@ -38,7 +38,7 @@ public class Game{
 				ai++;
 				return;
 			}
-			if(name.equalsIgnoreCase("CollectorPlayer")){
+			if(name.equalsIgnoreCase("4")){
 				pt[ai]=new PlayerThread(i, maxTime, "CollectorPlayer");
 				pt[ai].start();
 				pt[ai].datas(i, maxTime);
@@ -46,7 +46,7 @@ public class Game{
 				ai++;
 				return;
 			}
-			if(name.equalsIgnoreCase("CalculatPlayer")){
+			if(name.equalsIgnoreCase("5")){
 				pt[ai]=new PlayerThread(i, maxTime, "CalculatPlayer");
 				pt[ai].start();
 				pt[ai].datas(i, maxTime);
@@ -54,7 +54,23 @@ public class Game{
 				ai++;
 				return;
 			}
-			if(name.equalsIgnoreCase("Human")){
+			if(name.equalsIgnoreCase("6")){
+				pt[ai]=new PlayerThread(i, maxTime, "DefendCalculatPlayer");
+				pt[ai].start();
+				pt[ai].datas(i, maxTime);
+				pt[ai].setTable(t);
+				ai++;
+				return;
+			}
+			if(name.equalsIgnoreCase("7")){
+				pt[ai]=new PlayerThread(i, maxTime, "MohoCalculatPlayer");
+				pt[ai].start();
+				pt[ai].datas(i, maxTime);
+				pt[ai].setTable(t);
+				ai++;
+				return;
+			}
+			if(name.equalsIgnoreCase("0")){
 				p[people]=new Human();
 				p[people].datas(i, maxTime);
 				p[people].setTable(t);
@@ -294,12 +310,14 @@ public class Game{
 		m=null;
 		
 		System.out.println("Lehetseges jatekosok:");
-		System.out.println("Human: Emberi jatekos");
-		System.out.println("RandomPlayer: Gepi jatekos, aki veletlen valaszt egy szabalyos lepest.");
-		System.out.println("CheatRandomPlayer: Gepi jatekos, aki veletlen valaszt egy szabalyos lepest, elofordulhat, hogy csalni probal.");
-		System.out.println("DefendPlayer: Ha az ellenfelnek egy babu hianyzik, hogy nyerjen, akkor vedekezik. Egyebkent random lep.");
-		System.out.println("CollectorPlayer: Ha van rá lehetosege, akkor egy uj babut tesz le, egyebkent random.");
-		System.out.println("CalculatPlayer: Kiszamol egy tablat, hogy hova mennyire erdemes lepni. Kiirja a tablat, majd randomlep.");
+		System.out.println("0 Human: Emberi jatekos");
+		System.out.println("1 RandomPlayer: Gepi jatekos, aki veletlen valaszt egy szabalyos lepest.");
+		System.out.println("2 CheatRandomPlayer: Gepi jatekos, aki veletlen valaszt egy szabalyos lepest, elofordulhat, hogy csalni probal.");
+		System.out.println("3 DefendPlayer: Ha az ellenfelnek egy babu hianyzik, hogy nyerjen, akkor vedekezik. Egyebkent random lep.");
+		System.out.println("4 CollectorPlayer: Ha van rá lehetosege, akkor egy uj babut tesz le, egyebkent random.");
+		System.out.println("5 CalculatPlayer: Kiszamol egy tablat, hogy hova mennyire erdemes lepni. Kiirja a tablat, majd randomlep.");
+		System.out.println("6 DefendCalculatPlayer: ");
+		System.out.println("7 MohoCalculatPlayer: ");
 		System.out.println();
 		
 		try {
