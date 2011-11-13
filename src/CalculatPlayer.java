@@ -1,9 +1,8 @@
 public class CalculatPlayer extends RandomPlayer{
-//	public QuixoBoard table;
-//	public int color; 						//A jatekos sajat mintaja
-	//public int opponentColor; 				//Az ellenfel mintaja
-	public long maxTime;
 	public int[][] fields;
+	public float my=2;
+	public float your=-3;
+	public float nobody=1;
 	
 	public CalculatPlayer(){
 		fields=new int[25][6];
@@ -23,7 +22,6 @@ public class CalculatPlayer extends RandomPlayer{
 	//sorSzam, oszlopSzam, oszlopVonal, sorVonal, foatloVonal, mellekatloVonal
 	public void calculat(){
 		int k=0;
-		System.out.println("color "+color+" eszin "+opponentColor);
 		for(int i=0; i<5; i++){
 			for(int j=0; j<5; j++){
 				fields[k][0]=i;
@@ -32,74 +30,51 @@ public class CalculatPlayer extends RandomPlayer{
 					if(l!=i){
 						//oszlop
 						if(table.getField(l,j)==color){
-							fields[k][2]=+2;
-						//	System.out.println("oszlop color "+l+" "+j);
+							fields[k][2]+=my;
 						}
 						if(table.getField(l,j)==QuixoBoard.empty){
-							fields[k][2]++;
-						//	System.out.println("oszlop empty "+l+" "+j);
-						//	System.out.println("oszlop empty");
+							fields[k][2]+=nobody;
 						}
 						if(table.getField(l,j)==opponentColor){
-							fields[k][2]--;
-						//	System.out.println("oszlop opponentColor "+l+" "+j);
-						//	System.out.println("oszlop oponentColor");
+							fields[k][2]+=your;
 						}
 					}
 					if(l!=j){
 						//sor
 						if(table.getField(i,l)==color){
-							fields[k][3]=+2;
-						//	System.out.println("sor color "+i+" "+l);
-						//	System.out.println("sor color");
+							fields[k][3]+=my;
 						}
 						if(table.getField(i,l)==QuixoBoard.empty){
-							fields[k][3]++;
-						//	System.out.println("sor empty "+i+" "+l);
-						//	System.out.println("sor empty");
+							fields[k][3]+=nobody;
 						}
 						if(table.getField(i,l)==opponentColor){
-							fields[k][3]--;
-						//	System.out.println("sor opponentColor "+i+" "+l);
-						//	System.out.println("sor opponentColor");
+							fields[k][3]+=your;
 						}
 					}
-					/*if(l!=i && l!=j){
+					if(i==j || j+i==4){
 						//foatlo
 						if(table.getField(l,l)==color){
-							fields[k][4]=+2;
-						//	System.out.println("fo color "+l+" "+l);
-						//	System.out.println("fo color");
+							fields[k][4]+=my;
 						}
 						if(table.getField(l,l)==QuixoBoard.empty){
-							fields[k][4]++;
-						//	System.out.println("fo empty "+l+" "+l);
-						//	System.out.println("fo empty");
+							fields[k][4]+=nobody;
 						}
 						if(table.getField(l,l)==opponentColor){
-							fields[k][4]--;
-						//	System.out.println("fo opponentColor "+l+" "+l);
-						//	System.out.println("fo opponentColor");
+							fields[k][4]+=your;
 						}
 					}
 					if(i!=l && j!=4-l){
 						//mellekatlo
 						if(table.getField(l,4-l)==color){
-							fields[k][5]=+2;
-						//	System.out.println("mellek color "+l+" "+(4-l));
-						//	System.out.println("mellek color");
+							fields[k][5]+=my;
 						}
 						if(table.getField(l,4-l)==QuixoBoard.empty){
-							fields[k][5]++;
-						//	System.out.println("mellek empty "+l+" "+(4-l));
-						//	System.out.println("mellek empty");
+							fields[k][5]+=nobody;
 						}
 						if(table.getField(l,4-l)==opponentColor){
-							fields[k][5]--;
-						//	System.out.println("mellek opponentColor "+l+" "+(4-l));
-						//	System.out.println("mellek opponentColor");
+							fields[k][5]+=your;
 						}
-					}*/
+					}
 				}
 				k++;
 			}
