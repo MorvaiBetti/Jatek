@@ -60,8 +60,13 @@ public class QuixoBoard implements Cloneable {
 			return false;
 		}
 
+		if((nx==4-x && ny==y) || (ny==4-y && nx==x) || (nx==ny || nx==4-ny)){
+			return true;
+		}
+		return false;
+		
 		//melyik kivetel eseten hova lehet tenni
-		if(x==0 && ((nx==x && ny==0) ||(nx==x && ny==4) || (nx==4 && y==ny) )){
+	/*	if(x==0 && ((nx==x && ny==0) ||(nx==x && ny==4) || (nx==4 && y==ny) )){
 			return true;
 		}else if(x==4 &&((x==nx && ny==0) || (nx==x && ny==4) || (nx==0 && ny==y))){
 			return true;
@@ -70,7 +75,7 @@ public class QuixoBoard implements Cloneable {
 		}else if(y==4 &&((y==ny && nx==0) || (ny==y && nx==4) || (ny==0 && nx==x))){
 			return true;
 		}
-		return false;
+		return false;*/
 	}
 	
 	//nyertes-e
@@ -164,7 +169,7 @@ public class QuixoBoard implements Cloneable {
 			}
 		}
 	}
-	
+	//melyik mintabol hany darab van a tablan
 	public void piece(){
 		int x=0, o=0, e=0;
 		for(int i=0; i<5; i++){
