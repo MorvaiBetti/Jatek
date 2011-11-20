@@ -1,11 +1,11 @@
 public class CalculatPlayer extends RandomPlayer{
 	public int[][] fields;
-	public float my=2;
-	public float your=-3;
-	public float nobody=1;
+	public int my=3;
+	public int your=-3;
+	public int nobody=1;
 	
 	public CalculatPlayer(){
-		fields=new int[25][6];
+		fields=new int[25][7];
 	}
 	
 	public Move nextMove(Move prevStep, long time){
@@ -21,6 +21,7 @@ public class CalculatPlayer extends RandomPlayer{
 	
 	//sorSzam, oszlopSzam, oszlopVonal, sorVonal, foatloVonal, mellekatloVonal
 	public void calculat(){
+		empty();
 		int k=0;
 		for(int i=0; i<5; i++){
 			for(int j=0; j<5; j++){
@@ -77,6 +78,14 @@ public class CalculatPlayer extends RandomPlayer{
 					}
 				}
 				k++;
+			}
+		}
+	}
+	
+	public void empty(){
+		for(int i=0; i<25; i++){
+			for(int j=2; j<7; j++){
+				fields[i][j]=0;
 			}
 		}
 	}
