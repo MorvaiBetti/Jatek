@@ -7,24 +7,21 @@ public class DefendPlayer extends RandomPlayer{
 	}
 	
 	public Move nextMove(Move prevStep, long oTime) {
-		//System.out.println("ellenfel: "+opponentColor);
 		empty();
 		step=null;
-		
+		//nyeresre allok-e?
 		if(winner(color)){
 			winnerStep();
 		}
 		if(step!=null){
-		//	System.out.println("winner");
 			return step;
 		}
-		
+		//vesztesre allok-e?
 		if(winner(opponentColor) && step==null){
 			defendStep();
 		}
 		
 		if(step!=null){
-		//	System.out.println("mifene "+step);
 			return step;
 		}
 
@@ -38,6 +35,7 @@ public class DefendPlayer extends RandomPlayer{
 		}
 	}
 	
+	//Adott szinbol van-e negy egy vonalban
 	public boolean winner(int model){
 		int db=0;
 		//sorokon megy vegig
@@ -97,6 +95,7 @@ public class DefendPlayer extends RandomPlayer{
 		return false;
 	}
 	
+	//Az ellenfelemet megakadajozom a nyeresben
 	public void defendStep(){
 		//sor
 		if(line[0][0]==line[1][0]){
@@ -148,6 +147,7 @@ public class DefendPlayer extends RandomPlayer{
 		return;
 	}
 	
+	//A nyero lepes
 	public void winnerStep(){
 		//sor
 		if(line[0][0]==line[1][0]){

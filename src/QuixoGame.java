@@ -19,10 +19,6 @@ public class QuixoGame{
 		
 		//Addig lepnek felvaltva a jatekosok, amig valamelyikuk nem nyer vagy elfogynak a kovetkezo jatekos legal lepesei
 		while(go){
-			if(!t.existLegalStep(j)){
-				go=false; 
-				break;
-			}
 			i=0;
 			if(j==1){
 	    		System.out.println("X steps: ");

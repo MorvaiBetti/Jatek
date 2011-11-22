@@ -4,6 +4,12 @@ public class CheatRandomPlayer extends RandomPlayer{
 	public ArrayList<Move> cheat;
 	public double epsz=5;
 	
+	public CheatRandomPlayer() {
+		super();
+		epsz=5;
+		cheat=new ArrayList<Move>(75);
+	}
+	
 	public void setTable(QuixoBoard qt) {
 		table=qt;
 	}
@@ -24,7 +30,7 @@ public class CheatRandomPlayer extends RandomPlayer{
 
 		int db=0;
 		Move m=null;
-		cheat=new ArrayList<Move>(75);
+		
 		steps.clear();
 		cheat.clear();
 		for(int i=0; i<5; i++){
@@ -55,6 +61,4 @@ public class CheatRandomPlayer extends RandomPlayer{
 		}*/
 	    return m;
 	}
-	
-
 }

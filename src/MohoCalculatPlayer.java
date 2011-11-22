@@ -7,12 +7,15 @@ public class MohoCalculatPlayer extends CalculatPlayer{
 		for(int i=0; i<25; i++){
 			for(int j=2; j<6; j++){
 				//ha mar csak egy lepes hianyzik hogy nyerjek
-				if(fields[i][j]==12){
+				if(fields[i][j]>=12){
 					id=i;
 					//sorban van negy
 					if(j==3 && table.legal(4-fields[id][0], fields[id][1], color, fields[id][0], fields[id][1])){
 						System.out.println("sor");
 						step=new Move(4-fields[id][0], fields[id][1], fields[id][0], fields[id][1]);
+						return step;
+					}else if(table.getField(fields[id][0], fields[id][1])==QuixoBoard.empty && table.legal(fields[id][0], fields[id][1], color, fields[id][0], 4-fields[id][1])){
+						step=new Move(fields[id][0], fields[id][1], fields[id][0], 4-fields[id][1]);
 						return step;
 					}
 					//oszlopban van negy
@@ -20,13 +23,13 @@ public class MohoCalculatPlayer extends CalculatPlayer{
 						System.out.println("oszlop");
 						step=new Move(fields[id][0], 4-fields[id][1], fields[id][0], fields[id][1]);
 						return step;
+					}else if(table.getField(fields[id][0], fields[id][1])==QuixoBoard.empty && table.legal(fields[id][0], fields[id][1], color, 4-fields[id][0], fields[id][1])){
+						step=new Move(fields[id][0], fields[id][1], 4-fields[id][0], fields[id][1]);
+						return step;
 					}
-					newStep();
-					return step;
 				}
 				fields[i][6]+=fields[i][j];
 			}
-			System.out.println(i+". ertek: "+fields[i][6]+ " k: "+fields[i][0]+" "+fields[i][1]);
 		}
 		find();
 		newStep();
@@ -45,12 +48,11 @@ public class MohoCalculatPlayer extends CalculatPlayer{
 	}
 	
 	public void newStep(){
-		System.out.println("max koord.: " +fields[id][0]+" "+fields[id][1]+" index: "+id);
-		
 		//ha ott mar a sajat figuram van
 		if(table.getField(fields[id][0], fields[id][1])==color){
 			fields[id][6]=0;
-			again();
+			find();
+			newStep();
 			return;
 		}
 		
@@ -60,12 +62,10 @@ public class MohoCalculatPlayer extends CalculatPlayer{
 				//elobb az üreseket
 				if(table.getField(Math.abs(i-fields[id][0]), fields[id][1])==QuixoBoard.empty && table.legal(Math.abs(i-fields[id][0]), fields[id][1], color, fields[id][0], fields[id][1])){
 					step=new Move(Math.abs(i-fields[id][0]), fields[id][1], fields[id][0], fields[id][1]);
-					System.out.println("Lepesem: "+step);
 					return;
 				}
 				if(table.getField(fields[id][0], Math.abs(i-fields[id][1]))==QuixoBoard.empty && table.legal(fields[id][0], Math.abs(i-fields[id][1]), color, fields[id][0], fields[id][1])){
 					step=new Move(fields[id][0], Math.abs(i-fields[id][1]), fields[id][0], fields[id][1]);
-					System.out.println("Lepesem: "+step);
 					return;
 				}
 			}
@@ -73,12 +73,10 @@ public class MohoCalculatPlayer extends CalculatPlayer{
 				//majd a sajatokat
 				if(table.getField(Math.abs(i-fields[id][0]), fields[id][1])==color && table.legal(Math.abs(i-fields[id][0]), fields[id][1], color, fields[id][0], fields[id][1])){
 					step=new Move(Math.abs(i-fields[id][0]), fields[id][1], fields[id][0], fields[id][1]);
-					System.out.println("Lepesem: "+step);
 					return;
 				}
 				if(table.getField(fields[id][0], Math.abs(i-fields[id][1]))==color && table.legal(fields[id][0], Math.abs(i-fields[id][1]), color, fields[id][0], fields[id][1])){
 					step=new Move(fields[id][0], Math.abs(i-fields[id][1]), fields[id][0], fields[id][1]);
-					System.out.println("Lepesem: "+step);
 					return;
 				}
 			}
@@ -89,18 +87,16 @@ public class MohoCalculatPlayer extends CalculatPlayer{
 			//elobb forditani probalok
 			if(fields[id][0]+1<5 && table.getField(fields[id][0]+1, fields[id][1])==color){
 				for(int i=0; i<fields[id][0]; i++){
-					if(table.getField(0, fields[id][1])==QuixoBoard.empty && table.legal(0, fields[id][1], color, 4, fields[id][1])){
-						step=new Move(0, fields[id][1], 4, fields[id][1]);
-						System.out.println("Lepesem: "+step);
+					if(table.getField(i, fields[id][1])==QuixoBoard.empty && table.legal(i, fields[id][1], color, 4, fields[id][1])){
+						step=new Move(i, fields[id][1], 4, fields[id][1]);
 						return;
 					}
 				}
 			}
 			if(fields[id][0]-1 >-1 && table.getField(fields[id][0]-1, fields[id][1])==color){
 				for(int i=0; i<fields[id][0]; i++){
-					if(table.getField(4, fields[id][1])==QuixoBoard.empty && table.legal(4, fields[id][1], color, 0, fields[id][1])){
-						step=new Move(4, fields[id][1], 0, fields[id][1]);
-						System.out.println("Lepesem: "+step);
+					if(table.getField(i, fields[id][1])==QuixoBoard.empty && table.legal(i, fields[id][1], color, 0, fields[id][1])){
+						step=new Move(i, fields[id][1], 0, fields[id][1]);
 						return;
 					}
 				}
@@ -108,24 +104,22 @@ public class MohoCalculatPlayer extends CalculatPlayer{
 			//ha nem tudok forditani
 			if(fields[id][0]+1<5 && table.getField(fields[id][0]+1, fields[id][1])==color){
 				for(int i=0; i<fields[id][0]; i++){
-					if(table.getField(0, fields[id][1])==color && table.legal(0, fields[id][1], color, 4, fields[id][1])){
-						step=new Move(0, fields[id][1], 4, fields[id][1]);
-						System.out.println("Lepesem: "+step);
+					if(table.getField(i, fields[id][1])==color && table.legal(i, fields[id][1], color, 4, fields[id][1])){
+						step=new Move(i, fields[id][1], 4, fields[id][1]);
 						return;
 					}
 				}
 			}
 			if(fields[id][0]-1 >-1 && table.getField(fields[id][0]-1, fields[id][1])==color){
 				for(int i=0; i<fields[id][0]; i++){
-					if(table.getField(4, fields[id][1])==color && table.legal(4, fields[id][1], color, 0, fields[id][1])){
-						step=new Move(4, fields[id][1], 0, fields[id][1]);
-						System.out.println("Lepesem: "+step);
+					if(table.getField(i, fields[id][1])==color && table.legal(i, fields[id][1], color, 0, fields[id][1])){
+						step=new Move(i, fields[id][1], 0, fields[id][1]);
 						return;
 					}
 				}
 			}
-			if(table.getField(4-fields[id][0], fields[id][1])!=opponentColor && table.legal(4-fields[id][0], fields[id][1], color, fields[id][0], fields[id][1])){
-				step=new Move(4-fields[id][0], fields[id][1], fields[id][0], fields[id][1]);
+			if(table.getField(fields[id][0], 4-fields[id][1])!=opponentColor && table.legal(fields[id][0], 4-fields[id][1], color, fields[id][0], fields[id][1])){
+				step=new Move(fields[id][0], 4-fields[id][1], fields[id][0], fields[id][1]);
 				return;
 			}
 		}
@@ -135,18 +129,16 @@ public class MohoCalculatPlayer extends CalculatPlayer{
 			//forditani probalok
 			if(fields[id][1]+1<5 && table.getField(fields[id][0], fields[id][1]+1)==color){
 				for(int i=fields[id][0]+1;  i<5; i++){
-					if(table.getField(fields[id][0], 0)==QuixoBoard.empty && table.legal(fields[id][0], 0, color, fields[id][0], 4)){
-						step=new Move(fields[id][0], 0, fields[id][0], 4);
-						System.out.println("Lepesem: "+step);
+					if(table.getField(fields[id][0], i)==QuixoBoard.empty && table.legal(fields[id][0], i, color, fields[id][0], 4)){
+						step=new Move(fields[id][0], i, fields[id][0], 4);
 						return;
 					}
 				}
 			}
 			if(fields[id][1]-1>-1 && table.getField(fields[id][0], fields[id][1]-1)==color){
 				for(int i=0;  i<fields[id][0]; i++){
-						if(table.getField(fields[id][0], 4)==QuixoBoard.empty && table.legal(fields[id][0], 4, color, fields[id][0], 0)){
-							step=new Move(fields[id][0], 4, fields[id][0], 0);
-							System.out.println("Lepesem: "+step);
+						if(table.getField(fields[id][0], i)==QuixoBoard.empty && table.legal(fields[id][0], i, color, fields[id][0], 0)){
+							step=new Move(fields[id][0], i, fields[id][0], 0);
 							return;
 						}
 				}
@@ -154,24 +146,22 @@ public class MohoCalculatPlayer extends CalculatPlayer{
 			//ha nem tudok forditani
 			if(fields[id][1]+1<5 && table.getField(fields[id][0], fields[id][1]+1)==color){
 				for(int i=fields[id][0]+1;  i<5; i++){
-					if(table.getField(fields[id][0], 0)==color && table.legal(fields[id][0], 0, color, fields[id][0], 4)){
-						step=new Move(fields[id][0], 0, fields[id][0], 4);
-						System.out.println("Lepesem: "+step);
+					if(table.getField(fields[id][0], i)==color && table.legal(fields[id][0], i, color, fields[id][0], 4)){
+						step=new Move(fields[id][0], i, fields[id][0], 4);
 						return;
 					}
 				}
 			}
 			if(fields[id][1]-1>-1 && table.getField(fields[id][0], fields[id][1]-1)==color){
 				for(int i=0;  i<fields[id][0]; i++){
-						if(table.getField(fields[id][0], 4)==color && table.legal(fields[id][0], 4, color, fields[id][0], 0)){
-							step=new Move(fields[id][0], 4, fields[id][0], 0);
-							System.out.println("Lepesem: "+step);
+						if(table.getField(fields[id][0], i)==color && table.legal(fields[id][0], i, color, fields[id][0], 0)){
+							step=new Move(fields[id][0], i, fields[id][0], 0);
 							return;
 						}
 				}
 			}
-			if(table.getField(fields[id][0], 4-fields[id][1])!=opponentColor && table.legal(fields[id][0], 4-fields[id][1], color, fields[id][0], fields[id][1])){
-				step=new Move(fields[id][0], 4-fields[id][1], fields[id][0], fields[id][1]);
+			if(table.getField(4-fields[id][0], fields[id][1])!=opponentColor && table.legal(4-fields[id][0], fields[id][1], color, fields[id][0], fields[id][1])){
+				step=new Move(4-fields[id][0], fields[id][1], fields[id][0], fields[id][1]);
 				return;
 			}
 		}
@@ -182,7 +172,6 @@ public class MohoCalculatPlayer extends CalculatPlayer{
 			if(fields[id][0]+1<5 && table.getField(fields[id][0]+1, fields[id][1])==color){
 				if((table.getField(0, fields[id][1])==color || table.getField(0, fields[id][1])==QuixoBoard.empty) && table.legal(0, fields[id][1], color, 4, fields[id][1])){
 					step=new Move(0, fields[id][1], 4, fields[id][1]);
-					System.out.println("Lepesem: "+step);
 					return;
 				}
 			}
@@ -190,7 +179,6 @@ public class MohoCalculatPlayer extends CalculatPlayer{
 			if(fields[id][0]-1>-1 && table.getField(fields[id][0]-1, fields[id][1])==color){
 				if((table.getField(4, fields[id][1])==color || table.getField(4, fields[id][1])==QuixoBoard.empty) && table.legal(4, fields[id][1], color, 0, fields[id][1])){
 					step=new Move(4, fields[id][1], 0, fields[id][1]);
-					System.out.println("Lepesem: "+step);
 					return;
 				}
 			}
@@ -198,7 +186,6 @@ public class MohoCalculatPlayer extends CalculatPlayer{
 			if(fields[id][1]+1<5 && table.getField(fields[id][0], fields[id][1]+1)==color){
 				if((table.getField(fields[id][0], 0)==color || table.getField(fields[id][0], 0)==QuixoBoard.empty) && table.legal(fields[id][0], 0, color, fields[id][0], 4)){
 					step=new Move(fields[id][0], 0, fields[id][0], 4);
-					System.out.println("Lepesem: "+step);
 					return;
 				}
 			}
@@ -206,17 +193,10 @@ public class MohoCalculatPlayer extends CalculatPlayer{
 			if(fields[id][1]-1>-1 && table.getField(fields[id][0], fields[id][1]-1)==color){
 				if((table.getField(fields[id][0], 4)==color || table.getField(fields[id][0], 4)==QuixoBoard.empty) && table.legal(fields[id][0], 4, color, fields[id][0], 0)){
 					step=new Move(fields[id][0], 4, fields[id][0], 0);
-					System.out.println("Lepesem: "+step);
 					return;
 				}
 			}
 		}
-		System.out.println("nincs talalat");
-		again();
-		return;
-	}
-	
-	public void again(){
 		fields[id][6]=0;
 		find();
 		newStep();

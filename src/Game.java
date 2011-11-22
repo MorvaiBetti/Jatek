@@ -316,8 +316,8 @@ public class Game{
 		System.out.println("3 DefendPlayer: Ha az ellenfelnek egy babu hianyzik, hogy nyerjen, akkor vedekezik. Egyebkent random lep.");
 		System.out.println("4 CollectorPlayer: Ha van rá lehetosege, akkor egy uj babut tesz le, egyebkent random.");
 		System.out.println("5 CalculatPlayer: Kiszamol egy tablat, hogy hova mennyire erdemes lepni. Kiirja a tablat, majd randomlep.");
-		System.out.println("6 DefendCalculatPlayer: ");
-		System.out.println("7 MohoCalculatPlayer: ");
+		System.out.println("6 DefendCalculatPlayer: A legveszelyesebb mezore probal lepni. Azaz probalja minel jobban gatolni az ellenfelet");
+		System.out.println("7 MohoCalculatPlayer: A legjobb helyre probal lepni.");
 		System.out.println();
 		
 		try {
