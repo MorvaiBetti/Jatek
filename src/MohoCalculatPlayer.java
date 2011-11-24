@@ -5,13 +5,15 @@ public class MohoCalculatPlayer extends CalculatPlayer{
 	public Move nextMove(Move prevStep, long time){
 		calculat();
 		for(int i=0; i<25; i++){
+			//System.out.println(i+". "+fields[i][0]+" "+fields[i][1]+" ertekek "+fields[i][2]+" "+fields[i][3]+" "+fields[i][4]+" "+fields[i][5]);
 			for(int j=2; j<6; j++){
 				//ha mar csak egy lepes hianyzik hogy nyerjek
 				if(fields[i][j]>=12){
+				//	System.out.println(fields[i][0]+" "+fields[i][1]+" e "+fields[i][j]+"****************************************************************************");
 					id=i;
 					//sorban van negy
 					if(j==3 && table.legal(4-fields[id][0], fields[id][1], color, fields[id][0], fields[id][1])){
-						System.out.println("sor");
+			//			System.out.println("sor");
 						step=new Move(4-fields[id][0], fields[id][1], fields[id][0], fields[id][1]);
 						return step;
 					}else if(table.getField(fields[id][0], fields[id][1])==QuixoBoard.empty && table.legal(fields[id][0], fields[id][1], color, fields[id][0], 4-fields[id][1])){
@@ -20,7 +22,7 @@ public class MohoCalculatPlayer extends CalculatPlayer{
 					}
 					//oszlopban van negy
 					if(j==2 && table.legal(fields[id][0], 4-fields[id][1], color, fields[id][0], fields[id][1])){
-						System.out.println("oszlop");
+			//			System.out.println("oszlop");
 						step=new Move(fields[id][0], 4-fields[id][1], fields[id][0], fields[id][1]);
 						return step;
 					}else if(table.getField(fields[id][0], fields[id][1])==QuixoBoard.empty && table.legal(fields[id][0], fields[id][1], color, 4-fields[id][0], fields[id][1])){

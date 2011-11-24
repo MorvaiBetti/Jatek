@@ -52,28 +52,32 @@ public class CalculatPlayer extends RandomPlayer{
 							fields[k][3]+=your;
 						}
 					}
-					if(i==j || j+i==4){
+					if(i==j){
 						//foatlo
-						if(table.getField(l,l)==color){
-							fields[k][4]+=my;
-						}
-						if(table.getField(l,l)==QuixoBoard.empty){
-							fields[k][4]+=nobody;
-						}
-						if(table.getField(l,l)==opponentColor){
-							fields[k][4]+=your;
+						if(l!=i){
+							if(table.getField(l,l)==color){
+								fields[k][4]+=my;
+							}
+							if(table.getField(l,l)==QuixoBoard.empty){
+								fields[k][4]+=nobody;
+							}
+							if(table.getField(l,l)==opponentColor){
+								fields[k][4]+=your;
+							}
 						}
 					}
-					if(i!=l && j!=4-l){
+					if(i==4-j){
 						//mellekatlo
-						if(table.getField(l,4-l)==color){
-							fields[k][5]+=my;
-						}
-						if(table.getField(l,4-l)==QuixoBoard.empty){
-							fields[k][5]+=nobody;
-						}
-						if(table.getField(l,4-l)==opponentColor){
-							fields[k][5]+=your;
+						if(l!=i){
+							if(table.getField(l,4-l)==color){
+								fields[k][5]+=my;
+							}
+							if(table.getField(l,4-l)==QuixoBoard.empty){
+								fields[k][5]+=nobody;
+							}
+							if(table.getField(l,4-l)==opponentColor){
+								fields[k][5]+=your;
+							}
 						}
 					}
 				}
