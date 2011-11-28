@@ -1,27 +1,11 @@
 import java.util.*;
 
-public class RandomPlayer implements Player{
-	public QuixoBoard table;
+public class RandomPlayer extends SimplePlayer{
 	public ArrayList<Move> steps; 			//lehetseges steps letarolasara
-	public int color; 						//A jatekos sajat mintaja
-	public int opponentColor; 				//Az ellenfel mintaja
-	public long maxTime;
-	public Move step;
+
 	
 	public RandomPlayer(){
 		step=null;
-	}
-	
-	public void setTable(QuixoBoard qt) {
-		table=qt;
-	}
-	
-	public int getColor() {
-		return color;
-	}
-	
-	public String toString(){
-		return "RandomPlayer";
 	}
 	
 	public void datas(int sequence, long time) {

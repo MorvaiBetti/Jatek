@@ -1,23 +1,8 @@
-public class CalculatPlayer extends RandomPlayer{
-	public int[][] fields;
+public abstract class CalculatPlayer extends SimplePlayer{
+	public int[][] fields=new int[25][7];
 	public int my=3;
 	public int your=-3;
 	public int nobody=1;
-	
-	public CalculatPlayer(){
-		fields=new int[25][7];
-	}
-	
-	public Move nextMove(Move prevStep, long time){
-		calculat();
-		for(int i=0; i<25; i++){
-			for(int j=0; j<6; j++){
-				System.out.print(" "+fields[i][j]+" ");
-			}
-			System.out.println();
-		}
-		return super.nextMove(prevStep, time);
-	}
 	
 	//sorSzam, oszlopSzam, oszlopVonal, sorVonal, foatloVonal, mellekatloVonal
 	public void calculat(){

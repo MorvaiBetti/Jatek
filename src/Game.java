@@ -70,6 +70,14 @@ public class Game{
 				ai++;
 				return;
 			}
+			if(name.equalsIgnoreCase("8")){
+				pt[ai]=new PlayerThread(i, maxTime, "Moho");
+				pt[ai].start();
+				pt[ai].datas(i, maxTime);
+				pt[ai].setTable(t);
+				ai++;
+				return;
+			}
 			if(name.equalsIgnoreCase("0")){
 				p[people]=new Human();
 				p[people].datas(i, maxTime);
@@ -318,6 +326,7 @@ public class Game{
 		System.out.println("5 CalculatPlayer: Kiszamol egy tablat, hogy hova mennyire erdemes lepni. Kiirja a tablat, majd randomlep.");
 		System.out.println("6 DefendCalculatPlayer: A legveszelyesebb mezore probal lepni. Azaz probalja minel jobban gatolni az ellenfelet");
 		System.out.println("7 MohoCalculatPlayer: A legjobb helyre probal lepni.");
+		System.out.println("8 Moho: Egy melysegig nezi a fat.");
 		System.out.println();
 		
 		try {
@@ -330,8 +339,11 @@ public class Game{
 				return;
 			}else if(ai==2){
 					ai();
+					pt[0].exit();
+					pt[1].exit();
 					return;
 				}else{humanvsAI();
+						//pt[0].exit();
 						return;
 					}	
 		} catch (IOException e) {

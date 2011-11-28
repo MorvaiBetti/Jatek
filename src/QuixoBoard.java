@@ -29,7 +29,6 @@ public class QuixoBoard implements Cloneable {
 	
 	//a table egy adott mezojenek erteket adja vissza
 	public int getField(int x, int y){
-	//	System.out.println("VAGYOK");
 		return table[x][y];
 	}
 	
