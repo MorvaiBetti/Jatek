@@ -12,7 +12,7 @@ public class Game{
 	
 	public static void player(int i, long maxTime)throws Exception{
 		try {
-			System.out.println("Kerem a(z) "+i+" jatekos tipusat: ");
+			System.out.println("Kerem a(z) "+(i+1)+" jatekos tipusat: ");
 			name=reader.readLine();
 			if(name.equalsIgnoreCase("1")){
 				pt[ai]=new PlayerThread(i, maxTime, "RandomPlayer");
@@ -94,18 +94,18 @@ public class Game{
 		m = pt[i].nextMove(m, oTime);
 		System.out.println("\n"+j+". lepes "+ind+". jatekos lep | "+ m +" ido: "+pt[i].getElapsedTime()+" szinem: "+pt[i].getColor()+" || "+pt[ind].sequence+" nevem "+pt[i].playerName);
 		if (m != null) {
-		   // 'lejárt-e az ideje?' ellenõrzése
+		   // 'lejï¿½rt-e az ideje?' ellenï¿½rzï¿½se
 		   if (pt[i].getElapsedTime() > maxTime) {
 			   if(pt[i].getColor()==QuixoBoard.X){
-			            System.out.println("X ideje lejárt, ezért O nyert!");
+			            System.out.println("X ideje lejï¿½rt, ezï¿½rt O nyert!");
 			            return false;
 			          } else {
-			            System.out.println("O ideje lejárt, ezért X nyert!");
+			            System.out.println("O ideje lejï¿½rt, ezï¿½rt X nyert!");
 			            return false;
 			          }
 		   }
 		   
-		   // 'csalt-e valaki?' ellenõrzése
+		   // 'csalt-e valaki?' ellenï¿½rzï¿½se
 		   if(t.legal(m.x, m.y, pt[i].getColor(), m.nx, m.ny)){
 			   t.makeStep(m.x, m.y, pt[i].getColor(), m.nx, m.ny);
 		   } else {
@@ -120,12 +120,12 @@ public class Game{
 		   System.out.println(t);
 
 		} else {
-			// ind jatékos null-t lépett => lépés kényszer miatt kikapott
+			// ind jatï¿½kos null-t lï¿½pett => lï¿½pï¿½s kï¿½nyszer miatt kikapott
 			if(pt[i].getColor()==QuixoBoard.X){
-				System.out.println("X nem lépett, ezért O nyert!");
+				System.out.println("X nem lï¿½pett, ezï¿½rt O nyert!");
 				return false;
 		    } else {
-		          System.out.println("O nem lépett, ezért X nyert!");
+		          System.out.println("O nem lï¿½pett, ezï¿½rt X nyert!");
 		          return false;
 		        }
 			}
@@ -149,7 +149,7 @@ public class Game{
 		//	System.out.println("----------------------------------");
 			humanStep(ind);
 					   
-			// 'nyert-e valaki?' ellenõrzése
+			// 'nyert-e valaki?' ellenï¿½rzï¿½se
 			if(t.win(p[ind].getColor()) && t.win(p[nextInd].getColor())){
 				System.out.println("Dontetlen!");
 				return;
@@ -185,7 +185,7 @@ public class Game{
 			if(!aiStep(ind, pt[nextInd].getElapsedTime())){
 				return;
 			}
-			// 'nyert-e valaki?' ellenõrzése
+			// 'nyert-e valaki?' ellenï¿½rzï¿½se
 			if(t.win(pt[ind].getColor()) && t.win(pt[nextInd].getColor())){
 				System.out.println("Dontetlen!!");
 				return;
@@ -242,7 +242,7 @@ public class Game{
 		   		}
 				j++;
 				humanStep(0);
-				// 'nyert-e valaki?' ellenõrzése
+				// 'nyert-e valaki?' ellenï¿½rzï¿½se
 				if(t.win(pt[0].getColor()) && t.win(p[0].getColor())){
 					System.out.println("Dontetlen!");
 					return;
@@ -322,7 +322,7 @@ public class Game{
 		System.out.println("1 RandomPlayer: Gepi jatekos, aki veletlen valaszt egy szabalyos lepest.");
 		System.out.println("2 CheatRandomPlayer: Gepi jatekos, aki veletlen valaszt egy szabalyos lepest, elofordulhat, hogy csalni probal.");
 		System.out.println("3 DefendPlayer: Ha az ellenfelnek egy babu hianyzik, hogy nyerjen, akkor vedekezik. Egyebkent random lep.");
-		System.out.println("4 CollectorPlayer: Ha van rá lehetosege, akkor egy uj babut tesz le, egyebkent random.");
+		System.out.println("4 CollectorPlayer: Ha van rï¿½ lehetosege, akkor egy uj babut tesz le, egyebkent random.");
 		System.out.println("5 CalculatPlayer: Kiszamol egy tablat, hogy hova mennyire erdemes lepni. Kiirja a tablat, majd randomlep.");
 		System.out.println("6 DefendCalculatPlayer: A legveszelyesebb mezore probal lepni. Azaz probalja minel jobban gatolni az ellenfelet");
 		System.out.println("7 MohoCalculatPlayer: A legjobb helyre probal lepni.");
@@ -330,8 +330,8 @@ public class Game{
 		System.out.println();
 		
 		try {
+			player(0, maxTime);
 			player(1, maxTime);
-			player(2, maxTime);
 			System.out.println(t);
 			
 			if(people==2){

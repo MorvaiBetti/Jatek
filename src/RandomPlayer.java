@@ -20,7 +20,7 @@ public class RandomPlayer extends SimplePlayer{
 	}
 	
 	//Az AI kovetkezo lepese. A legal stepset osszegyujti, osszekeveri oket, es valaszt kozuluk egyet, amit meglep
-	public Move nextMove(Move prevStep, long time) {	
+	public Move nextMove(Move prevStep, long time) {
 		steps.clear(); 								//torli az eddig lementett stepset
 		for(int i=0; i<5; i++){ 					//A lehetseges stepsen vegigmegy, es steps-hez hozzaadja a legal stepset
 			//ha az elso sorbol valasztok

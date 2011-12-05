@@ -1,9 +1,9 @@
 public class QuixoBoard implements Cloneable {
 	/*(sor; oszlop)*/
 
-	public static final int empty =0;
-	public static final int X=1;
-	public static final int O=2;
+	public static final int empty=2;
+	public static final int X=0;
+	public static final int O=1;
 	public int[][] table;
 	
 	//konstruktor
@@ -35,7 +35,7 @@ public class QuixoBoard implements Cloneable {
 	//Az adott lepes helyes-e?
 	public boolean legal(int x, int y, int model, int nx, int ny){
 		//csak sajat szinut vagy semlegeset lehet 
-		if(table[x][y]!=model && table[x][y]!=0){
+		if(table[x][y]!=model && table[x][y]!=empty){
 			return false;
 		}
 		
@@ -58,11 +58,6 @@ public class QuixoBoard implements Cloneable {
 		if(nx!=0 && nx!=4 && ny!=0 && ny!=4){
 			return false;
 		}
-
-		/*if((nx==4-x && ny==y) || (ny==4-y && nx==x) || (nx==ny || nx==4-ny)){
-			return true;
-		}
-		return false;*/
 		
 		//melyik kivetel eseten hova lehet tenni
 		if(x==0 && ((nx==x && ny==0) ||(nx==x && ny==4) || (nx==4 && y==ny) )){

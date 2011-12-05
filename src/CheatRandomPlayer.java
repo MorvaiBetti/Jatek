@@ -30,7 +30,6 @@ public class CheatRandomPlayer extends RandomPlayer{
 
 		int db=0;
 		Move m=null;
-		
 		steps.clear();
 		cheat.clear();
 		for(int i=0; i<5; i++){
