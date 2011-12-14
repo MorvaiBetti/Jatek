@@ -1,18 +1,10 @@
 public class Pair {
-	public Move step;
 	public int model;
 	public QuixoBoard table;
 	
 	public Pair(int model, QuixoBoard qt){
 		setModel(model);
 		setTable(qt);
-	}
-	
-	public Move getStep() {
-		return step;
-	}
-	public void setStep(Move step) {
-		this.step = step;
 	}
 	
 	public QuixoBoard getTable() {
