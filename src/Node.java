@@ -8,10 +8,7 @@ public class Node {
 	public boolean leaf;
 	public int index;
 	public Move step;
-<<<<<<< HEAD
 	public Node brother=null;
-=======
->>>>>>> origin/master
 	
 	public Node(Pair d, Node p, int v, Move s){
 		data=d;
@@ -21,16 +18,10 @@ public class Node {
 	}
 
 	public void addChild(Node child, Node parent, int v, Move s){
-<<<<<<< HEAD
 		if(child.data.getTable().win(parent.data.getModel())){
-=======
-		/*if(child.getTable().win(parent.data.getModel())){
->>>>>>> origin/master
 			parent.setLeaf(true);
-			
 			System.out.println("Level vagyok");
 			return;
-<<<<<<< HEAD
 		}else parent.setLeaf(false);
 		parent.children.add(child);
 		child.setIndex(parent.getIndex()+1);	
@@ -45,15 +36,6 @@ public class Node {
 		this.brother = brother;
 	}
 
-=======
-		}*/
-		parent.setLeaf(false);
-		parent.children.add(child);
-		child.setIndex(parent.getIndex()+1);
-	//	System.out.println("ertekem: "+v);
-	}
-	
->>>>>>> origin/master
 	public Move getStep() {
 		return step;
 	}
@@ -102,10 +84,6 @@ public class Node {
 		this.index = index;
 	}
 
-<<<<<<< HEAD
-=======
-	@Override
->>>>>>> origin/master
 	public String toString() {
 		return "Node [" +
 			//	"value=" + value + 
@@ -114,9 +92,4 @@ public class Node {
 				", data="+ data+
 				", index=" + index + "]";
 	}
-<<<<<<< HEAD
 }
-=======
-
-}
->>>>>>> origin/master
