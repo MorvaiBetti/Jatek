@@ -29,13 +29,12 @@ public class TreeStructure extends Node{
 	}
 	
 	public void makeTree(Node node, int model){
-		//System.out.println("Kifejtve! szint: "+node.getIndex()+ " menet: "+depth);
+	//	System.out.println("Kifejtve! szint: "+node.getIndex()+ " menet: "+depth);
 		for(int i=0; i<5; i++){
 			for(int j=0; j<5; j++){
 				nextStep(i,j, model);
 			}
 		}
-		//return;
 	}
 	
 	public void step(ArrayList<Node> nodes){
@@ -44,9 +43,9 @@ public class TreeStructure extends Node{
 			root=nodes.remove(i);
 			makeTree(root, root.data.getModel());
 		}
-		//return;
 	}
 	public void cyrcle(){
+		d=newRoots.remove(newRoots.size()-1).getIndex();
 		while(d<depth){
 			d=newRoots.remove(newRoots.size()-1).getIndex();
 			System.out.println("Melyseg: "+d);
@@ -55,7 +54,11 @@ public class TreeStructure extends Node{
 				roots.add(newRoots.remove(i));
 			}
 			newRoots.clear();
-			step(roots);
+			for(int i=0; i<roots.size(); i++){
+				root=roots.remove(i);
+				makeTree(root, root.data.getModel());
+			}
+			//step(roots);
 			d++;
 		}
 	}
@@ -138,6 +141,7 @@ public class TreeStructure extends Node{
 	
 	public int sum(int model){
 		calculate(model);
+	//	System.out.println("model: "+model+" me "+me);
 		int value=0;
 		for(int i=0; i<25; i++){
 			for(int j=2; j<6; j++){
@@ -161,7 +165,7 @@ public class TreeStructure extends Node{
 		//ha vmelyik csucsra akarok tenni
 		if((b==0 || a==4) && (a==0 || b==4)){
 			for(int i=0; i<5; i++){
-				//elobb az �reseket
+				//elobb az ďż˝reseket
 				if(root.data.table.getField(Math.abs(i-a), b)==QuixoBoard.empty && root.data.table.legal(Math.abs(i-a), b, model, a, b)){
 					newTable.makeStep(Math.abs(i-a), b, model, a, b);
 					newData=new Pair((model+1)%2, newTable);
