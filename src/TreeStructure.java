@@ -7,6 +7,7 @@ public class TreeStructure extends Node{
 	public int my=3;
 	public int your=-3;
 	public int nobody=1;
+<<<<<<< HEAD
 	public int value;
 	public int depth;
 	public int d=0;
@@ -53,10 +54,46 @@ public class TreeStructure extends Node{
 			roots.clear();
 			for(int i=0; i<newRoots.size(); i++){
 				roots.add(newRoots.remove(i));
+=======
+	public int id=0;
+	public int value;
+	public int depth;
+	public int me;
+	public Node child;
+	public Node now;
+	
+	public TreeStructure(Pair rootData, int depth, Move s, int model){
+		super(rootData, null, 0, s);
+		this.depth=depth;
+		me=model;
+		root=new Node(rootData, null, 0, s);
+		setIndex(id);
+		makeTree(root, depth, null, rootData.getModel());
+	}
+	
+	public void makeTree(Node node, int depth, Move s, int model){
+		if(node.getIndex()==depth){
+			//System.out.println("Vegeztem: "+node.getIndex()+" "+depth);
+			return;
+		}
+		System.out.println("szint: "+(node.getIndex()+1));
+		root=node;
+		System.out.println("elsooooo");
+		for(id=0; id<=depth; id++){
+			for(int i=0; i<5; i++){
+				for(int j=0; j<5; j++){
+					nextStep(i,j, model);
+				}
+>>>>>>> origin/master
 			}
 			newRoots.clear();
 			step(roots);
 			d++;
+		}
+		System.out.println("masodik!!");
+		for(int i=0; i<root.children.size(); i++){
+			now=root.children.remove(i);
+			makeTree(now, depth, now.getStep(), (now.data.getModel()+1)%2);
 		}
 	}
 	
@@ -144,6 +181,10 @@ public class TreeStructure extends Node{
 				value=value+fields[i][j];
 			}
 		}
+<<<<<<< HEAD
+=======
+		System.out.println("mostani: "+model+" eredeti: "+me);
+>>>>>>> origin/master
 		if(model!=me){
 		//	System.out.println("ellen");
 			value=0-value;
@@ -164,22 +205,40 @@ public class TreeStructure extends Node{
 				//elobb az �reseket
 				if(root.data.table.getField(Math.abs(i-a), b)==QuixoBoard.empty && root.data.table.legal(Math.abs(i-a), b, model, a, b)){
 					newTable.makeStep(Math.abs(i-a), b, model, a, b);
+<<<<<<< HEAD
 					newData=new Pair((model+1)%2, newTable);
 					value=sum(model);
 					step=new Move(Math.abs(i-a), b, a, b);
 					child=new Node(newData, root, value, step);
 					addChild(child, root, value, step);
 					newRoots.add(child);
+=======
+					newData=new Pair(model, newTable);
+					value=sum(root.data.getModel());
+					step=new Move(Math.abs(i-a), b, a, b);
+					child=new Node(newData, root, value, step);
+					addChild(child, root, value, step);
+				//	makeTree(child, depth, step, (model+1)%2);
+>>>>>>> origin/master
 					newTable=(QuixoBoard) root.data.table.clone();
 				}
 				if(root.data.table.getField(a, Math.abs(i-b))==QuixoBoard.empty && root.data.table.legal(a, Math.abs(i-b), model, a, b)){
 					newTable.makeStep(a, Math.abs(i-b), model, a, b);
+<<<<<<< HEAD
 					newData=new Pair((model+1)%2, newTable);
 					value=sum(model);
 					step=new Move(a, Math.abs(i-b), a, b);
 					child=new Node(newData, root, value, step);
 					addChild(child, root, value, step);
 					newRoots.add(child);
+=======
+					newData=new Pair(model, newTable);
+					value=sum(root.data.getModel());
+					step=new Move(a, Math.abs(i-b), a, b);
+					child=new Node(newData, root, value, step);
+					addChild(child, root, value, step);
+				//	makeTree(child, depth, step, (model+1)%2);
+>>>>>>> origin/master
 					newTable=(QuixoBoard) root.data.table.clone();
 				}
 			}
@@ -187,22 +246,40 @@ public class TreeStructure extends Node{
 			for(int i=0; i<5; i++){
 				if(root.data.table.getField(Math.abs(i-a), b)==model && root.data.table.legal(Math.abs(i-a), b, model, a, b)){
 					newTable.makeStep(Math.abs(i-a), b, model, a, b);
+<<<<<<< HEAD
 					newData=new Pair((model+1)%2, newTable);
 					value=sum(model);
 					step=new Move(Math.abs(i-a), b, a, b);
 					child=new Node(newData, root, value, step);
 					addChild(child, root, value, step);
 					newRoots.add(child);
+=======
+					newData=new Pair(model, newTable);
+					value=sum(root.data.getModel());
+					step=new Move(Math.abs(i-a), b, a, b);
+					child=new Node(newData, root, value, step);
+					addChild(child, root, value, step);
+				//	makeTree(child, depth, step, (model+1)%2);
+>>>>>>> origin/master
 					newTable=(QuixoBoard) root.data.table.clone();
 				}
 				if(root.data.table.getField(a, Math.abs(i-b))==model && root.data.table.legal(a, Math.abs(i-b), model, a, b)){
 					newTable.makeStep(a, Math.abs(i-b), model, a, b);
+<<<<<<< HEAD
 					newData=new Pair((model+1)%2, newTable);
 					value=sum(model);
 					step=new Move(a, Math.abs(i-b), a, b);
 					child=new Node(newData, root, value, step);
 					addChild(child, root, value, step);
 					newRoots.add(child);
+=======
+					newData=new Pair(model, newTable);
+					value=sum(root.data.getModel());
+					step=new Move(a, Math.abs(i-b), a, b);
+					child=new Node(newData, root, value, step);
+					addChild(child, root, value, step);
+				//	makeTree(child, depth, step, (model+1)%2);
+>>>>>>> origin/master
 					newTable=(QuixoBoard) root.data.table.clone();
 				}
 			}
@@ -215,12 +292,21 @@ public class TreeStructure extends Node{
 				for(int i=0; i<a; i++){
 					if(root.data.table.getField(i, b)==QuixoBoard.empty && root.data.table.legal(i, b, model, 4, b)){
 						newTable.makeStep(i, b, model, 4, b);
+<<<<<<< HEAD
 						newData=new Pair((model+1)%2, newTable);
 						value=sum(model);
 						step=new Move(i, b, 4, b);
 						child=new Node(newData, root, value, step);
 						addChild(child, root, value, step);
 						newRoots.add(child);
+=======
+						newData=new Pair(model, newTable);
+						value=sum(root.data.getModel());
+						step=new Move(i, b, 4, b);
+						child=new Node(newData, root, value, step);
+						addChild(child, root, value, step);
+					//	makeTree(child, depth, step, (model+1)%2);
+>>>>>>> origin/master
 						newTable=(QuixoBoard) root.data.table.clone();
 					}
 				}
@@ -229,12 +315,21 @@ public class TreeStructure extends Node{
 				for(int i=0; i<a; i++){
 					if(root.data.table.getField(i, b)==QuixoBoard.empty && root.data.table.legal(i, b, model, 0, b)){
 						newTable.makeStep(i, b, model, 0, b);
+<<<<<<< HEAD
 						newData=new Pair((model+1)%2, newTable);
 						value=sum(model);
 						step=new Move(i, b, 0, b);
 						child=new Node(newData, root, value, step);
 						addChild(child, root, value, step);
 						newRoots.add(child);
+=======
+						newData=new Pair(model, newTable);
+						value=sum(root.data.getModel());
+						step=new Move(i, b, 0, b);
+						child=new Node(newData, root, value, step);
+						addChild(child, root, value, step);
+					//	makeTree(child, depth, step, (model+1)%2);
+>>>>>>> origin/master
 						newTable=(QuixoBoard) root.data.table.clone();
 					}
 				}
@@ -244,12 +339,21 @@ public class TreeStructure extends Node{
 				for(int i=0; i<a; i++){
 					if(root.data.table.getField(i, b)==model && root.data.table.legal(i, b, model, 4, b)){
 						newTable.makeStep(i, b, model, 4, b);
+<<<<<<< HEAD
 						newData=new Pair((model+1)%2, newTable);
 						value=sum(model);
 						step=new Move(i, b, 4, b);
 						child=new Node(newData, root, value, step);
 						addChild(child, root, value, step);
 						newRoots.add(child);
+=======
+						newData=new Pair(model, newTable);
+						value=sum(root.data.getModel());
+						step=new Move(i, b, 4, b);
+						child=new Node(newData, root, value, step);
+						addChild(child, root, value, step);
+					//	makeTree(child, depth, step, (model+1)%2);
+>>>>>>> origin/master
 						newTable=(QuixoBoard) root.data.table.clone();
 					}
 				}
@@ -258,24 +362,42 @@ public class TreeStructure extends Node{
 				for(int i=0; i<a; i++){
 					if(root.data.table.getField(i, b)==model && root.data.table.legal(i, b, model, 0, b)){
 						newTable.makeStep(i, b, model, 0, b);
+<<<<<<< HEAD
 						newData=new Pair((model+1)%2, newTable);
 						value=sum(model);
 						step=new Move(i, b, 0, b);
 						Node child=new Node(newData, root, value, step);
 						addChild(child, root, value, step);
 						newRoots.add(child);
+=======
+						newData=new Pair(model, newTable);
+						value=sum(root.data.getModel());
+						step=new Move(i, b, 0, b);
+						Node child=new Node(newData, root, value, step);
+						addChild(child, root, value, step);
+					//	makeTree(child, depth, step, (model+1)%2);
+>>>>>>> origin/master
 						newTable=(QuixoBoard) root.data.table.clone();
 					}
 				}
 			}
 			if(root.data.table.getField(a, 4-b)!=(model+1)%2 && root.data.table.legal(a, 4-b, model, a, b)){
 				newTable.makeStep(a, 4-b, model, a, b);
+<<<<<<< HEAD
 				newData=new Pair((model+1)%2, newTable);
 				value=sum(model);
 				step=new Move(a, 4-b, a, b);
 				Node child=new Node(newData, root, value, step);
 				addChild(child, root, value, step);
 				newRoots.add(child);
+=======
+				newData=new Pair(model, newTable);
+				value=sum(root.data.getModel());
+				step=new Move(a, 4-b, a, b);
+				Node child=new Node(newData, root, value, step);
+				addChild(child, root, value, step);
+			//	makeTree(child, depth, step, (model+1)%2);
+>>>>>>> origin/master
 				newTable=(QuixoBoard) root.data.table.clone();
 			}
 		}
@@ -287,12 +409,21 @@ public class TreeStructure extends Node{
 				for(int i=a+1;  i<5; i++){
 					if(root.data.table.getField(a, i)==QuixoBoard.empty && root.data.table.legal(a, i, model, a, 4)){
 						newTable.makeStep(a, i, model, a, 4);
+<<<<<<< HEAD
 						newData=new Pair((model+1)%2, newTable);
 						value=sum(model);
 						step=new Move(a, i, a, 4);
 						Node child=new Node(newData, root, value, step);
 						addChild(child, root, value, step);
 						newRoots.add(child);
+=======
+						newData=new Pair(model, newTable);
+						value=sum(root.data.getModel());
+						step=new Move(a, i, a, 4);
+						Node child=new Node(newData, root, value, step);
+						addChild(child, root, value, step);
+				//		makeTree(child, depth, step, (model+1)%2);
+>>>>>>> origin/master
 						newTable=(QuixoBoard) root.data.table.clone();
 					}
 				}
@@ -301,12 +432,21 @@ public class TreeStructure extends Node{
 				for(int i=0;  i<a; i++){
 					if(root.data.table.getField(a, i)==QuixoBoard.empty && root.data.table.legal(a, i, model, a, 0)){
 						newTable.makeStep(a, i, model, a, 0);
+<<<<<<< HEAD
 						newData=new Pair((model+1)%2, newTable);
 						value=sum(model);
 						step=new Move(a, i, a, 0);
 						Node child=new Node(newData, root, value, step);
 						addChild(child, root, value, step);
 						newRoots.add(child);
+=======
+						newData=new Pair(model, newTable);
+						value=sum(root.data.getModel());
+						step=new Move(a, i, a, 0);
+						Node child=new Node(newData, root, value, step);
+						addChild(child, root, value, step);
+					//	makeTree(child, depth, step, (model+1)%2);
+>>>>>>> origin/master
 						newTable=(QuixoBoard) root.data.table.clone();
 					}
 				}
@@ -316,12 +456,21 @@ public class TreeStructure extends Node{
 				for(int i=a+1;  i<5; i++){
 					if(root.data.table.getField(a, i)==model && root.data.table.legal(a, i, model, a, 4)){
 						newTable.makeStep(a, i, model, a, 4);
+<<<<<<< HEAD
 						newData=new Pair((model+1)%2, newTable);
 						value=sum(model);
 						step=new Move(a, i, a, 4);
 						Node child=new Node(newData, root, value, step);
 						addChild(child, root, value, step);
 						newRoots.add(child);
+=======
+						newData=new Pair(model, newTable);
+						value=sum(root.data.getModel());
+						step=new Move(a, i, a, 4);
+						Node child=new Node(newData, root, value, step);
+						addChild(child, root, value, step);
+				//		makeTree(child, depth, step, (model+1)%2);
+>>>>>>> origin/master
 						newTable=(QuixoBoard) root.data.table.clone();
 					}
 				}
@@ -330,24 +479,42 @@ public class TreeStructure extends Node{
 				for(int i=0;  i<a; i++){
 					if(root.data.table.getField(a, i)==model && root.data.table.legal(a, i, model, a, 0)){
 						newTable.makeStep(a, i, model, a, 0);
+<<<<<<< HEAD
 						newData=new Pair((model+1)%2, newTable);
 						value=sum(model);
 						step=new Move(a, i, a, 0);
 						Node child=new Node(newData, root, value, step);
 						addChild(child, root, value, step);
 						newRoots.add(child);
+=======
+						newData=new Pair(model, newTable);
+						value=sum(root.data.getModel());
+						step=new Move(a, i, a, 0);
+						Node child=new Node(newData, root, value, step);
+						addChild(child, root, value, step);
+				//		makeTree(child, depth, step, (model+1)%2);
+>>>>>>> origin/master
 						newTable=(QuixoBoard) root.data.table.clone();
 					}
 				}
 			}
 			if(root.data.table.getField(4-a, b)!=(model+1)%2 && root.data.table.legal(4-a, b, model, a, b)){
 				newTable.makeStep(4-a, b, model, a, b);
+<<<<<<< HEAD
 				newData=new Pair((model+1)%2, newTable);
 				value=sum(model);
 				step=new Move(4-a, b, a, b);
 				Node child=new Node(newData, root, value, step);
 				addChild(child, root, value, step);
 				newRoots.add(child);
+=======
+				newData=new Pair(model, newTable);
+				value=sum(root.data.getModel());
+				step=new Move(4-a, b, a, b);
+				Node child=new Node(newData, root, value, step);
+				addChild(child, root, value, step);
+			//	makeTree(child, depth, step, (model+1)%2);
+>>>>>>> origin/master
 				newTable=(QuixoBoard) root.data.table.clone();	
 			}
 		}
@@ -358,12 +525,21 @@ public class TreeStructure extends Node{
 			if(a+1<5 && root.data.table.getField(a+1, b)==model){
 				if((root.data.table.getField(0, b)==model || root.data.table.getField(0, b)==QuixoBoard.empty) && root.data.table.legal(0, b, model, 4, b)){
 					newTable.makeStep(0, b, model, 4, b);
+<<<<<<< HEAD
 					newData=new Pair((model+1)%2, newTable);
 					value=sum(model);
 					step=new Move(0, b, 4, b);
 					Node child=new Node(newData, root, value, step);
 					addChild(child, root, value, step);
 					newRoots.add(child);
+=======
+					newData=new Pair(model, newTable);
+					value=sum(root.data.getModel());
+					step=new Move(0, b, 4, b);
+					Node child=new Node(newData, root, value, step);
+					addChild(child, root, value, step);
+			//		makeTree(child, depth, step, (model+1)%2);
+>>>>>>> origin/master
 					newTable=(QuixoBoard) root.data.table.clone();
 				}
 			}
@@ -371,12 +547,21 @@ public class TreeStructure extends Node{
 			if(a-1>-1 && root.data.table.getField(a-1, b)==model){
 				if((root.data.table.getField(4, b)==model || root.data.table.getField(4, b)==QuixoBoard.empty) && root.data.table.legal(4, b, model, 0, b)){
 					newTable.makeStep(4, b, model, 0, b);
+<<<<<<< HEAD
 					newData=new Pair((model+1)%2, newTable);
 					value=sum(model);
 					step=new Move(4, b, 0, b);
 					Node child=new Node(newData, root, value, step);
 					addChild(child, root, value, step);
 					newRoots.add(child);
+=======
+					newData=new Pair(model, newTable);
+					value=sum(root.data.getModel());
+					step=new Move(4, b, 0, b);
+					Node child=new Node(newData, root, value, step);
+					addChild(child, root, value, step);
+				//	makeTree(child, depth, step, (model+1)%2);
+>>>>>>> origin/master
 					newTable=(QuixoBoard) root.data.table.clone();
 				}
 			}
@@ -384,12 +569,21 @@ public class TreeStructure extends Node{
 			if(b+1<5 && root.data.table.getField(a, b+1)==model){
 				if((root.data.table.getField(a, 0)==model || root.data.table.getField(a, 0)==QuixoBoard.empty) && root.data.table.legal(a, 0, model, a, 4)){
 					newTable.makeStep(a, 0, model, a, 4);
+<<<<<<< HEAD
 					newData=new Pair((model+1)%2, newTable);
 					value=sum(model);
 					step=new Move(a, 0, a, 4);
 					Node child=new Node(newData, root, value, step);
 					addChild(child, root, value, step);
 					newRoots.add(child);
+=======
+					newData=new Pair(model, newTable);
+					value=sum(root.data.getModel());
+					step=new Move(a, 0, a, 4);
+					Node child=new Node(newData, root, value, step);
+					addChild(child, root, value, step);
+			//		makeTree(child, depth, step, (model+1)%2);
+>>>>>>> origin/master
 					newTable=(QuixoBoard) root.data.table.clone();
 				}
 			}
@@ -397,16 +591,32 @@ public class TreeStructure extends Node{
 			if(b-1>-1 && root.data.table.getField(a, b-1)==model){
 				if((root.data.table.getField(a, 4)==model || root.data.table.getField(a, 4)==QuixoBoard.empty) && root.data.table.legal(a, 4, model, a, 0)){
 					newTable.makeStep(a, 4, model, a, 0);
+<<<<<<< HEAD
 					newData=new Pair((model+1)%2, newTable);
 					value=sum(model);
 					step=new Move(a, 4, a, 0);
 					Node child=new Node(newData, root, value, step);
 					addChild(child, root, value, step);
 					newRoots.add(child);
+=======
+					newData=new Pair(model, newTable);
+					value=sum(root.data.getModel());
+					step=new Move(a, 4, a, 0);
+					Node child=new Node(newData, root, value, step);
+					addChild(child, root, value, step);
+			//		makeTree(child, depth, step, (model+1)%2);
+>>>>>>> origin/master
 					newTable=(QuixoBoard) root.data.table.clone();
 				}
 			}
 		}
+
+		
 		return;
 	}
+<<<<<<< HEAD
 }
+=======
+
+}
+>>>>>>> origin/master
