@@ -1,30 +1,41 @@
-public class Moho extends Tree{
+public class Moho extends SimplePlayer{
+	public Pair pair;
+	public TreeStructure tree;
 	
 	public Move nextMove(Move prevStep, long oTime) {
-		Pair p=new Pair(color, table);
-		tree = new TreeStructure(p, 1);
-		
-		
-		return null;
+		pair=new Pair(color, table);
+		tree = new TreeStructure(pair, 3, null, getColor());
+	//	max();
+		return max();
 	}
 	
 	public Move max(){
-		int i;
-		maxValue=-1000;
-		
-		for(i=tree.root.children.size(); i>=0; i--){
-		
-		}
-		
-		/*for(int i=0; i<25*5; i++){
-			if(values[i]>maxValue){
-				step=steps[i];
-				maxValue=values[i];
+		Node c = null;
+		/*for(int i=0; i<TreeStructure.newRoots.size(); i++){
+			n.add(TreeStructure.newRoots.remove(i));
+		}*/
+	
+		int maxValue=-1000;
+		for(int i=0; i<tree.newRoots.size(); i++){
+			c=tree.newRoots.remove(i);
+			if(c.getValue()>maxValue){
+				step=c.getStep();
+				maxValue=c.getValue();
+			}
+			if(c.isLeaf()){
+				step=undo(c);
 			}
 		}
-		System.out.println("max: "+maxValue+" lepes: "+step);*/
+		step=undo(c);
+		System.out.println("max: "+maxValue+" lepes: "+step);
 		return step;
 	}
 	
+	public Move undo(Node n){
+		while(n.getIndex()!=1){
+			n=n.parent;
+		}
+		return n.getStep();
+	}
 
 }

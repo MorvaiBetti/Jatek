@@ -7,24 +7,40 @@ public class Node {
 	public ArrayList<Node> children=new ArrayList<Node>(80);
 	public boolean leaf;
 	public int index;
+	public Move step;
+	public Node brother=null;
 	
-	public Node(Pair d, Node p, int v){
+	public Node(Pair d, Node p, int v, Move s){
 		data=d;
 		parent=p;
 		value=v;
+		step=s;
 	}
 
-	public void addChild(Pair child, Node parent, int v){
-		if(child.getTable().win(parent.data.getModel())){
+	public void addChild(Node child, Node parent, int v, Move s){
+		if(child.data.getTable().win(parent.data.getModel())){
 			parent.setLeaf(true);
 			System.out.println("Level vagyok");
 			return;
-		}
-		parent.setLeaf(false);
-		Node newChild=new Node(child, parent, v);
-		children.add(newChild);
-		newChild.setIndex(parent.getIndex()+1);
-		System.out.println("ertekem: "+v);
+		}else parent.setLeaf(false);
+		parent.children.add(child);
+		child.setIndex(parent.getIndex()+1);	
+	}
+	
+	
+	public Node getBrother() {
+		return brother;
+	}
+
+	public void setBrother(Node brother) {
+		this.brother = brother;
+	}
+
+	public Move getStep() {
+		return step;
+	}
+	public void setStep(Move step) {
+		this.step = step;
 	}
 	public Pair getData() {
 		return data;
@@ -68,4 +84,12 @@ public class Node {
 		this.index = index;
 	}
 
+	public String toString() {
+		return "Node [" +
+			//	"value=" + value + 
+			//	", parent=" + parent + 
+			//	", children="+ children + 
+				", data="+ data+
+				", index=" + index + "]";
+	}
 }
