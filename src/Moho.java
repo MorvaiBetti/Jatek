@@ -4,13 +4,12 @@ public class Moho extends SimplePlayer{
 	
 	public Move nextMove(Move prevStep, long oTime) {
 		pair=new Pair(color, table);
-		tree = new TreeStructure(pair, 3, null, getColor());
+		tree = new TreeStructure(pair, 1, null, getColor());
 		return max();
 	}
 	
 	public Move max(){
 		Node c = null;
-	
 		int maxValue=-1000;
 		for(int i=0; i<tree.newRoots.size(); i++){
 			c=tree.newRoots.remove(i);
@@ -20,6 +19,7 @@ public class Moho extends SimplePlayer{
 			}
 			if(c.isLeaf()){
 				step=undo(c);
+				return step;
 			}
 		}
 		step=undo(c);
@@ -29,8 +29,10 @@ public class Moho extends SimplePlayer{
 	
 	public Move undo(Node n){
 		while(n.getIndex()!=1){
+	//		System.out.println("lepegetek: \n"+n);
 			n=n.parent;
 		}
+	//	System.out.println("lepegetek: \n"+n);
 		return n.getStep();
 	}
 }
