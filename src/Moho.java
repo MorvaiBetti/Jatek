@@ -10,7 +10,7 @@ public class Moho extends SimplePlayer{
 	
 	public Move max(){
 		Node c = null;
-		int maxValue=-1000;
+		int maxValue=264*(-3);
 		for(int i=0; i<tree.newRoots.size(); i++){
 			c=tree.newRoots.remove(i);
 			if(c.getValue()>maxValue){
@@ -23,16 +23,18 @@ public class Moho extends SimplePlayer{
 			}
 		}
 		step=undo(c);
-		System.out.println("max: "+maxValue+" lepes: "+step);
+		tree=null;
 		return step;
 	}
 	
 	public Move undo(Node n){
-		while(n.getIndex()!=1){
-	//		System.out.println("lepegetek: \n"+n);
+		while(n.parent.data.table!=table){
+			//System.out.println("lepegetek: \n"+n);
 			n=n.parent;
 		}
-	//	System.out.println("lepegetek: \n"+n);
+		System.out.println("Apa: "+n.parent);
+		System.out.println("Fia: "+n);
+		//System.out.println("lepegetek: \n"+n);
 		return n.getStep();
 	}
 }
