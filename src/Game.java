@@ -9,6 +9,9 @@ public class Game{
 	public static PlayerThread[] pt=new PlayerThread[2];
 	public static int j, ai, people, ind, nextInd;
 	public static long maxTime;
+	public static int firstDepth;
+	public static int secondDepth;
+	public static int d;
 	
 	public static void player(int i, long maxTime)throws Exception{
 		try {
@@ -78,6 +81,20 @@ public class Game{
 				ai++;
 				return;
 			}
+			if(name.equalsIgnoreCase("9")){
+				pt[ai]=new PlayerThread(i, maxTime, "Tree");
+				pt[ai].start();
+				pt[ai].datas(i, maxTime);
+				System.out.println("Melyseg??");
+				d=Integer.parseInt(reader.readLine());
+				pt[ai].setDepth(d);
+				/*if(ai==1){
+					pt[ai].setDepth(firstDepth);
+				}else pt[ai].setDepth(secondDepth);*/
+				pt[ai].setTable(t);
+				ai++;
+				return;
+			}
 			if(name.equalsIgnoreCase("0")){
 				p[people]=new Human();
 				p[people].datas(i, maxTime);
@@ -97,10 +114,10 @@ public class Game{
 		   // 'lej�rt-e az ideje?' ellen�rz�se
 		   if (pt[i].getElapsedTime() > maxTime) {
 			   if(pt[i].getColor()==QuixoBoard.X){
-			            System.out.println("X ideje lej�rt, ez�rt O nyert!");
+			            System.out.println("X ideje lepett, ezert O nyert!");
 			            return false;
 			          } else {
-			            System.out.println("O ideje lej�rt, ez�rt X nyert!");
+			            System.out.println("O ideje lepett, ezert X nyert!");
 			            return false;
 			          }
 		   }
@@ -314,6 +331,20 @@ public class Game{
 	
 	public static void main(String[] args) throws Exception{
 		maxTime = Long.parseLong(args[0]); // game time / player
+		if(args.length==2){
+			firstDepth=Integer.parseInt(args[1]);
+			/*pt[0]=new PlayerThread(0, maxTime, "Tree");
+			pt[0].start();
+			pt[0].datas(0, maxTime, 0);
+			pt[0].setTable(t);*/
+		}
+		if(args.length==3){
+			secondDepth=Integer.parseInt(args[2]);
+		/*	pt[1]=new PlayerThread(0, maxTime, "Tree");
+			pt[1].start();
+			pt[1].datas(0, maxTime, 0);
+			pt[].setTable(t);*/
+		}
 		j=ai=people=0;
 		m=null;
 		
@@ -327,6 +358,7 @@ public class Game{
 		System.out.println("6 DefendCalculatPlayer: A legveszelyesebb mezore probal lepni. Azaz probalja minel jobban gatolni az ellenfelet");
 		System.out.println("7 MohoCalculatPlayer: A legjobb helyre probal lepni.");
 		System.out.println("8 Moho: Egy melysegig nezi a fat.");
+		System.out.println("9 Tree: parameterben megadott melysegig vizsgalja a jatekfat.");
 		System.out.println();
 		
 		try {
@@ -343,7 +375,6 @@ public class Game{
 					pt[1].exit();
 					return;
 				}else{humanvsAI();
-						//pt[0].exit();
 						return;
 					}	
 		} catch (IOException e) {
