@@ -19,12 +19,14 @@ public class TreeStructure extends Node{
 	
 	public TreeStructure(Pair rootData, int d, Move s, int model){
 		super(rootData, null, 0, s);
+		roots.clear();
+		newRoots.clear();
 		this.depth=d;
 		me=model;
-		System.out.println("melyseg= "+depth);
 		root=new Node(rootData, null, 0, s);
 		setIndex(0);
 		makeTree(root, rootData.getModel());
+		System.out.println("0. szint");
 		cyrcle();
 	}
 	
@@ -35,32 +37,43 @@ public class TreeStructure extends Node{
 				nextStep(i,j, model);
 			}
 		}
+		return;
 	}
-	
-	public void step(ArrayList<Node> nodes){
-		//System.out.println("bent vok ************************************************");
-		for(int i=0; i<nodes.size(); i++){
-			root=nodes.remove(i);
-			makeTree(root, root.data.getModel());
-		}
-	}
+
 	public void cyrcle(){
 		d=newRoots.remove(newRoots.size()-1).getIndex();
 		while(d<depth){
-			d=newRoots.remove(newRoots.size()-1).getIndex();
+			//d=newRoots.remove(newRoots.size()-1).getIndex();
 			System.out.println("Melyseg: "+d);
 			roots.clear();
 			for(int i=0; i<newRoots.size(); i++){
+				/*while(newRoots.remove(i).isLeaf()){
+					i++;
+				}*/
+				//System.out.println("Masol "+i);
 				roots.add(newRoots.remove(i));
 			}
 			newRoots.clear();
+			if(roots.isEmpty()){
+				System.out.println("Empty");
+				break;
+			}
 			for(int i=0; i<roots.size(); i++){
 				root=roots.remove(i);
 				makeTree(root, root.data.getModel());
 			}
-			//step(roots);
+			System.out.println("uj d "+newRoots.remove(newRoots.size()-1).getIndex());
 			d++;
+			System.out.println("regi d+1 "+d);
 		}
+	
+		while(root.getIndex()!=0){
+			//System.out.println("lepegetek: \n"+n);
+			root=root.parent;
+		}
+		roots.clear();
+		System.out.println("Vegeztem");
+	//	newRoots.clear();
 	}
 	
 	public void calculate(int model){
@@ -165,7 +178,7 @@ public class TreeStructure extends Node{
 		//ha vmelyik csucsra akarok tenni
 		if((b==0 || a==4) && (a==0 || b==4)){
 			for(int i=0; i<5; i++){
-				//elobb az ďż˝reseket
+				//elobb az �reseket
 				if(root.data.table.getField(Math.abs(i-a), b)==QuixoBoard.empty && root.data.table.legal(Math.abs(i-a), b, model, a, b)){
 					newTable.makeStep(Math.abs(i-a), b, model, a, b);
 					newData=new Pair((model+1)%2, newTable);
