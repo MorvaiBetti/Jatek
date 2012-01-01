@@ -4,7 +4,7 @@ public class Node {
 	public Pair data;
 	public int value;
 	public Node parent;
-	public ArrayList<Node> children=new ArrayList<Node>(80);
+	public ArrayList<Node> children=new ArrayList<Node>(8);
 	public boolean leaf;
 	public int index;
 	public Move step;
@@ -20,10 +20,13 @@ public class Node {
 	public void addChild(Node child, Node parent, int v, Move s){
 		if(child.data.getTable().win(parent.data.getModel())){
 			parent.setLeaf(true);
-			System.out.println("Level vagyok");
+		//	System.out.println("Level vagyok");
 			return;
 		}else parent.setLeaf(false);
-		parent.children.add(child);
+		/*child.index=parent.index;
+		child.index=child.index+1;
+		*/parent.children.add(child);
+		
 		child.setIndex(parent.getIndex()+1);	
 	}
 	
@@ -86,7 +89,8 @@ public class Node {
 
 	public String toString() {
 		return "Node [" +
-			//	"value=" + value + 
+				"step="+step+
+				"value=" + value + 
 			//	", parent=" + parent + 
 			//	", children="+ children + 
 				", data="+ data+
