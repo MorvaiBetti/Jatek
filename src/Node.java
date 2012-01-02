@@ -18,18 +18,13 @@ public class Node {
 	}
 
 	public void addChild(Node child, Node parent, int v, Move s){
+		parent.children.add(child);
+		child.setIndex(parent.getIndex()+1);	
 		if(child.data.getTable().win(parent.data.getModel())){
-			parent.setLeaf(true);
-		//	System.out.println("Level vagyok");
+			child.setLeaf(true);
 			return;
 		}else parent.setLeaf(false);
-		/*child.index=parent.index;
-		child.index=child.index+1;
-		*/parent.children.add(child);
-		
-		child.setIndex(parent.getIndex()+1);	
 	}
-	
 	
 	public Node getBrother() {
 		return brother;
@@ -90,8 +85,8 @@ public class Node {
 	public String toString() {
 		return "Node [" +
 				"step="+step+
-				"value=" + value + 
-			//	", parent=" + parent + 
+			//	" value=" + value + 
+			//	", \nparent=" + parent + 
 			//	", children="+ children + 
 				", data="+ data+
 				", index=" + index + "]";
