@@ -32,6 +32,10 @@ public class QuixoBoard implements Cloneable {
 		return table[x][y];
 	}
 	
+	public void setField(int x, int y, int model){
+		table[x][y]=model;
+	}
+	
 	//Az adott lepes helyes-e?
 	public boolean legal(int x, int y, int model, int nx, int ny){
 		//csak sajat szinut vagy semlegeset lehet 
