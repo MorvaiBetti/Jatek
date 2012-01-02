@@ -28,13 +28,10 @@ public class Moho extends SimplePlayer{
 	}
 	
 	public Move undo(Node n){
-		while(n.parent.data.table!=table){
-			//System.out.println("lepegetek: \n"+n);
+		while(n.index!=1){
+			System.out.println(n);
 			n=n.parent;
 		}
-		System.out.println("Apa: "+n.parent);
-		System.out.println("Fia: "+n);
-		//System.out.println("lepegetek: \n"+n);
 		return n.getStep();
 	}
 }
