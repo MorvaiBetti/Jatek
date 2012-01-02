@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class TreeStructure extends Node{
 	public Node root;
 	public int[][] fields=new int[25][7];
-	public QuixoBoard newTable;
+	public QuixoBoard newTable=new QuixoBoard();
 	public int my=3;
 	public int your=-3;
 	public int nobody=1;
@@ -43,14 +43,8 @@ public class TreeStructure extends Node{
 	public void cyrcle(){
 		d=newRoots.remove(newRoots.size()-1).getIndex();
 		while(d<depth){
-			//d=newRoots.remove(newRoots.size()-1).getIndex();
-			System.out.println("Melyseg: "+d);
 			roots.clear();
 			for(int i=0; i<newRoots.size(); i++){
-				/*while(newRoots.remove(i).isLeaf()){
-					i++;
-				}*/
-				//System.out.println("Masol "+i);
 				roots.add(newRoots.remove(i));
 			}
 			newRoots.clear();
@@ -60,27 +54,22 @@ public class TreeStructure extends Node{
 			}
 			for(int i=0; i<roots.size(); i++){
 				root=roots.remove(i);
-				makeTree(root, root.data.getModel());
+				if(!root.isLeaf()){
+					makeTree(root, root.data.getModel());
+				}
 			}
-			System.out.println("uj d "+newRoots.remove(newRoots.size()-1).getIndex());
 			d++;
-			System.out.println("regi d+1 "+d);
 		}
 	
 		while(root.getIndex()!=0){
-			//System.out.println("lepegetek: \n"+n);
 			root=root.parent;
 		}
 		roots.clear();
-		System.out.println("Vegeztem");
-	//	newRoots.clear();
 	}
 	
 	public void calculate(int model){
 		emptyFields();
 		int k=0;
-
-	//	System.out.println("Tabla CALC.: "+newTable);
 		for(int i=0; i<5; i++){
 			for(int j=0; j<5; j++){
 				fields[k][0]=i;
@@ -154,7 +143,6 @@ public class TreeStructure extends Node{
 	
 	public int sum(int model){
 		calculate(model);
-	//	System.out.println("model: "+model+" me "+me);
 		int value=0;
 		for(int i=0; i<25; i++){
 			for(int j=2; j<6; j++){
@@ -162,10 +150,8 @@ public class TreeStructure extends Node{
 			}
 		}
 		if(model!=me){
-		//	System.out.println("ellen");
 			value=0-value;
 		}
-//		System.out.println("ertek: "+value);
 		return value;
 	}
 	
@@ -173,12 +159,13 @@ public class TreeStructure extends Node{
 	public void nextStep(int a, int b, int model){
 	//	System.out.println("a: "+a+" b: "+b);
 		
-		newTable=(QuixoBoard) data.getTable().clone();
+		newTable=(QuixoBoard) root.data.getTable().clone();
+		
 		Pair newData; 
 		//ha vmelyik csucsra akarok tenni
 		if((b==0 || a==4) && (a==0 || b==4)){
 			for(int i=0; i<5; i++){
-				//elobb az �reseket
+				//elobb az ďż˝reseket
 				if(root.data.table.getField(Math.abs(i-a), b)==QuixoBoard.empty && root.data.table.legal(Math.abs(i-a), b, model, a, b)){
 					newTable.makeStep(Math.abs(i-a), b, model, a, b);
 					newData=new Pair((model+1)%2, newTable);
