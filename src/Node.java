@@ -4,7 +4,7 @@ public class Node {
 	public Pair data;
 	public int value;
 	public Node parent;
-	public ArrayList<Node> children=new ArrayList<Node>(8);
+	public ArrayList<Node> children=new ArrayList<Node>();
 	public boolean leaf;
 	public int index;
 	public Move step;
@@ -85,7 +85,7 @@ public class Node {
 	public String toString() {
 		return "Node [" +
 				"step="+step+
-			//	" value=" + value + 
+				" value=" + value + 
 			//	", \nparent=" + parent + 
 			//	", children="+ children + 
 				", data="+ data+
