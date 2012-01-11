@@ -49,6 +49,9 @@ public class PlayerThread extends Thread implements Player {
 	public void datas(int sequence, long time) {
 		status=active;
 		p.datas(sequence, time);
+	/*	if(playerName.equalsIgnoreCase("Tree")){
+			p.setDepth(sequence);
+		}*/
 		status=passive;
 	}
 	
@@ -67,6 +70,9 @@ public class PlayerThread extends Thread implements Player {
 		status=active;
 		p.setTable(t);
 		status=passive;
+	}
+	public void setDepth(int d){
+		p.setDepth(d);
 	}
 	
 	public void exit(){

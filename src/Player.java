@@ -10,4 +10,6 @@ public interface Player{
 	
 	//A jatekos szinet/mintajat adja vissza
 	public int getColor();
+
+	public void setDepth(int d);
 }

@@ -22,4 +22,6 @@ public abstract class SimplePlayer implements Player{
 		opponentColor=QuixoBoard.X;
 		}
 	}
+	
+	public void setDepth(int d) {}
 }

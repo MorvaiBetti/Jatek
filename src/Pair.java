@@ -22,6 +22,6 @@ public class Pair {
 	}
 
 	public String toString() {
-		return "Pair [model=" + model + ", table=" + table + "]";
+		return "Pair [model=" + model + ", table=\n" + table + "]";
 	}	
 }

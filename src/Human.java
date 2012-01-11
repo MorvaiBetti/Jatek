@@ -67,4 +67,7 @@ public class Human implements Player{
 		return color;
 	}
 
+
+	@Override
+	public void setDepth(int d) {}
 }
