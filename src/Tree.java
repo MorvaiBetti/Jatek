@@ -1,5 +1,4 @@
 public class Tree extends SimplePlayer{
-		public Pair pair;
 		public TreeStructure tree;
 		public int depth;
 		public Node maxNode=null;
@@ -9,8 +8,7 @@ public class Tree extends SimplePlayer{
 		}
 		
 		public Move nextMove(Move prevStep, long oTime) {
-			pair=new Pair(color, table);
-			tree = new TreeStructure(pair, table, depth, null, getColor());
+			tree = new TreeStructure(getColor(), table, depth, null);
 			step=tree.maxNode.step;
 			return step;
 		}

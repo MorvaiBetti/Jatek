@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Node {
-	public Pair data;
+	public int model;
 	public int value;
 	public Node parent;
 	public ArrayList<Node> children=new ArrayList<Node>();
@@ -10,8 +10,8 @@ public class Node {
 	public Move step;
 	public Node brother=null;
 	
-	public Node(Pair d, Node p, int v, Move s){
-		data=d;
+	public Node(int color, Node p, int v, Move s){
+		model=color;
 		parent=p;
 		value=v;
 		step=s;
@@ -40,13 +40,15 @@ public class Node {
 	public void setStep(Move step) {
 		this.step = step;
 	}
-	public Pair getData() {
-		return data;
-	}
-	public void setData(Pair data) {
-		this.data = data;
-	}
 	
+	public int getModel() {
+		return model;
+	}
+
+	public void setModel(int model) {
+		this.model = model;
+	}
+
 	public Node getParent() {
 		return parent;
 	}
@@ -88,7 +90,7 @@ public class Node {
 				" value=" + value + 
 			//	", \nparent=" + parent + 
 			//	", children="+ children + 
-				", data="+ data+
+				", model="+ model+
 				", index=" + index + "]";
 	}
 }
