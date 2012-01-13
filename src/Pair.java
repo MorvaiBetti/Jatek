@@ -1,19 +1,19 @@
 public class Pair {
 	public int model;
-	public QuixoBoard table;
+//	public QuixoBoard table;
 	
 	public Pair(int model, QuixoBoard qt){
 		setModel(model);
-		setTable(qt);
+	//	setTable(qt);
 	}
 	
-	public QuixoBoard getTable() {
+/*	public QuixoBoard getTable() {
 		return table;
 	}
 	public void setTable(QuixoBoard table) {
 		this.table = table;
 	}
-	
+	*/
 	public int getModel() {
 		return model;
 	}
@@ -22,6 +22,8 @@ public class Pair {
 	}
 
 	public String toString() {
-		return "Pair [model=" + model + ", table=\n" + table + "]";
+		return "Pair [model=" + model
+				//+ ", table=\n" + table 
+				+ "]";
 	}	
 }

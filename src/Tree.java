@@ -10,7 +10,7 @@ public class Tree extends SimplePlayer{
 		
 		public Move nextMove(Move prevStep, long oTime) {
 			pair=new Pair(color, table);
-			tree = new TreeStructure(pair, depth, null, getColor());
+			tree = new TreeStructure(pair, table, depth, null, getColor());
 			step=tree.maxNode.step;
 			return step;
 		}
