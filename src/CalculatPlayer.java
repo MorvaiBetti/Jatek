@@ -4,7 +4,7 @@ public abstract class CalculatPlayer extends SimplePlayer{
 	public int your=-3;
 	public int nobody=1;
 	
-	//sorSzam, oszlopSzam, oszlopVonal, sorVonal, foatloVonal, mellekatloVonal
+	//sorSzam, oszlopSzam, oszlopVonal, sorVonal, foatloVonal, mellekatloVonal, mezoErtek
 	public void calculat(){
 		empty();
 		int k=0;

@@ -1,37 +1,16 @@
 import java.io.*;
 import java.util.*;
 
-
-public class Human implements Player{
-	public QuixoBoard table;
+public class Human extends SimplePlayer{
 	public ArrayList<Move> steps; 			//lehetseges steps letarolasara
-	public int color; 						//A jatekos sajat mintaja
-	public int opponentColor; 				//Az ellenfel mintaja
-	public long maxTime;
-	
 	public static String in;
 	public static StringTokenizer st;
 	public static BufferedReader reader = new BufferedReader(new InputStreamReader (System.in));
-	
-	public void setTable(QuixoBoard qt) {
-		table=qt;
-	}
 
-
-	public void datas(int sequence, long time) {
-		maxTime=time;
-		if(sequence==QuixoBoard.X){ 				//A jatekosnak melyik a mintaja, es az ellenfele melyik
-			color=QuixoBoard.X;
-			opponentColor=QuixoBoard.O;
-		}else if(sequence==QuixoBoard.O){color=QuixoBoard.O;
-		opponentColor=QuixoBoard.X;
-		}
-	}
-
-	public Move nextMove(Move prevStep, long oTime) {
+	public Move nextMove() {
 		int i;
-		int[] m;
-		m=new int[4]; 	
+		int[] moveDatas;
+		moveDatas=new int[4]; 	
 		i=0;
 		try {
 			in = reader.readLine();
@@ -39,35 +18,27 @@ public class Human implements Player{
 			
 			//megfelelo meretu legyen az input
 			if(in.length()!=7){
-				System.out.println("Rossz input!");
-				return nextMove(prevStep, oTime);
+				System.out.println("Rossz input! Helyes input: 'x y nx ny'");
+				return nextMove();
 			}
 				
 			//input letarolasa
 		    while(st.hasMoreTokens()) {
-		         m[i]=Integer.parseInt(st.nextToken());
+		         moveDatas[i]=Integer.parseInt(st.nextToken());
 		         i++;
 		    }
 			    
 		    //Ha szabalytalan a lepes, akkor ujra kerem
-		    if(!table.legal(m[0], m[1], color, m[2], m[3])){
+		    if(!table.legal(moveDatas[0], moveDatas[1], color, moveDatas[2], moveDatas[3])){
 		    	System.out.println("legal lepest adjon meg!");
-		    	return nextMove(prevStep, oTime);
+		    	return nextMove();
 		    }
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		Move move=new Move(m[0],m[1],m[2],m[3]);
+		Move move=new Move(moveDatas[0], moveDatas[1], moveDatas[2], moveDatas[3]);
 		return move;
 	}
-
-	public int getColor() {
-		return color;
-	}
-
-
-	@Override
-	public void setDepth(int d) {}
 }

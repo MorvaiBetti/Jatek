@@ -20,10 +20,6 @@ public class Node {
 	public void addChild(Node child, Node parent, int v, Move s){
 		parent.children.add(child);
 		child.setIndex(parent.getIndex()+1);	
-/*		if(child.data.getTable().win(parent.data.getModel())){
-			child.setLeaf(true);
-			return;
-		}else parent.setLeaf(false);*/
 	}
 	
 	public Node getBrother() {

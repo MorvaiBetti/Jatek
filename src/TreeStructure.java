@@ -3,27 +3,25 @@ import java.util.ArrayList;
 public class TreeStructure extends Node{
 	public Node root;
 	public int[][] fields=new int[25][7];
-	public QuixoBoard newTable=new QuixoBoard();
-	public QuixoBoard rootTable=new QuixoBoard();
-	public QuixoBoard table=new QuixoBoard();
+	public QuixoBoard newTable=new QuixoBoard(); 	//aktualis gyerek tablaja
+	public QuixoBoard rootTable=new QuixoBoard(); 	//eredeti tablaja
+	public QuixoBoard table=new QuixoBoard(); 	//aktualis tabla
 	public int my=3;
 	public int your=-3;
 	public int nobody=1;
 	public int value;
 	public int depth;
-	public int d=0;
-	public int me;
+	public int actualDepth=0; 	//a ciklus miatt kell a melyseg szamolasahoz
+	public int me; 		//az aktualis jatekos mintaja
 	public Node child;
-	public Node now;
-	public int kutya=0;
 	public ArrayList<Node> roots=new ArrayList<Node>();
 	public ArrayList<Node> newRoots=new ArrayList<Node>();
 	public Move[] steps;
 	public Minmax minmaxTree;
 	public Node maxNode;
 	
-	public TreeStructure(int color, QuixoBoard t, int d, Move s){
-		super(color, null, 0, s);
+	public TreeStructure(int color, QuixoBoard t, int d){
+		super(color, null, 0, null);
 		steps=new Move[d];
 		rootTable=(QuixoBoard) t.clone();
 		table=(QuixoBoard) rootTable.clone();
@@ -31,7 +29,7 @@ public class TreeStructure extends Node{
 		newRoots.clear();
 		this.depth=d;
 		me=color;
-		root=new Node(color, null, 0, s);
+		root=new Node(color, null, 0, null);
 		setIndex(0);
 		makeTree(root, color);
 		cyrcle();
@@ -49,8 +47,8 @@ public class TreeStructure extends Node{
 	}
 
 	public void cyrcle(){
-		d=1;
-		while(d<depth){
+		actualDepth=1;
+		while(actualDepth<depth){
 			roots.clear();
 			for(Node n:newRoots){
 				roots.add(n);
@@ -61,17 +59,18 @@ public class TreeStructure extends Node{
 				break;
 			}
 			for(Node n: roots){
-			
 				if(!root.isLeaf()){
 					int i=0;
 					root=n;
 					int m=0;
+					//adott csucshoz vezeto lepesek
 					table=(QuixoBoard) rootTable.clone();
 					while(n.index!=0){
 						steps[i]=n.step;
 						i++;
 						n=n.parent;
 					}
+					//az aktualis tablan eljutok az aktualis csucshoz
 					for(int j=i-1; j>=0; j--){
 						Move stp=steps[j];
 						int mdl;
@@ -81,13 +80,12 @@ public class TreeStructure extends Node{
 						table.makeStep(stp.x, stp.y, mdl, stp.nx, stp.ny);	
 						m++;
 					}
-				//	table=(QuixoBoard) rootTable.clone();
 					makeTree(root, root.getModel());
 				}
 			}
-			d++;
+			actualDepth++;
 		}
-	
+		//visszalepegetek a gyokerhez
 		while(root.getIndex()!=0){
 			root=root.parent;
 		}
@@ -167,7 +165,7 @@ public class TreeStructure extends Node{
 			}
 		}
 	}
-	
+	//szummazza a tabla erteketaz utoljara lepett jatekos szemszogebol nezve. ha az ellenfelem lepett, akkor az ertek negativ lesz
 	public int sum(int model){
 		calculate(model);
 		int value=0;
@@ -182,6 +180,7 @@ public class TreeStructure extends Node{
 		return value;
 	}
 	
+	//minden lehetseges lepest megvizsga, hogy szabalyos-e. Ha igen, akkor az egy uj csomopont.
 	//a=sor b=oszlop
 	public void nextStep(int a, int b, int model){
 		newTable=(QuixoBoard) table.clone();
@@ -197,6 +196,9 @@ public class TreeStructure extends Node{
 					step=new Move(Math.abs(i-a), b, a, b);
 					child=new Node((model+1)%2, root, value, step);
 					addChild(child, root, value, step);
+					if(newTable.win(model) || newTable.win((model+1)%2)){
+						child.leaf=true;
+					}
 					if(child.isLeaf()){
 						child.value=sum(model);
 					}
@@ -210,6 +212,9 @@ public class TreeStructure extends Node{
 					}else {value=0;}
 					step=new Move(a, Math.abs(i-b), a, b);
 					child=new Node((model+1)%2, root, value, step);
+					if(newTable.win(model) || newTable.win((model+1)%2)){
+						child.leaf=true;
+					}
 					if(child.isLeaf()){
 						child.value=sum(model);
 					}
@@ -227,6 +232,9 @@ public class TreeStructure extends Node{
 					}else {value=0;}
 					step=new Move(Math.abs(i-a), b, a, b);
 					child=new Node((model+1)%2, root, value, step);
+					if(newTable.win(model) || newTable.win((model+1)%2)){
+						child.leaf=true;
+					}
 					if(child.isLeaf()){
 						child.value=sum(model);
 					}
@@ -241,6 +249,9 @@ public class TreeStructure extends Node{
 					}else {value=0;}
 					step=new Move(a, Math.abs(i-b), a, b);
 					child=new Node((model+1)%2, root, value, step);
+					if(newTable.win(model) || newTable.win((model+1)%2)){
+						child.leaf=true;
+					}
 					if(child.isLeaf()){
 						child.value=sum(model);
 					}
@@ -264,6 +275,9 @@ public class TreeStructure extends Node{
 						step=new Move(i, b, 4, b);
 						child=new Node((model+1)%2, root, value, step);
 						addChild(child, root, value, step);
+						if(newTable.win(model) || newTable.win((model+1)%2)){
+							child.leaf=true;
+						}
 						if(child.isLeaf()){
 							child.value=sum(model);
 						}
@@ -282,6 +296,9 @@ public class TreeStructure extends Node{
 						step=new Move(i, b, 0, b);
 						child=new Node((model+1)%2, root, value, step);
 						addChild(child, root, value, step);
+						if(newTable.win(model) || newTable.win((model+1)%2)){
+							child.leaf=true;
+						}
 						if(child.isLeaf()){
 							child.value=sum(model);
 						}
@@ -300,6 +317,9 @@ public class TreeStructure extends Node{
 						}else {value=0;}
 						step=new Move(i, b, 4, b);
 						child=new Node((model+1)%2, root, value, step);
+						if(newTable.win(model) || newTable.win((model+1)%2)){
+							child.leaf=true;
+						}
 						if(child.isLeaf()){
 							child.value=sum(model);
 						}
@@ -319,6 +339,9 @@ public class TreeStructure extends Node{
 						step=new Move(i, b, 0, b);
 						child=new Node((model+1)%2, root, value, step);
 						addChild(child, root, value, step);
+						if(newTable.win(model) || newTable.win((model+1)%2)){
+							child.leaf=true;
+						}
 						if(child.isLeaf()){
 							child.value=sum(model);
 						}
@@ -335,6 +358,9 @@ public class TreeStructure extends Node{
 				step=new Move(a, 4-b, a, b);
 				child=new Node((model+1)%2, root, value, step);
 				addChild(child, root, value, step);
+				if(newTable.win(model) || newTable.win((model+1)%2)){
+					child.leaf=true;
+				}
 				if(child.isLeaf()){
 					child.value=sum(model);
 				}
@@ -356,6 +382,9 @@ public class TreeStructure extends Node{
 						step=new Move(a, i, a, 4);
 						child=new Node((model+1)%2, root, value, step);
 						addChild(child, root, value, step);
+						if(newTable.win(model) || newTable.win((model+1)%2)){
+							child.leaf=true;
+						}
 						if(child.isLeaf()){
 							child.value=sum(model);
 						}
@@ -374,6 +403,9 @@ public class TreeStructure extends Node{
 						step=new Move(a, i, a, 0);
 						child=new Node((model+1)%2, root, value, step);
 						addChild(child, root, value, step);
+						if(newTable.win(model) || newTable.win((model+1)%2)){
+							child.leaf=true;
+						}
 						if(child.isLeaf()){
 							child.value=sum(model);
 						}
@@ -393,6 +425,9 @@ public class TreeStructure extends Node{
 						step=new Move(a, i, a, 4);
 						child=new Node((model+1)%2, root, value, step);
 						addChild(child, root, value, step);
+						if(newTable.win(model) || newTable.win((model+1)%2)){
+							child.leaf=true;
+						}
 						if(child.isLeaf()){
 							child.value=sum(model);
 						}
@@ -411,6 +446,9 @@ public class TreeStructure extends Node{
 						step=new Move(a, i, a, 0);
 						child=new Node((model+1)%2, root, value, step);
 						addChild(child, root, value, step);
+						if(newTable.win(model) || newTable.win((model+1)%2)){
+							child.leaf=true;
+						}
 						if(child.isLeaf()){
 							child.value=sum(model);
 						}
@@ -426,6 +464,9 @@ public class TreeStructure extends Node{
 				}else {value=0;}
 				step=new Move(4-a, b, a, b);
 				child=new Node((model+1)%2, root, value, step);
+				if(newTable.win(model) || newTable.win((model+1)%2)){
+					child.leaf=true;
+				}
 				if(child.isLeaf()){
 					child.value=sum(model);
 				}
@@ -447,6 +488,9 @@ public class TreeStructure extends Node{
 					step=new Move(0, b, 4, b);
 					Node child=new Node((model+1)%2, root, value, step);
 					addChild(child, root, value, step);
+					if(newTable.win(model) || newTable.win((model+1)%2)){
+						child.leaf=true;
+					}
 					if(child.isLeaf()){
 						child.value=sum(model);
 					}
@@ -464,6 +508,9 @@ public class TreeStructure extends Node{
 					step=new Move(4, b, 0, b);
 					child=new Node((model+1)%2, root, value, step);
 					addChild(child, root, value, step);
+					if(newTable.win(model) || newTable.win((model+1)%2)){
+						child.leaf=true;
+					}
 					if(child.isLeaf()){
 						child.value=sum(model);
 					}
@@ -481,6 +528,9 @@ public class TreeStructure extends Node{
 					step=new Move(a, 0, a, 4);
 					child=new Node((model+1)%2, root, value, step);
 					addChild(child, root, value, step);
+					if(newTable.win(model) || newTable.win((model+1)%2)){
+						child.leaf=true;
+					}
 					if(child.isLeaf()){
 						child.value=sum(model);
 					}
@@ -498,6 +548,9 @@ public class TreeStructure extends Node{
 					step=new Move(a, 4, a, 0);
 					child=new Node((model+1)%2, root, value, step);
 					addChild(child, root, value, step);
+					if(newTable.win(model) || newTable.win((model+1)%2)){
+						child.leaf=true;
+					}
 					if(child.isLeaf()){
 						child.value=sum(model);
 					}

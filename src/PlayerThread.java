@@ -5,7 +5,6 @@ public class PlayerThread extends Thread implements Player {
 	public int sequence;
 	public Player p;
 	public long maxTime;
-	public Move prevStep=null;
 	public Move nextStep;
 	public QuixoBoard t;
 	public static final int passive=0;
@@ -49,15 +48,12 @@ public class PlayerThread extends Thread implements Player {
 	public void datas(int sequence, long time) {
 		status=active;
 		p.datas(sequence, time);
-	/*	if(playerName.equalsIgnoreCase("Tree")){
-			p.setDepth(sequence);
-		}*/
 		status=passive;
 	}
 	
-	public Move nextMove(Move pS, long oTime) {
+	public Move nextMove() {
 		status=active;
-		nextStep=p.nextMove(pS, oTime);
+		nextStep=p.nextMove();
 		status=passive;
 		return nextStep;
 	}

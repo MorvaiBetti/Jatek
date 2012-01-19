@@ -7,8 +7,8 @@ public class Tree extends SimplePlayer{
 			depth=d;
 		}
 		
-		public Move nextMove(Move prevStep, long oTime) {
-			tree = new TreeStructure(getColor(), table, depth, null);
+		public Move nextMove() {
+			tree = new TreeStructure(getColor(), table, depth);
 			step=tree.maxNode.step;
 			return step;
 		}

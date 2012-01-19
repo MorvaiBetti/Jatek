@@ -167,6 +167,7 @@ public class QuixoBoard implements Cloneable {
 			}
 		}
 	}
+	
 	//melyik mintabol hany darab van a tablan
 	public void piece(){
 		int x=0, o=0, e=0;

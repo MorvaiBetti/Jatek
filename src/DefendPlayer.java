@@ -24,8 +24,8 @@ public class DefendPlayer extends RandomPlayer{
 		if(step!=null){
 			return step;
 		}
-
-		return super.nextMove(prevStep, oTime);
+		step=super.nextMove();
+		return step;
 	}
 	
 	public void empty(){
@@ -196,14 +196,6 @@ public class DefendPlayer extends RandomPlayer{
 				}
 			}
 		}
-		//atlo
-		/*if(line[0][0]==line[0][1]||line[1][0]==line[1][1]){
-			for(int i=0; i<4; i++){
-				if(line[i][0]!=line[i+1][0]+1 || line[i][0]!=line[i+1][0]-1){}
-					if(table.legal(line[i][0], 0, color, line[i][0], ))
-			}
-		}*/
-		
 		return;
 	}
 }

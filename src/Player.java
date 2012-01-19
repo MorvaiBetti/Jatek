@@ -5,8 +5,8 @@ public interface Player{
 	//hanyadik jatekos, ideje
 	public void datas(int sequence, long time);
 	
-	//megkapja az ellenfel utolso lepeset, idejet es a sajat idejet
-	public Move nextMove(Move prevStep, long oTime);
+	//kovi lepest szamolja ki
+	public Move nextMove();
 	
 	//A jatekos szinet/mintajat adja vissza
 	public int getColor();

@@ -1,26 +1,15 @@
 import java.util.*;
 
 public class RandomPlayer extends SimplePlayer{
-	public ArrayList<Move> steps; 			//lehetseges steps letarolasara
+	public ArrayList<Move> steps=new ArrayList<Move>(); 			//lehetseges steps letarolasara
 
 	
 	public RandomPlayer(){
 		step=null;
 	}
 	
-	public void datas(int sequence, long time) {
-		steps=new ArrayList<Move>(56); 				//16*3-4 lehetseges lepes lehet maximum (3*5*4)
-		maxTime=time;
-		if(sequence==QuixoBoard.X){ 				//A jatekosnak melyik a mintaja, es az ellenfele melyik
-			color=QuixoBoard.X;
-			opponentColor=QuixoBoard.O;
-		}else if(sequence==QuixoBoard.O){color=QuixoBoard.O;
-		opponentColor=QuixoBoard.X;
-		}
-	}
-	
 	//Az AI kovetkezo lepese. A legal stepset osszegyujti, osszekeveri oket, es valaszt kozuluk egyet, amit meglep
-	public Move nextMove(Move prevStep, long time) {
+	public Move nextMove() {
 		steps.clear(); 								//torli az eddig lementett stepset
 		for(int i=0; i<5; i++){ 					//A lehetseges stepsen vegigmegy, es steps-hez hozzaadja a legal stepset
 			//ha az elso sorbol valasztok

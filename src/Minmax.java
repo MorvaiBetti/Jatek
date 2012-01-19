@@ -22,7 +22,6 @@ public class Minmax{
 				min=child.value;
 			}
 			if(alfa>=min){
-				//System.out.println("min vagas");
 				return;
 			}
 			beta=Math.min(min, beta);
@@ -38,7 +37,6 @@ public class Minmax{
 				max=child.value;
 			}
 			if(max>=beta){
-				//System.out.println("max vagas");
 				return;
 			}
 			alfa=Math.max(max, alfa);

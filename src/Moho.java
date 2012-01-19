@@ -1,9 +1,8 @@
 public class Moho extends SimplePlayer{
 	public TreeStructure tree;
-	public int depth=1;
 	
-	public Move nextMove(Move prevStep, long oTime) {
-		tree = new TreeStructure(getColor(), table, depth, null);
+	public Move nextMove() {
+		tree = new TreeStructure(getColor(), table, 1);
 		return tree.maxNode.step;
 	}
 }

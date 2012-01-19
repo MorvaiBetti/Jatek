@@ -2,7 +2,7 @@ public class MohoCalculatPlayer extends CalculatPlayer{
 	public int max;
 	public int id;
 
-	public Move nextMove(Move prevStep, long time){
+	public Move nextMove(){
 		calculat();
 		for(int i=0; i<25; i++){
 			System.out.println(i+". "+fields[i][0]+" "+fields[i][1]+" ertekek "+fields[i][2]+" "+fields[i][3]+" "+fields[i][4]+" "+fields[i][5]);

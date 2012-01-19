@@ -2,7 +2,7 @@ public class DefendCalculatPlayer extends CalculatPlayer{
 	public int min;
 	public int id;
 
-	public Move nextMove(Move prevStep, long time){
+	public Move nextMove(){
 		calculat();
 		step=null;
 		for(int i=0; i<25; i++){
@@ -59,7 +59,7 @@ public class DefendCalculatPlayer extends CalculatPlayer{
 	public void newStep(){
 		//ha ott mar a sajat figuram van
 		if(table.getField(fields[id][0], fields[id][1])==color){
-			fields[id][6]=100;
+			fields[id][6]=1000;
 			find();
 			newStep();
 			return;
