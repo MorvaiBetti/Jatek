@@ -9,14 +9,14 @@ public class DefendPlayer extends RandomPlayer{
 	public Move nextMove(Move prevStep, long oTime) {
 		empty();
 		step=null;
-		//nyeresre allok-e?
+		/**nyeresre allok-e?*/
 		if(winner(color)){
 			winnerStep();
 		}
 		if(step!=null){
 			return step;
 		}
-		//vesztesre allok-e?
+		/**vesztesre allok-e?*/
 		if(winner(opponentColor) && step==null){
 			defendStep();
 		}
@@ -24,7 +24,7 @@ public class DefendPlayer extends RandomPlayer{
 		if(step!=null){
 			return step;
 		}
-		step=super.nextMove();
+		step=super.nextMove(prevStep);
 		return step;
 	}
 	
@@ -35,10 +35,10 @@ public class DefendPlayer extends RandomPlayer{
 		}
 	}
 	
-	//Adott szinbol van-e negy egy vonalban
+	/**Adott szinbol van-e negy egy vonalban*/
 	public boolean winner(int model){
 		int db=0;
-		//sorokon megy vegig
+		/**sorokon megy vegig*/
 		for(int i=0; i<5; i++){
 			for(int j=0; j<5; j++){
 				if(table.getField(i,j)==model){
@@ -53,7 +53,7 @@ public class DefendPlayer extends RandomPlayer{
 			empty();
 			db=0; 
 		}
-		//oszlopokon megy vegig
+		/**oszlopokon megy vegig*/
 		for(int i=0; i<5; i++){
 			for(int j=0; j<5; j++){
 				if(table.getField(j,i)==model){
@@ -68,7 +68,7 @@ public class DefendPlayer extends RandomPlayer{
 			empty();
 			db=0;
 		}
-		//foatlo
+		/**foatlo*/
 		for(int i=0; i<5; i++){
 			if(table.getField(i,i)==model){
 				line[db][0]=i;
@@ -81,7 +81,7 @@ public class DefendPlayer extends RandomPlayer{
 		}
 		empty();
 		db=0;
-		//mellekatlo
+		/**mellekatlo*/
 		for(int i=0; i<5; i++){
 			if(table.getField(i, 4-i)==model){
 				line[db][0]=i;
@@ -95,9 +95,9 @@ public class DefendPlayer extends RandomPlayer{
 		return false;
 	}
 	
-	//Az ellenfelemet megakadajozom a nyeresben
+	/**Az ellenfelemet megakadajozom a nyeresben*/
 	public void defendStep(){
-		//sor
+		/**sor*/
 		if(line[0][0]==line[1][0]){
 			for(int i=0; i<4; i++){
 				for(int j=0; j<5; j++){
@@ -110,7 +110,7 @@ public class DefendPlayer extends RandomPlayer{
 				}
 			}
 		}
-		//oszlop
+		/**oszlop*/
 		if(line[0][1]==line[1][1]){
 			for(int i=0; i<4; i++){
 				for(int j=0; j<5; j++){
@@ -123,7 +123,7 @@ public class DefendPlayer extends RandomPlayer{
 				}
 			}
 		}
-		//foatlo
+		/**foatlo*/
 		if((line[0][0]==line[0][1] && line[1][0]==line[1][1]) ||(line[0][0]+line[0][1]==4 && line[1][0]+line[1][1]==4)){
 			for(int i=0; i<5; i++){
 				if(table.legal(i, 0, color, i, 4)){
@@ -147,9 +147,9 @@ public class DefendPlayer extends RandomPlayer{
 		return;
 	}
 	
-	//A nyero lepes
+	/**A nyero lepes*/
 	public void winnerStep(){
-		//sor
+		/**sor*/
 		if(line[0][0]==line[1][0]){
 			for(int i=1; i<4; i++){
 				if(line[i][1]!=line[i-1][1]+1){
@@ -172,7 +172,7 @@ public class DefendPlayer extends RandomPlayer{
 				}
 			}
 		}
-		//oszlop
+		/**oszlop*/
 		if(line[0][1]==line[1][1]){
 			for(int i=1; i<4; i++){
 				if(line[i][0]!=line[i-1][0]+1){

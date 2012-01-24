@@ -1,11 +1,16 @@
 import java.lang.management.ManagementFactory;
 
 public class PlayerThread extends Thread implements Player {
+	/**@playerName jatekos fajtaja*/
 	public String playerName;
+	/**@sequence hanyadiknak lep a jatekos*/
 	public int sequence;
 	public Player p;
+	/**@maxTime jatekos maximalis ideje*/
 	public long maxTime;
+	/**@nextStep jatekos kovetkezo lepese*/
 	public Move nextStep;
+	/**@t aktualis tabla*/
 	public QuixoBoard t;
 	public static final int passive=0;
 	public static final int active=1;
@@ -20,9 +25,9 @@ public class PlayerThread extends Thread implements Player {
 		p= (Player) Class.forName(playerName).newInstance();
 	}
 	
-	//Az adott szal adott futasa mennyi idot vett igenybe
+	/**Az adott szal adott futasa mennyi idot vett igenybe*/
 	public long getElapsedTime(){
-		return ManagementFactory.getThreadMXBean().getThreadUserTime(getId())/1000000;
+		return ManagementFactory.getThreadMXBean().getThreadUserTime(getId())/1000000000;
 	}
 	
 	public void run(){
@@ -51,9 +56,9 @@ public class PlayerThread extends Thread implements Player {
 		status=passive;
 	}
 	
-	public Move nextMove() {
+	public Move nextMove(Move prevStep) {
 		status=active;
-		nextStep=p.nextMove();
+		nextStep=p.nextMove(prevStep);
 		status=passive;
 		return nextStep;
 	}

@@ -1,13 +1,21 @@
 import java.io.*;
 
 public class Game{
+	/**@table jatektabla*/
 	public static QuixoBoard table=new QuixoBoard();
 	public static BufferedReader reader = new BufferedReader(new InputStreamReader (System.in));
+	/**@move utoljara megtett lepes*/
 	public static Move move;
+	/**@name jatekos neve*/
 	public static String name;
 	public static Player[] p=new Player[2];
 	public static PlayerThread[] pt=new PlayerThread[2];
+	/**@ai ai-k szama
+	 * @people emberek szama
+	 * @ind aktualis jatekos szama
+	 * @nextInd kovetkezo jatekos szama*/
 	public static int j, ai, people, ind, nextInd;
+	/**@maxTime jatekosok ideje*/
 	public static long maxTime;
 	public static int depth;
 	
@@ -102,7 +110,7 @@ public class Game{
 		}
 	}
 	
-	//nyert-e valamelyik jatekos
+	/**nyert-e valamelyik jatekos*/
 	public static boolean winner(){
 		if(table.win(QuixoBoard.X) && table.win(QuixoBoard.O)){
 			System.out.println("Dontetlen!");
@@ -118,12 +126,12 @@ public class Game{
 		return false;
 	}
 	
-	//meghivja az ai nextMove()-jat, ellenorzi az ai lepeset es vegrehajtja azt
+	/**meghivja az ai nextMove()-jat, ellenorzi az ai lepeset es vegrehajtja azt*/
 	public static boolean aiStep(int i, long oTime){
-		move = pt[i].nextMove();
+		move = pt[i].nextMove(move);
 		System.out.println("\n"+j+". lepes "+ind+". jatekos lepett | "+ move +" ido: "+pt[i].getElapsedTime()+" szinem: "+pt[i].getColor()+" || "+pt[ind].sequence+" nevem "+pt[i].playerName);
 		if (move != null) {
-		   // 'lejart-e az ideje?' ellenorzese
+		   /** 'lejart-e az ideje?' ellenorzese*/
 		   if (pt[i].getElapsedTime() > maxTime) {
 			   if(pt[i].getColor()==QuixoBoard.X){
 			            System.out.println("X ideje lejart, ezert O nyert!");
@@ -134,7 +142,7 @@ public class Game{
 			          }
 		   }
 		   
-		   // 'csalt-e valaki?' ellenorzese
+		   /** 'csalt-e valaki?' ellenorzese*/
 		   if(table.legal(move.x, move.y, pt[i].getColor(), move.nx, move.ny)){
 			   table.makeStep(move.x, move.y, pt[i].getColor(), move.nx, move.ny);
 		   } else {
@@ -149,7 +157,7 @@ public class Game{
 		   System.out.println(table);
 
 		} else {
-			// ind jatekos null-t lepett => lepes kenyszer miatt kikapott
+			/** ind jatekos null-t lepett => lepes kenyszer miatt kikapott*/
 			if(pt[i].getColor()==QuixoBoard.X){
 				System.out.println("X nem lepett, ezert O nyert!");
 				return false;
@@ -161,16 +169,16 @@ public class Game{
 		return true;
 	}
 	
-	//meghivja a jatekos nextMove()-jat es vegrehajtja azt
+	/**meghivja a jatekos nextMove()-jat es vegrehajtja azt*/
 	public static void humanStep(int i){
-		move = p[i].nextMove();
+		move = p[i].nextMove(move);
 		System.out.println("\n"+j+". lepes "+ind+". jatekos lepett | "+ move +" szinem: "+p[i].getColor());		   
 		table.makeStep(move.x, move.y, p[i].getColor(), move.nx, move.ny);
 		System.out.println(table);
 		return;
 	}
 	
-	//Human vs Human
+	/**Human vs Human*/
 	public static void people(){
 		while(!table.win(p[0].getColor()) && !table.win(p[1].getColor())){
 			ind=j%2;
@@ -181,7 +189,7 @@ public class Game{
 		}
 	}
 	
-	//AI vs AI
+	/**AI vs AI*/
 	public static void ai(){
 		while(!table.win(pt[0].getColor()) && !table.win(pt[1].getColor())){
 			ind=j%2;
@@ -196,7 +204,7 @@ public class Game{
 		}
 	}
 	
-	//Human vs AI
+	/**Human vs AI*/
 	public static void humanvsAI(){
 		if(pt[0].getColor()==QuixoBoard.X){
 			while(!table.win(pt[0].getColor()) && !table.win(p[0].getColor())){
@@ -229,7 +237,7 @@ public class Game{
 	}
 	
 	public static void main(String[] args) throws Exception{
-		maxTime = Long.parseLong(args[0]); // gameTime/player
+		maxTime = Long.parseLong(args[0]);
 		j=ai=people=0;
 		move=null;
 		
@@ -260,6 +268,7 @@ public class Game{
 					pt[1].exit();
 					return;
 				}else{humanvsAI();
+						pt[0].exit();
 						return;
 					}	
 		} catch (IOException e) {

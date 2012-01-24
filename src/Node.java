@@ -1,20 +1,35 @@
 import java.util.*;
 
 public class Node {
+	/**@model csomopont mintaja, amivel lepni kell*/
 	public int model;
+	/**@value csomopont erteke*/
 	public int value;
+	/**@parent csomopont apja*/
 	public Node parent;
+	/**@children csomopont fiai*/
 	public ArrayList<Node> children=new ArrayList<Node>();
+	/**@leaf csomopont level-e*/
 	public boolean leaf;
+	/**@end a csomopont az aktualis n melysegu reszfaban n melyen van-e*/
+	public boolean end;
+	/**@index csomopont indexe*/
 	public int index;
+	/**@step csomoponthoz vezeto lepes*/
 	public Move step;
-	public Node brother=null;
 	
-	public Node(int color, Node p, int v, Move s){
+	public Node(int color, Node p, int v, Move s, Node gf){
 		model=color;
 		parent=p;
 		value=v;
 		step=s;
+	}
+	
+	public boolean equals(Move m){
+		if(step.x==m.x && step.y==m.y && step.nx==m.nx && step.ny==m.y){
+			return true;
+		}
+		return false;
 	}
 
 	public void addChild(Node child, Node parent, int v, Move s){
@@ -22,14 +37,6 @@ public class Node {
 		child.setIndex(parent.getIndex()+1);	
 	}
 	
-	public Node getBrother() {
-		return brother;
-	}
-
-	public void setBrother(Node brother) {
-		this.brother = brother;
-	}
-
 	public Move getStep() {
 		return step;
 	}
@@ -50,8 +57,8 @@ public class Node {
 	}
 	public void setParent(Node parent) {
 		this.parent = parent;
-	}
-	
+	}	
+
 	public ArrayList<Node> getChildren() {
 		return children;
 	}
@@ -66,6 +73,14 @@ public class Node {
 		this.leaf = leaf;
 	}
 	
+	public boolean isEnd() {
+		return end;
+	}
+
+	public void setEnd(boolean end) {
+		this.end = end;
+	}
+
 	public int getValue() {
 		return value;
 	}

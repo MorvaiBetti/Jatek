@@ -1,13 +1,15 @@
 public class CollectorPlayer extends RandomPlayer{
-	public int[][] line;
-	public int db;
+	/**@line szabalyos lepesek letarolasara*/
+	public int[][] line; 	 	
+	/**@db szabalyos lepesek szama*/
+	public int db; 		
 	
 	public CollectorPlayer() {
 		super();
 		line=new int[25][2];
 	}
 
-	public Move nextMove() {
+	public Move nextMove(Move prevStep) {
 		int rand;
 		
 		for(int k=0; k<4; k++){
@@ -17,7 +19,7 @@ public class CollectorPlayer extends RandomPlayer{
 		
 		if(existEmptyField()){
 			rand=(int) (Math.random()*(db-1));
-			//ugyanabban a sorban marad
+			/**ugyanabban a sorban marad*/
 			if(table.legal(line[rand][0], line[rand][1], color, line[rand][0], 0)){
 				step=new Move(line[rand][0], line[rand][1], line[rand][0], 0);
 				return step;
@@ -26,7 +28,7 @@ public class CollectorPlayer extends RandomPlayer{
 				step=new Move(line[rand][0], line[rand][1], line[rand][0], 4);
 				return step;
 			}
-			//ugyanabban az oszlopban marad
+			/**ugyanabban az oszlopban marad*/
 			if(table.legal(line[rand][0], line[rand][1], color, 0, line[rand][1])){
 				step=new Move(line[rand][0], line[rand][1], 0, line[rand][1]);
 				return step;
@@ -36,10 +38,10 @@ public class CollectorPlayer extends RandomPlayer{
 				return step;
 			}
 		}
-		return super.nextMove();
+		return super.nextMove(prevStep);
 	}
 	
-	//adott jatekosnak van-e meg szabalyos lepese
+	/**adott jatekosnak van-e meg szabalyos lepese*/
 	public boolean existEmptyField(){
 		db=0;
 		for(int i=0; i<5; i++){

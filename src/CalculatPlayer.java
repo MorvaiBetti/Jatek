@@ -4,7 +4,7 @@ public abstract class CalculatPlayer extends SimplePlayer{
 	public int your=-3;
 	public int nobody=1;
 	
-	//sorSzam, oszlopSzam, oszlopVonal, sorVonal, foatloVonal, mellekatloVonal, mezoErtek
+	/**sorSzam, oszlopSzam, oszlopVonal, sorVonal, foatloVonal, mellekatloVonal, mezoErtek*/
 	public void calculat(){
 		empty();
 		int k=0;
@@ -14,7 +14,7 @@ public abstract class CalculatPlayer extends SimplePlayer{
 				fields[k][1]=j;
 				for(int l=0; l<5; l++){
 					if(l!=i){
-						//oszlop
+						/**oszlop*/
 						if(table.getField(l,j)==color){
 							fields[k][2]+=my;
 						}
@@ -26,7 +26,7 @@ public abstract class CalculatPlayer extends SimplePlayer{
 						}
 					}
 					if(l!=j){
-						//sor
+						/**sor*/
 						if(table.getField(i,l)==color){
 							fields[k][3]+=my;
 						}
@@ -38,7 +38,7 @@ public abstract class CalculatPlayer extends SimplePlayer{
 						}
 					}
 					if(i==j){
-						//foatlo
+						/**foatlo*/
 						if(l!=i){
 							if(table.getField(l,l)==color){
 								fields[k][4]+=my;
@@ -52,7 +52,7 @@ public abstract class CalculatPlayer extends SimplePlayer{
 						}
 					}
 					if(i==4-j){
-						//mellekatlo
+						/**mellekatlo*/
 						if(l!=i){
 							if(table.getField(l,4-l)==color){
 								fields[k][5]+=my;
