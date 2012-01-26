@@ -1,3 +1,4 @@
+package quixo.engine;
 public class Move {
 	
 	/**honnan veszem el a babut*/

@@ -1,3 +1,8 @@
+package quixo.players.minimax;
+
+import quixo.players.SimplePlayer;
+import quixo.engine.Move;
+
 public class Tree extends SimplePlayer{
 		public TreeStructure tree=null;
 		/**@depth milyen melysegig vizsgalja a jatekfat*/
@@ -6,6 +11,7 @@ public class Tree extends SimplePlayer{
 		public Node maxNode=null;
 	//	public Minimax minmaxTree;
 	//	public int[] delete;
+		public Node n;
 		
 		public void setDepth(int d){
 			depth=d;
@@ -13,10 +19,15 @@ public class Tree extends SimplePlayer{
 		
 		public Move nextMove(Move prevStep) {
 		//	if(tree==null){
+			
 				tree = new TreeStructure(getColor(), table, depth);
 				maxNode=tree.maxNode;
-				tree.mainNode=tree.maxNode;
+				
+				//tree.mainNode=tree.maxNode;
+
 				return maxNode.step;
+				
+				
 		/*	}
 			for(Node node: tree.mainNode.children){
 				if(node.step.equals(prevStep)){

@@ -1,5 +1,9 @@
+package quixo.players;
+
 import java.io.*;
 import java.util.*;
+
+import quixo.engine.Move;
 
 public class Human extends SimplePlayer{
 	public static String in;

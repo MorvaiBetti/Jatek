@@ -1,3 +1,4 @@
+package quixo.engine;
 public interface Player{
 	public void setTable(QuixoBoard qt);
 

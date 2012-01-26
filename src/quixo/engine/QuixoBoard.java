@@ -1,3 +1,4 @@
+package quixo.engine;
 public class QuixoBoard implements Cloneable {
 	/**(sor; oszlop)
 	 * @empty ures mezo*/

@@ -1,3 +1,8 @@
+package quixo.players;
+
+import quixo.engine.QuixoBoard;
+import quixo.engine.Move;
+
 public class DefendCalculatPlayer extends CalculatPlayer{
 	public int min;
 	public int id;
@@ -66,7 +71,7 @@ public class DefendCalculatPlayer extends CalculatPlayer{
 		/**ha vmelyik csucsra akarok tenni*/
 		if((fields[id][1]==0 || fields[id][1]==4) && (fields[id][0]==0 || fields[id][0]==4)){
 			for(int i=0; i<5; i++){
-				/**elobb az üreseket*/
+				/**elobb az ï¿½reseket*/
 				if(table.getField(Math.abs(i-fields[id][0]), fields[id][1])==QuixoBoard.empty && table.legal(Math.abs(i-fields[id][0]), fields[id][1], color, fields[id][0], fields[id][1])){
 					step=new Move(Math.abs(i-fields[id][0]), fields[id][1], fields[id][0], fields[id][1]);
 					return;

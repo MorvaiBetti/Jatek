@@ -1,3 +1,6 @@
+package quixo.heuristics;
+
+import quixo.engine.QuixoBoard;
 
 public class Winner {
 	public QuixoBoard table;

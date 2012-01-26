@@ -1,3 +1,9 @@
+package quixo.players;
+
+import quixo.engine.Player;
+import quixo.engine.QuixoBoard;
+import quixo.engine.Move;
+
 public abstract class SimplePlayer implements Player{
 	public QuixoBoard table;
 	public Move step;

@@ -1,3 +1,8 @@
+package quixo.players;
+
+import quixo.engine.QuixoBoard;
+import quixo.engine.Move;
+
 public class CollectorPlayer extends RandomPlayer{
 	/**@line szabalyos lepesek letarolasara*/
 	public int[][] line; 	 	

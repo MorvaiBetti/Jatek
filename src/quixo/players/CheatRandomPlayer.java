@@ -1,4 +1,8 @@
+package quixo.players;
+
 import java.util.*;
+
+import quixo.engine.Move;
 
 public class CheatRandomPlayer extends SimplePlayer{
 	/**@cheat szabalytalan lepesek letarolasara*/

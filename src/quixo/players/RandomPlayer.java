@@ -1,4 +1,8 @@
+package quixo.players;
+
 import java.util.*;
+
+import quixo.engine.Move;
 
 public class RandomPlayer extends SimplePlayer{
 	public ArrayList<Move> steps=new ArrayList<Move>();  	/**@steps szabalyos lepesek letarolasara*/

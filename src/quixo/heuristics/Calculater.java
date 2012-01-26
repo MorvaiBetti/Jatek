@@ -1,3 +1,7 @@
+package quixo.heuristics;
+
+import quixo.engine.QuixoBoard;
+
 public class Calculater {
 	/**@mine az aktualis minta darabszama*/
 	public int mine; 	
@@ -6,8 +10,8 @@ public class Calculater {
 	/**@free az ures minta darabszama*/
 	public int free; 	
 	public int me=3;
-	public int you=3;
-	public int nobody=2;
+	public int you=-3;
+	public int nobody=0;
  	/**@fields hogy helyezkednek el a mintak*/
 	public int[][] fields;
 	public QuixoBoard table;
@@ -21,6 +25,7 @@ public class Calculater {
 		table=t;
 	}
 	
+
 	public int calculation(){
 		fields=new int[5][4];
 		emptyFields();
@@ -37,29 +42,19 @@ public class Calculater {
 				if(table.getField(i, j)==QuixoBoard.empty){
 					free++;
 				}
-			}
-			if(yours>=mine){
-			}
-		//	if(yours>=3){
-				yours=(int) (Math.pow(you, yours));
-		/*		if(yours>=4){
-					yours=yours*yours*2;
-				}
-			}
-			if(mine>=3){*/
-				mine=(int) (Math.pow(me, mine));
-		/*		if(mine==4){
-					mine=mine*2;
-				}
-				if(mine==5){
-					mine=mine*4;
-				}
-			}*/
-			fields[i][0]=sum();
+			}	
+		}	
+		return mine-yours-free;
+			
+	}
+		/*	if(yours>=mine){
+				free=-free;
+			}	
+			//fields[i][0]=sum();
 		}
 		
 		/**sorokon megy vegig*/
-		for(int j=0; j<5; j++){
+	/*	for(int j=0; j<5; j++){
 			for(int i=0; i<5; i++){
 				if(table.getField(i,j)==model){
 					mine++;
@@ -71,28 +66,13 @@ public class Calculater {
 					free++;
 				}
 			}
-			if(yours>=mine){
+		/*	if(yours>=mine){
 				free=-free;
 			}	
-		//	if(yours>=3){
-				yours=(int) (Math.pow(you, yours));
-		/*		if(yours>=4){
-					yours=yours*yours*2;
-				}
-			}
-			if(mine>=3){*/
-				mine=(int) (Math.pow(me, mine));
-			/*	if(mine==4){
-					mine=mine*2;
-				}
-				if(mine==5){
-					mine=mine*4;
-				}
-			}*/
 			fields[j][1]=sum();
 		}
 		
-		/**foatlon megyek vegig*/
+		/**foatlon megyek vegig
 		for(int i=0; i<5;i++){
 			if(table.getField(i, i)==model){
 				mine++;
@@ -104,27 +84,12 @@ public class Calculater {
 				free++;
 			}
 		}
-		if(yours>=mine){
+	/*	if(yours>=mine){
 			free=-free;
 		}	
-	//	if(yours>2){
-			yours=(int) (Math.pow(you, yours));
-	/*		if(yours>=4){
-				yours=yours*yours*2;
-			}
-		}
-		if(mine>=3){*/
-			mine=(int) (Math.pow(me, mine));
-		/*	if(mine==4){
-				mine=mine*2;
-			}
-			if(mine==5){
-				mine=mine*4;
-			}
-		}*/
 		fields[0][2]=sum();
 		
-		/**mellekatlon megyek vegig*/
+		/**mellekatlon megyek vegig
 		for(int i=0; i<5; i++){
 			if(table.getField(i, 4-i)==model){
 				mine++;
@@ -136,24 +101,9 @@ public class Calculater {
 				free++;
 			}
 		}
-		if(yours>=mine){
+	/*	if(yours>=mine){
 			free=-free;
-		}	
-	//	if(yours>=3){
-			yours=(int) (Math.pow(you, yours));
-		/*	if(yours>=4){
-				yours=yours*yours*2;
-			}*/
-//		}
-	//	if(mine>=3){
-			mine=(int) (Math.pow(me, mine));
-		/*	if(mine==4){
-				mine=mine*2;
-			}
-			if(mine==5){
-				mine=mine*4;
-			}*/
-	//	}
+		}
 		fields[0][3]=sum();
 		
 		for(int i=0; i<5; i++){
@@ -163,7 +113,7 @@ public class Calculater {
 		}
 		return value;
 	}
-	
+	*/
 	/**Kiuriti a fields-et*/
 	public void emptyFields(){
 		value=0;
@@ -174,17 +124,17 @@ public class Calculater {
 		}
 	}
 	
-	/**osszegzi az ertekeket*/
+	/**osszegzi az ertekeket
 	public int sum(){
-		int result;
-		result=mine-yours+free;
+		//int result;
+		value=(mine*me)-(you*yours);
 	//	result=(free*nobody)+(mine*me)+(yours*you);
 	/*	result=(int) Math.pow(me, mine);
 		result=result+(free*nobody);
-		result=(int) (result-Math.pow(you, yours));*/
+		result=(int) (result-Math.pow(you, yours));
 		mine=0;
 		free=0;
 		yours=0;
-		return result;
-	}
+		return value;
+	}*/
 }

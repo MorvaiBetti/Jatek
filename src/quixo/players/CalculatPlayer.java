@@ -1,3 +1,7 @@
+package quixo.players;
+
+import quixo.engine.QuixoBoard;
+
 public abstract class CalculatPlayer extends SimplePlayer{
 	public int[][] fields=new int[25][7];
 	public int my=3;

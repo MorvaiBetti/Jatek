@@ -1,3 +1,7 @@
+package quixo.players;
+
+import quixo.engine.Move;
+
 public class DefendPlayer extends RandomPlayer{
 	public int[][] line;
 

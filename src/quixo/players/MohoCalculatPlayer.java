@@ -1,3 +1,8 @@
+package quixo.players;
+
+import quixo.engine.QuixoBoard;
+import quixo.engine.Move;
+
 public class MohoCalculatPlayer extends CalculatPlayer{
 	public int max;
 	public int id;

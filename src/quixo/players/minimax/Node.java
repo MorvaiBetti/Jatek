@@ -1,4 +1,8 @@
+package quixo.players.minimax;
+
 import java.util.*;
+
+import quixo.engine.Move;
 
 public class Node {
 	/**@model csomopont mintaja, amivel lepni kell*/
@@ -17,8 +21,9 @@ public class Node {
 	public int index;
 	/**@step csomoponthoz vezeto lepes*/
 	public Move step;
+	public int ind;
 	
-	public Node(int color, Node p, int v, Move s, Node gf){
+	public Node(int color, Node p, int v, Move s){
 		model=color;
 		parent=p;
 		value=v;
@@ -95,13 +100,26 @@ public class Node {
 		this.index = index;
 	}
 
-	public String toString() {
+	/*public String toString() {
 		return "Node [" +
 				"step="+step+
 				" value=" + value + 
-			//	", \nparent=" + parent + 
+				", \nparent=" + parent + 
 			//	", children="+ children + 
 				", model="+ model+
 				", index=" + index + "]";
+	}*/
+	
+	public String toString(){
+		String s="";
+		s+=this.ind+"-"+this.value;
+		if(this.children.size()>0){
+			s+="(";
+			for(Node n:this.children){
+				s+=" " + n.toString();
+			}
+			s+=")";
+		}
+		return s;
 	}
 }

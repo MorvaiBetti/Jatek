@@ -1,3 +1,4 @@
+package quixo.engine;
 import java.lang.management.ManagementFactory;
 
 public class PlayerThread extends Thread implements Player {
