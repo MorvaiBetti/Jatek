@@ -11,6 +11,9 @@ public class DefendPlayer extends RandomPlayer{
 	}
 	
 	public Move nextMove(Move prevStep, long oTime) {
+		if(prevStep!=null){
+			table.makeStep(prevStep, (color+1)%2);
+		}
 		empty();
 		step=null;
 		/**nyeresre allok-e?*/
@@ -18,6 +21,7 @@ public class DefendPlayer extends RandomPlayer{
 			winnerStep();
 		}
 		if(step!=null){
+			table.makeStep(step, color);
 			return step;
 		}
 		/**vesztesre allok-e?*/
@@ -26,9 +30,11 @@ public class DefendPlayer extends RandomPlayer{
 		}
 		
 		if(step!=null){
+			table.makeStep(step, color);
 			return step;
 		}
 		step=super.nextMove(prevStep);
+		table.makeStep(step, color);
 		return step;
 	}
 	

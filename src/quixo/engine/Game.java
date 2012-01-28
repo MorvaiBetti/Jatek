@@ -97,9 +97,6 @@ public class Game{
 				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.minimax.Tree");
 				pt[ai].start();
 				pt[ai].datas(i, maxTime);
-				System.out.println("Melyseg??");
-				depth=Integer.parseInt(reader.readLine());
-				pt[ai].setDepth(depth);
 				pt[ai].setTable(table);
 				ai++;
 				return;

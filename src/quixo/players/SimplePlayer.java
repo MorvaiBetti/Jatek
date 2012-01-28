@@ -15,7 +15,7 @@ public abstract class SimplePlayer implements Player{
 	public long maxTime;
 	
 	public void setTable(QuixoBoard qt) {
-		table=qt;
+		table=(QuixoBoard) qt.clone();
 	}
 	
 	public int getColor() {

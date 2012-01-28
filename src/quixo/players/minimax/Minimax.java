@@ -13,26 +13,27 @@ public class Minimax{
 	
 	
 	public Minimax(Node root){
-		if(root.model%2==1){
+		if(root.data.model%2==1){
 			root.value=minValue(root, -900000, 900000);
 		}else 	{root.value=maxValue(root, -900000, 900000);}
-		System.out.println("Kolkok syama "+root.children.size()+" erteke "+root.value);
+	//	System.out.println("Kolkok syama "+root.children.size()+" erteke "+root.value);
 		for(Node n:  root.children){
 			if(n.value==root.value){
 				maxNode=n;
 			}
 		}
-	//	System.out.println("maxom "+maxNode);
 	}
 	
 	public int maxValue(Node node, int alfa, int beta){
-		if(node.isLeaf() || node.isEnd() || node.children.isEmpty()){
+		if(node.isLeaf() || node.children.isEmpty()){
 			return node.value;
 		}
 		int max=-Integer.MAX_VALUE;
 		for(Node child : node.children){
 				max=Math.max(max, minValue(child, alfa, beta));
 				if(max>=beta){
+					node.children.clear();
+					node.children.add(child);
 					node.value=max;	
 					return max;
 				}
@@ -43,13 +44,15 @@ public class Minimax{
 	}
 	
 	public int minValue(Node node, int alfa, int beta){
-		if(node.isLeaf() || node.isEnd() || node.children.isEmpty()){
+		if(node.isLeaf() || node.children.isEmpty()){
 			return node.value;
 		}
 		int min=Integer.MAX_VALUE;
 		for(Node child: node.children){
 				min=Math.min(min, maxValue(child, alfa, beta));
 				if(alfa>=min){
+					node.children.clear();
+					node.children.add(child);
 			 		node.value=min;
 					return min;
 				}

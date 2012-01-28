@@ -26,6 +26,9 @@ public class CheatRandomPlayer extends SimplePlayer{
 		Move m=null;
 		steps.clear();
 		cheat.clear();
+		if(prevStep!=null){
+			table.makeStep(prevStep, (color+1)%2);
+		}
 		for(int i=0; i<5; i++){
 			/**ha az elso sorbol valasztok*/
 			if(table.legal(0, i, color, 0, 4)){steps.add(new Move(0, i, 0, 4)); db++;}else {cheat.add(new Move(0, i, 0, 4)); j++;}
@@ -50,6 +53,7 @@ public class CheatRandomPlayer extends SimplePlayer{
 		}else {rand=(int) (Math.random()*(db-1));
 				m=steps.remove(rand);
 			}
+		table.makeStep(m, color);
 	    return m;
 	}
 }

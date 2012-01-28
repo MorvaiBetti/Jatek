@@ -1,5 +1,6 @@
 package quixo.engine;
 public interface Player{
+	
 	public void setTable(QuixoBoard qt);
 
 	/**hanyadik jatekos, ideje
@@ -14,5 +15,5 @@ public interface Player{
 	/**A jatekos szinet/mintajat adja vissza*/
 	public int getColor();
 
-	public void setDepth(int d);
+//	public void setDepth(int d);
 }

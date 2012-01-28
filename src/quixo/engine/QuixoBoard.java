@@ -130,6 +130,10 @@ public class QuixoBoard implements Cloneable {
 		return false;
 	}
 	
+	public void makeStep(Move m, int model){
+		makeStep(m.x, m.y, model, m.nx, m.ny);
+	}
+	
 	/**A jatektablan vegrehajtja a lepest*/
 	public void makeStep(int x, int y, int model, int nx, int ny){
 		/**ha az eredeti sorba rakom vissza*/

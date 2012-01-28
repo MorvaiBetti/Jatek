@@ -16,7 +16,9 @@ public class CollectorPlayer extends RandomPlayer{
 
 	public Move nextMove(Move prevStep) {
 		int rand;
-		
+		if(prevStep!=null){
+			table.makeStep(prevStep, (color+1)%2);
+		}
 		for(int k=0; k<4; k++){
 			line[k][0]=0;
 			line[k][1]=0;
@@ -27,19 +29,23 @@ public class CollectorPlayer extends RandomPlayer{
 			/**ugyanabban a sorban marad*/
 			if(table.legal(line[rand][0], line[rand][1], color, line[rand][0], 0)){
 				step=new Move(line[rand][0], line[rand][1], line[rand][0], 0);
+				table.makeStep(step, color);
 				return step;
 			}
 			if(table.legal(line[rand][0], line[rand][1], color, line[rand][0], 4)){	
 				step=new Move(line[rand][0], line[rand][1], line[rand][0], 4);
+				table.makeStep(step, color);
 				return step;
 			}
 			/**ugyanabban az oszlopban marad*/
 			if(table.legal(line[rand][0], line[rand][1], color, 0, line[rand][1])){
 				step=new Move(line[rand][0], line[rand][1], 0, line[rand][1]);
+				table.makeStep(step, color);
 				return step;
 			}
 			if(table.legal(line[rand][0], line[rand][1], color, 4, line[rand][1])){	
 				step=new Move(line[rand][0], line[rand][1], 4, line[rand][1]);
+				table.makeStep(step, color);
 				return step;
 			}
 		}

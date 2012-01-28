@@ -21,7 +21,7 @@ public class Move {
 	}
 	
 	public String toString(){
-		return x +" "+ y +" "+ nx +" "+ ny;
+		return "("+x +" "+ y +" "+ nx +" "+ ny+")";
 	};
 
 }

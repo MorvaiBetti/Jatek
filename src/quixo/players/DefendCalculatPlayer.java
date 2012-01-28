@@ -7,7 +7,10 @@ public class DefendCalculatPlayer extends CalculatPlayer{
 	public int min;
 	public int id;
 
-	public Move nextMove(Move prevStep){
+	public Move nextMove(Move prevStep){	
+		if(prevStep!=null){
+			table.makeStep(prevStep, (color+1)%2);
+		}
 		calculat();
 		step=null;
 		for(int i=0; i<25; i++){
@@ -20,6 +23,7 @@ public class DefendCalculatPlayer extends CalculatPlayer{
 							if(table.getField(fields[i][0], k)==opponentColor){
 								if(table.getField(4-fields[i][0], k)!=opponentColor && table.legal(4-fields[i][0], k, color, fields[i][0], k)){
 									step=new Move(4-fields[i][0], k, fields[i][0], k);
+									table.makeStep(step, color);
 									return step;
 								}
 							}
@@ -31,6 +35,7 @@ public class DefendCalculatPlayer extends CalculatPlayer{
 							if(table.getField(k, fields[i][1])==opponentColor){
 								if(table.getField(k, 4-fields[i][1])!=opponentColor && table.legal(k, 4-fields[i][1], color, k, fields[i][1])){
 									step=new Move(k, 4-fields[i][1], k, fields[i][1]);
+									table.makeStep(step, color);
 									return step;
 								}
 							}
@@ -44,6 +49,7 @@ public class DefendCalculatPlayer extends CalculatPlayer{
 			find();
 			newStep();
 		//}
+		table.makeStep(step, color);
 		return step;
 	}
 	

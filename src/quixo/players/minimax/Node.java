@@ -1,60 +1,60 @@
 package quixo.players.minimax;
 
-import java.util.*;
+import java.util.ArrayList;
 
 import quixo.engine.Move;
+import quixo.engine.QuixoBoard;
 
 public class Node {
-	/**@model csomopont mintaja, amivel lepni kell*/
-	public int model;
-	/**@value csomopont erteke*/
+	public Pair data;
 	public int value;
-	/**@parent csomopont apja*/
 	public Node parent;
-	/**@children csomopont fiai*/
-	public ArrayList<Node> children=new ArrayList<Node>();
-	/**@leaf csomopont level-e*/
+	public ArrayList<Node> children=new ArrayList<Node>(80);
 	public boolean leaf;
-	/**@end a csomopont az aktualis n melysegu reszfaban n melyen van-e*/
-	public boolean end;
-	/**@index csomopont indexe*/
 	public int index;
-	/**@step csomoponthoz vezeto lepes*/
 	public Move step;
-	public int ind;
-	
-	public Node(int color, Node p, int v, Move s){
-		model=color;
+	public Node brother=null;
+
+	public Node(Pair d, Node p, Move s){
+		data=d;
 		parent=p;
-		value=v;
 		step=s;
-	}
-	
-	public boolean equals(Move m){
-		if(step.x==m.x && step.y==m.y && step.nx==m.nx && step.ny==m.y){
-			return true;
+		if(parent!=null){index=parent.getIndex()+1;}
+		if(data.table.win(QuixoBoard.O) || data.table.win(QuixoBoard.X)){
+			setLeaf(true);
 		}
-		return false;
 	}
 
-	public void addChild(Node child, Node parent, int v, Move s){
+	/*public void addChild(Node child, Node parent, int v, Move s){
+		if(child.data.getTable().win(parent.data.getModel())){
+			parent.setLeaf(true);
+			System.out.println("Level vagyok");
+			return;
+		}else parent.setLeaf(false);
 		parent.children.add(child);
 		child.setIndex(parent.getIndex()+1);	
+	}*/
+
+
+	public Node getBrother() {
+		return brother;
 	}
-	
+
+	public void setBrother(Node brother) {
+		this.brother = brother;
+	}
+
 	public Move getStep() {
 		return step;
 	}
 	public void setStep(Move step) {
 		this.step = step;
 	}
-	
-	public int getModel() {
-		return model;
+	public Pair getData() {
+		return data;
 	}
-
-	public void setModel(int model) {
-		this.model = model;
+	public void setData(Pair data) {
+		this.data = data;
 	}
 
 	public Node getParent() {
@@ -62,7 +62,7 @@ public class Node {
 	}
 	public void setParent(Node parent) {
 		this.parent = parent;
-	}	
+	}
 
 	public ArrayList<Node> getChildren() {
 		return children;
@@ -70,20 +70,12 @@ public class Node {
 	public void setChildren(Node child) {
 		this.children.add(child);
 	}
-	
+
 	public boolean isLeaf() {
 		return leaf;
 	}
 	public void setLeaf(boolean leaf) {
 		this.leaf = leaf;
-	}
-	
-	public boolean isEnd() {
-		return end;
-	}
-
-	public void setEnd(boolean end) {
-		this.end = end;
 	}
 
 	public int getValue() {
@@ -92,7 +84,7 @@ public class Node {
 	public void setValue(int value) {
 		this.value = value;
 	}
-	
+
 	public int getIndex() {
 		return index;
 	}
@@ -100,19 +92,9 @@ public class Node {
 		this.index = index;
 	}
 
-	/*public String toString() {
-		return "Node [" +
-				"step="+step+
-				" value=" + value + 
-				", \nparent=" + parent + 
-			//	", children="+ children + 
-				", model="+ model+
-				", index=" + index + "]";
-	}*/
-	
 	public String toString(){
 		String s="";
-		s+=this.ind+"-"+this.value;
+		s+=this.index+"-"+this.value+"\n"+this.data.table+"\n\n";
 		if(this.children.size()>0){
 			s+="(";
 			for(Node n:this.children){

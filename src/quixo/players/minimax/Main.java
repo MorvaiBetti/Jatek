@@ -12,7 +12,7 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		Node newRoot;
-		root=new Node(0, null, 0, null);
+	/*	root=new Node(0, null, 0, null);
 		root.ind=1;
 		
 		Node elso=new Node(1, root, 0, null);
@@ -108,7 +108,7 @@ public class Main {
 		
 		Minimax minimax=new Minimax(root);
 		
-		System.out.println(root);
+		System.out.println(root);*/
 	}
 
 	
