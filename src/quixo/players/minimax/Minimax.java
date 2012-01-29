@@ -16,7 +16,6 @@ public class Minimax{
 		if(root.data.model%2==1){
 			root.value=minValue(root, -900000, 900000);
 		}else 	{root.value=maxValue(root, -900000, 900000);}
-	//	System.out.println("Kolkok syama "+root.children.size()+" erteke "+root.value);
 		for(Node n:  root.children){
 			if(n.value==root.value){
 				maxNode=n;

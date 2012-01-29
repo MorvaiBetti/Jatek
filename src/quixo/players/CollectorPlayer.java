@@ -64,7 +64,7 @@ public class CollectorPlayer extends RandomPlayer{
 				}
 			}
 		}
-		System.out.println("db: "+db);
+	//	System.out.println("db: "+db);
 		if(db>0){
 			return true;
 		}

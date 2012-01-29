@@ -9,11 +9,13 @@ public class Calculater {
 	public int yours; 
 	/**@free az ures minta darabszama*/
 	public int free; 	
-	public int me=3;
-	public int you=-3;
+	/**@me sajat babu erteke*/
+	public int me=3; 	
+	/**@you ellenfel babu erteke*/
+	public int you=3; 	
+	/**@nobody ures mezo erteke*/
 	public int nobody=0;
- 	/**@fields hogy helyezkednek el a mintak*/
-	public int[][] fields;
+	/**@table aktualis tabla*/
 	public QuixoBoard table;
  	/**@model aktualis minta*/
 	public int model;
@@ -23,101 +25,82 @@ public class Calculater {
 	public Calculater(int color, QuixoBoard t){
 		model=color;
 		table=t;
+		value=0;
 		calculation(color);
 	}
-	
 
 	public void calculation(int model){
-		emptyFields();
-		int k=0;
-
+		/**sorokon megy vegig*/
 		for(int i=0; i<5; i++){
 			for(int j=0; j<5; j++){
-				for(int l=0; l<5; l++){
-					if(l!=i){
-						//oszlop
-						if(table.getField(l,j)==model){
-							fields[k][1]+=me;
-						}
-						if(table.getField(l,j)==QuixoBoard.empty){
-							fields[k][1]+=nobody;
-						}
-						if(table.getField(l,j)==(model+1)%2){
-							fields[k][1]+=you;
-						}
-					}
-					if(l!=j){
-						//sor
-						if(table.getField(i,l)==model){
-							fields[k][2]+=me;
-						}
-						if(table.getField(i,l)==QuixoBoard.empty){
-							fields[k][2]+=nobody;
-						}
-						if(table.getField(i,l)==(model+1)%2){
-							fields[k][2]+=you;
-						}
-					}
-					if(i==j){
-						//foatlo
-						if(l!=i){
-							if(table.getField(l,l)==model){
-								fields[k][3]+=me;
-							}
-							if(table.getField(l,l)==QuixoBoard.empty){
-								fields[k][3]+=nobody;
-							}
-							if(table.getField(l,l)==(model+1)%2){
-								fields[k][3]+=you;
-							}
-						}
-					}
-					if(i==4-j){
-						//mellekatlo
-						if(l!=i){
-							if(table.getField(l,4-l)==model){
-								fields[k][4]+=me;
-							}
-							if(table.getField(l,4-l)==QuixoBoard.empty){
-								fields[k][4]+=nobody;
-							}
-							if(table.getField(l,4-l)==(model+1)%2){
-								fields[k][4]+=you;
-							}
-						}
-					}
-				}
-				k++;
-			}
-		}
-	}
-
-	public void emptyFields(){
-		for(int i=0; i<5; i++){
-			for(int j=2; j<4; j++){
-				fields[i][j]=0;
-			}
-		}
-	}
-
-	public int sum(){/*
-		/**oszlopokon megy vegig*/
-		int mine = 0;
-		int yours = 0;
-		for(int i=0; i<5; i++){
-			for(int j=0; j<5; j++){
-				if(table.getField(i,j)==model){
+				if(table.getField(i, j)==model){
 					mine++;
 				}
-				if(table.getField(i,j)==(model+1)%2){
+				if(table.getField(i, j)==(model+1)%2){
 					yours++;
 				}
 				if(table.getField(i, j)==QuixoBoard.empty){
 					free++;
 				}
-			}	
+			}
+			value=sum();
 		}
-		value=(mine*me)-(yours*you);
-		return value;
+		/**oszlopokon megy vegig*/
+		for(int i=0; i<5; i++){
+			for(int j=0; j<5; j++){
+				if(table.getField(j, i)==model){
+					mine++;
+				}
+				if(table.getField(j, i)==(model+1)%2){
+					yours++;
+				}
+				if(table.getField(j, i)==QuixoBoard.empty){
+					free++;
+				}
+			}
+			value=value+sum();
+		}
+		
+		/**foatlon megy vegig*/
+		for(int i=0; i<5; i++){
+			if(table.getField(i, i)==model){
+				mine++;
+			}
+			if(table.getField(i, i)==(model+1)%2){
+				yours++;
+			}
+			if(table.getField(i, i)==QuixoBoard.empty){
+				free++;
+			}
+		}
+		value=value+sum();
+		
+		/**mellekatlon megy vegig*/
+		for(int i=0; i<5; i++){
+			if(table.getField(i, 4-i)==model){
+				mine++;
+			}
+			if(table.getField(i, 4-i)==(model+1)%2){
+				yours++;
+			}
+			if(table.getField(i, 4-i)==QuixoBoard.empty){
+				free++;
+			}
+		}
+		value=value+sum();
+		return;
+	}
+
+	/**osszegzi a tabla tartalmat*/
+	public int sum(){
+		int result;
+		if(mine<yours){
+			free=-free;
+		}
+		result=(int) (Math.pow(mine, me)-Math.pow(yours, you)+free);
+		mine=0;
+		yours=0;
+		free=0;
+		return result;
 	}
 }

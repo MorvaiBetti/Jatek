@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import quixo.engine.Move;
 import quixo.engine.QuixoBoard;
+import quixo.heuristics.Calculater;
+import quixo.heuristics.Winner;
 
 public class TreeStructure extends Node{
 	public Node root;
@@ -11,15 +13,9 @@ public class TreeStructure extends Node{
 	public Node maxNode;
 	public int[][] fields=new int[25][7];
 	public QuixoBoard newTable;
-	public int my=2;
-	public int your=3;
-	public int nobody=1;
-	public int value;
 	public int depth;
-	public int d=0;
-	public int me;
-	public int kutya=0;
-	public Node now;
+	public int actualDepth;
+	public int myColor;
 	public Move step;
 	public ArrayList<Node> roots=new ArrayList<Node>(80);
 	public ArrayList<Node> newRoots=new ArrayList<Node>(80);
@@ -27,40 +23,21 @@ public class TreeStructure extends Node{
 	public TreeStructure(Pair rootData, int d, Move s, int model){
 		super(rootData, null, s);
 		depth=d;
-		me=model;
-		System.out.println("melyseg= "+depth);
 		root=new Node(rootData, null, s);
 		mainRoot=root;
+		newRoots.clear();
+		newRoots.add(root);
 		setIndex(0);
-		nextStep(root, root.data.getModel());
-	//	System.out.println(root.children.size()+" fia van");
-		//makeTree(root, rootData.getModel());
 		cyrcle();
-	//	System.out.println(mainRoot);
 		Minimax minmaxTree=new Minimax(mainRoot);
 		maxNode=minmaxTree.maxNode;
-		System.out.println("gyoker ertek: "+mainRoot.getValue());
+	/*	System.out.println("gyoker ertek: "+mainRoot.getValue());
 		System.out.println("max erteke "+maxNode.getValue());
-		
+	*/	
 	}
-
-	/*public void makeTree(Node node, int model){
-		for(int i=0; i<5; i++){
-			for(int j=0; j<5; j++){
-				nextStep(i,j, model);
-			}
-		}
-	}*/
-
-	public void step(ArrayList<Node> nodes){
-		for(int i=0; i<nodes.size(); i++){
-			root=nodes.remove(i);
-		//	makeTree(root, root.data.getModel());
-		}
-	}
+	
 	public void cyrcle(){
-		d=1;
-		while(d<depth){
+		while(actualDepth<depth){
 			roots.clear();
 			for(Node node: newRoots){
 				roots.add(node);
@@ -68,34 +45,19 @@ public class TreeStructure extends Node{
 			newRoots.clear();
 			for(Node node: roots){
 				nextStep(node, node.data.getModel());
-			//	System.out.println("fiuk szama "+node.children.size());
 			}
-			d++;
+			actualDepth++;
 		}
 	}
-
-	public int sum(int model){/*
-		/**oszlopokon megy vegig*/
-		int mine = 0;
-		int yours = 0;
-		for(int i=0; i<5; i++){
-			for(int j=0; j<5; j++){
-				if(newTable.getField(i,j)==model){
-					mine++;
-				}
-				if(newTable.getField(i,j)==(model+1)%2){
-					yours++;
-				}
-			/*	if(newTable.getField(i, j)==QuixoBoard.empty){
-					free++;
-				}*/
-			}	
-		}
-		value=(mine*my)-(yours*your);
-		return value;
+	
+	/**Kiszamolja az aktualis csomopont erteket a csomoponthoz tartozo tabla alapjan*/
+	public int sum(int model, QuixoBoard table){
+		//Calculater result=new Calculater(model, table);
+		Winner result=new Winner(model, table);
+		return result.value;
 	}
 
-	//a=sor b=oszlop
+
 	public void nextStep(Node root, int model){
 		newTable=(QuixoBoard) data.getTable().clone();
 		
@@ -109,6 +71,7 @@ public class TreeStructure extends Node{
 				if(newTable.legal(0, i, model, 0, 0)){
 					step=new Move(0, i, 0, 0);
 					newChild(model, step, root);
+					step=null;
 				}
 				if(newTable.legal(0, i, model, 4, i)){
 					step=new Move(0, i, 4, i);
@@ -165,6 +128,7 @@ public class TreeStructure extends Node{
 		return;
 	}
 	
+	/**Az aktualis csomopont uj fiat letrehozza es hozzaadja az apa gyerekeinek listajahoz*/
 	public void newChild(int model, Move step, Node parent){
 		newTable.makeStep(step, model);
 		Pair newData=new Pair((model+1)%2, newTable);
@@ -175,17 +139,16 @@ public class TreeStructure extends Node{
 				return;
 			}
 		}
-		kutya++;
 		parent.children.add(child);
 		newRoots.add(child);
 		if(child.index==depth){
 			child.setLeaf(true);
 		}
 		if(child.isLeaf()){
-			child.setValue(sum(model));
+			child.setValue(sum(model, child.data.getTable()));
 		}
+	//	System.out.println("lepes "+step+" level-e: "+child.isLeaf());
 		newTable=(QuixoBoard) parent.data.table.clone();
-	//	System.out.println(kutya+". "+step+" level-e "+child.isLeaf()+" index "+child.getIndex()+" ertek "+child.getValue());
 		return;
 	}
 }

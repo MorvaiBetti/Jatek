@@ -14,22 +14,29 @@ public class Game{
 	public static Move move;
 	/**@name jatekos neve*/
 	public static String name;
+	/**@p emberi jatekosok*/
 	public static Player[] p=new Player[2];
+	/**@pt gepi jatekosok*/
 	public static PlayerThread[] pt=new PlayerThread[2];
-	/**@ai ai-k szama
-	 * @people emberek szama
-	 * @ind aktualis jatekos szama
-	 * @nextInd kovetkezo jatekos szama*/
-	public static int j, ai, people, ind, nextInd;
+	/**@j lepes sorszama*/
+	public static int j; 
+	 /**@ai ai-k szama*/
+	public static int ai; 
+	 /** @people emberek szama*/
+	public static int people;
+	/** @ind aktualis jatekos szama*/
+	public static int ind;
+	/** @nextInd kovetkezo jatekos szama*/
+	public static int nextInd;
 	/**@maxTime jatekosok ideje*/
 	public static long maxTime;
-	public static int depth;
+	/**@xwin az x jatekos nyereseinek szama*/
+	public static int xwin=0;
+	/**@owin az o jatekos nyereseinek szama*/
+	public static int owin=0;
 	
-	public static void player(int i, long maxTime)throws Exception{
-		try {
-			System.out.println("Kerem a(z) "+(i+1)+" jatekos tipusat: ");
-			name=reader.readLine();
-			if(name.equalsIgnoreCase("1")){
+	public static void player(int i, long maxTime, int playerTipe, int depth)throws Exception{
+			if(playerTipe==1){
 				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.RandomPlayer");
 				pt[ai].start();
 				pt[ai].datas(i, maxTime);
@@ -37,7 +44,7 @@ public class Game{
 				ai++;
 				return;
 			}
-			if(name.equalsIgnoreCase("2")){
+			if(playerTipe==2){
 				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.CheatRandomPlayer");
 				pt[ai].start();
 				pt[ai].datas(i, maxTime);
@@ -45,7 +52,7 @@ public class Game{
 				ai++;
 				return;
 			}
-			if(name.equalsIgnoreCase("3")){
+			if(playerTipe==3){
 				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.DefendPlayer");
 				pt[ai].start();
 				pt[ai].datas(i, maxTime);
@@ -53,7 +60,7 @@ public class Game{
 				ai++;
 				return;
 			}
-			if(name.equalsIgnoreCase("4")){
+			if(playerTipe==4){
 				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.CollectorPlayer");
 				pt[ai].start();
 				pt[ai].datas(i, maxTime);
@@ -61,7 +68,7 @@ public class Game{
 				ai++;
 				return;
 			}
-			if(name.equalsIgnoreCase("5")){
+			if(playerTipe==5){
 				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.CalculatPlayer");
 				pt[ai].start();
 				pt[ai].datas(i, maxTime);
@@ -69,7 +76,7 @@ public class Game{
 				ai++;
 				return;
 			}
-			if(name.equalsIgnoreCase("6")){
+			if(playerTipe==6){
 				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.DefendCalculatPlayer");
 				pt[ai].start();
 				pt[ai].datas(i, maxTime);
@@ -77,7 +84,7 @@ public class Game{
 				ai++;
 				return;
 			}
-			if(name.equalsIgnoreCase("7")){
+			if(playerTipe==7){
 				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.MohoCalculatPlayer");
 				pt[ai].start();
 				pt[ai].datas(i, maxTime);
@@ -85,7 +92,7 @@ public class Game{
 				ai++;
 				return;
 			}
-			if(name.equalsIgnoreCase("8")){
+			if(playerTipe==8){
 				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.minimax.Moho");
 				pt[ai].start();
 				pt[ai].datas(i, maxTime);
@@ -93,24 +100,22 @@ public class Game{
 				ai++;
 				return;
 			}
-			if(name.equalsIgnoreCase("9")){
+			if(playerTipe==9){
 				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.minimax.Tree");
 				pt[ai].start();
 				pt[ai].datas(i, maxTime);
+				pt[ai].setDepth(depth);
 				pt[ai].setTable(table);
 				ai++;
 				return;
 			}
-			if(name.equalsIgnoreCase("0")){
+			if(playerTipe==0){
 				p[people]=new Human();
 				p[people].datas(i, maxTime);
 				p[people].setTable(table);
 				people++;
 				return;
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	/**nyert-e valamelyik jatekos*/
@@ -121,10 +126,13 @@ public class Game{
 		}
 		if(table.win(QuixoBoard.X)){
 			System.out.println("X nyert");
+			xwin++;
 			return true;
 		}
 		if(table.win(QuixoBoard.O)){
 			System.out.println("O nyert");
+			owin++;
+			return true;
 		}
 		return false;
 	}
@@ -132,15 +140,15 @@ public class Game{
 	/**meghivja az ai nextMove()-jat, ellenorzi az ai lepeset es vegrehajtja azt*/
 	public static boolean aiStep(int i, long oTime){
 		move = pt[i].nextMove(move);
-		System.out.println("\n"+j+". lepes "+ind+". jatekos lepett | "+ move +" ido: "+pt[i].getElapsedTime()+" szinem: "+pt[i].getColor()+" || "+pt[ind].sequence+" nevem "+pt[i].playerName);
+		//System.out.println("\n"+j+". lepes "+ind+". jatekos lepett | "+ move +" ido: "+pt[i].getElapsedTime()+" szinem: "+pt[i].getColor()+" || "+pt[ind].sequence+" nevem "+pt[i].playerName);
 		if (move != null) {
 		   /** 'lejart-e az ideje?' ellenorzese*/
 		   if (pt[i].getElapsedTime() > maxTime) {
 			   if(pt[i].getColor()==QuixoBoard.X){
-			            System.out.println("X ideje lejart, ezert O nyert!");
+			            //System.out.println("X ideje lejart, ezert O nyert!");
 			            return false;
 			          } else {
-			            System.out.println("O ideje lejart, ezert X nyert!");
+			           // System.out.println("O ideje lejart, ezert X nyert!");
 			            return false;
 			          }
 		   }
@@ -150,10 +158,10 @@ public class Game{
 			   table.makeStep(move.x, move.y, pt[i].getColor(), move.nx, move.ny);
 		   } else {
 			   if(pt[i].getColor()==QuixoBoard.X){
-				   	System.out.println("X csalni probalt, azert O nyert!");
+				   //	System.out.println("X csalni probalt, azert O nyert!");
 				   	return false;
 			   } else {
-				   System.out.println("O csalni probalt, azert X nyert!");
+				  // System.out.println("O csalni probalt, azert X nyert!");
 				   return false;
 		   		}
 		   }
@@ -162,10 +170,10 @@ public class Game{
 		} else {
 			/** ind jatekos null-t lepett => lepes kenyszer miatt kikapott*/
 			if(pt[i].getColor()==QuixoBoard.X){
-				System.out.println("X nem lepett, ezert O nyert!");
+				//System.out.println("X nem lepett, ezert O nyert!");
 				return false;
 		    } else {
-		          System.out.println("O nem lepett, ezert X nyert!");
+		         // System.out.println("O nem lepett, ezert X nyert!");
 		          return false;
 		        }
 			}
@@ -175,7 +183,7 @@ public class Game{
 	/**meghivja a jatekos nextMove()-jat es vegrehajtja azt*/
 	public static void humanStep(int i){
 		move = p[i].nextMove(move);
-		System.out.println("\n"+j+". lepes "+ind+". jatekos lepett | "+ move +" szinem: "+p[i].getColor());		   
+	//	System.out.println("\n"+j+". lepes "+ind+". jatekos lepett | "+ move +" szinem: "+p[i].getColor());		   
 		table.makeStep(move.x, move.y, p[i].getColor(), move.nx, move.ny);
 		System.out.println(table);
 		return;
@@ -198,7 +206,7 @@ public class Game{
 			ind=j%2;
 			nextInd=(j+1)%2;
 			
-			System.out.println("----------------------------------");
+			//System.out.println("----------------------------------");
 			if(!aiStep(ind, pt[nextInd].getElapsedTime())){
 				return;
 			}
@@ -211,7 +219,7 @@ public class Game{
 	public static void humanvsAI(){
 		if(pt[0].getColor()==QuixoBoard.X){
 			while(!table.win(pt[0].getColor()) && !table.win(p[0].getColor())){
-				System.out.println("----------------------------------");
+				//System.out.println("----------------------------------");
 				
 				aiStep(0, 0);
 				if(winner()){
@@ -224,7 +232,7 @@ public class Game{
 			}
 		}else {
 			while(!table.win(pt[0].getColor()) && !table.win(p[0].getColor())){
-				System.out.println("----------------------------------");
+				//System.out.println("----------------------------------");
 				humanStep(0);
 				if(winner()){
 					return;
@@ -239,8 +247,17 @@ public class Game{
 		}
 	}
 	
+
+	/**time=args[0], player1=args[1],  player1depth=args[2], player2=args[3], player2depth=args[4]*/
 	public static void main(String[] args) throws Exception{
 		maxTime = Long.parseLong(args[0]);
+		int player1=Integer.parseInt(args[1]);
+		int depth1=Integer.parseInt(args[2]);
+		
+		int player2=Integer.parseInt(args[3]);
+		int depth2=Integer.parseInt(args[4]);
+		int runNumber=0;
+		
 		j=ai=people=0;
 		move=null;
 		
@@ -258,22 +275,31 @@ public class Game{
 		System.out.println();
 		
 		try {
-			player(0, maxTime);
-			player(1, maxTime);
-			System.out.println(table);
-			
-			if(people==2){
-				people();
-				return;
-			}else if(ai==2){
-					ai();
-					pt[0].exit();
-					pt[1].exit();
+		/*	while(runNumber!=25){
+				table=new QuixoBoard();
+				j=ai=people=0;
+				move=null;*/
+				player(0, maxTime, player1, depth1);
+				player(1, maxTime, player2, depth2);
+				System.out.println(table);
+				if(people==2){
+					people();
 					return;
-				}else{humanvsAI();
+				}else if(ai==2){
+						ai();
 						pt[0].exit();
-						return;
-					}	
+						pt[1].exit();
+						//return;
+					}else{humanvsAI();
+							pt[0].exit();
+							return;
+						}	
+		/*		runNumber++;
+			}*/
+			System.out.println("X nyert: "+xwin+" O nyert "+owin+" run "+runNumber);
+			pt[0].exit();
+			pt[1].exit();
+			return;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

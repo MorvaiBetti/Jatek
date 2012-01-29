@@ -73,9 +73,9 @@ public class PlayerThread extends Thread implements Player {
 		p.setTable(t);
 		status=passive;
 	}
-/*	public void setDepth(int d){
+	public void setDepth(int d){
 		p.setDepth(d);
-	}*/
+	}
 	
 	public void exit(){
 		status=exit;

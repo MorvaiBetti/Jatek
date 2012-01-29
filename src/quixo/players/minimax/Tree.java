@@ -20,8 +20,8 @@ public class Tree extends SimplePlayer{
 			depth=d;
 		}
 		public Tree() throws NumberFormatException, IOException{
-			System.out.println("Melyseg??");
-			setDepth(Integer.parseInt(reader.readLine()));
+			/*System.out.println("Melyseg??");
+			setDepth(Integer.parseInt(reader.readLine()));*/
 		}
 		
 		public Move nextMove(Move prevStep) {
