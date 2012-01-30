@@ -165,7 +165,7 @@ public class Game{
 				   return false;
 		   		}
 		   }
-		   System.out.println(table);
+		  // System.out.println(table);
 
 		} else {
 			/** ind jatekos null-t lepett => lepes kenyszer miatt kikapott*/
@@ -248,7 +248,7 @@ public class Game{
 	}
 	
 
-	/**time=args[0], player1=args[1],  player1depth=args[2], player2=args[3], player2depth=args[4]*/
+	/**time=args[0], player1=args[1],  player1depth=args[2], player2=args[3], player2depth=args[4] runNumber=args[5]*/
 	public static void main(String[] args) throws Exception{
 		maxTime = Long.parseLong(args[0]);
 		int player1=Integer.parseInt(args[1]);
@@ -256,7 +256,7 @@ public class Game{
 		
 		int player2=Integer.parseInt(args[3]);
 		int depth2=Integer.parseInt(args[4]);
-		int runNumber=0;
+		int runNumber=Integer.parseInt(args[5]);
 		
 		j=ai=people=0;
 		move=null;
@@ -275,13 +275,13 @@ public class Game{
 		System.out.println();
 		
 		try {
-		/*	while(runNumber!=25){
+			while(runNumber!=0){
 				table=new QuixoBoard();
 				j=ai=people=0;
-				move=null;*/
+				move=null;
 				player(0, maxTime, player1, depth1);
 				player(1, maxTime, player2, depth2);
-				System.out.println(table);
+			//	System.out.println(table);
 				if(people==2){
 					people();
 					return;
@@ -294,8 +294,8 @@ public class Game{
 							pt[0].exit();
 							return;
 						}	
-		/*		runNumber++;
-			}*/
+				runNumber--;
+			}
 			System.out.println("X nyert: "+xwin+" O nyert "+owin+" run "+runNumber);
 			pt[0].exit();
 			pt[1].exit();

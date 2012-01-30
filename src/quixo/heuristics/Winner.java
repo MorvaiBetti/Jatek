@@ -1,6 +1,8 @@
 package quixo.heuristics;
 
+
 import quixo.engine.QuixoBoard;
+import quixo.players.minimax.Node;
 
 public class Winner {
 	public QuixoBoard table;
@@ -31,15 +33,28 @@ public class Winner {
 	/**@you ellenfel babu erteke*/
 	public int you=4;
 	/**@win a nyeres erteke*/
-	public int win=5;
+	public int win=6;
 	
+
+	public int parentMine;
+	public int parentYours;
+	public int parentFree;
+	public int[][] parentMineFields;
+	public int[][] parentYoursFields; 
+	public QuixoBoard parentTable;
 	
-	public Winner(int color, QuixoBoard t){
+	public Winner(Node node, int color){
 		model=color;
-		table=t;
-		value=0;
+		table=(QuixoBoard) node.data.getTable().clone();
 		yoursFields=new int[5][2];
 		mineFields=new int[5][2];
+		
+		parentTable=(QuixoBoard) node.parent.data.getTable().clone();
+		parentMineFields=new int[5][2];;
+		parentYoursFields=new int[5][2];; 
+		parentMine=0;
+		parentYours=0;
+		parentFree=0;
 		value=0;
 		mine=0;
 		yours=0;
@@ -51,17 +66,28 @@ public class Winner {
 		/**Soronkent megy vegig*/
 		for(int i=0; i<5; i++){
 			mine=0; yours=0;
+			parentMine=0; parentYours=0;
 			for(int j=0; j<5; j++){
 				if(table.getField(i, j)==model){
 					mineFields[mine][0]=i;
 					mineFields[mine][1]=j;
 					mine++;
+				}else {if(table.getField(i, j)==(model+1)%2){
+						yoursFields[yours][0]=i;
+						yoursFields[yours][1]=j;
+						yours++;
+					}else {nobody++;}
 				}
-				if(table.getField(i, j)==(model+1)%2){
-					yoursFields[yours][0]=i;
-					yoursFields[yours][1]=j;
-					yours++;
-				}else {nobody++;}
+				if(parentTable.getField(i, j)==model){
+					parentMineFields[parentMine][0]=i;
+					parentMineFields[parentMine][1]=j;
+					parentMine++;
+				}else {if(parentTable.getField(i, j)==(model+1)%2){
+						parentYoursFields[parentYours][0]=i;
+						parentYoursFields[parentYours][1]=j;
+						parentYours++;
+					}else {parentFree++;}
+				}
 			}
 			findField();
 		}
@@ -69,60 +95,37 @@ public class Winner {
 		/**oszlopononkent megyek vegig*/
 		for(int i=0; i<5; i++){
 			mine=0; yours=0;
+			parentMine=0; parentYours=0;
 			for(int j=0; j<5; j++){
 				if(table.getField(j, i)==model){
 					mineFields[mine][0]=i;
 					mineFields[mine][1]=j;
 					mine++;
+				}else {if(table.getField(j, i)==(model+1)%2){
+						yoursFields[yours][0]=i;
+						yoursFields[yours][1]=j;
+						yours++;
+					}else {nobody++;}
 				}
-				if(table.getField(j, i)==(model+1)%2){
-					yoursFields[yours][0]=i;
-					yoursFields[yours][1]=j;
-					yours++;
-				}else {nobody++;}
+				if(parentTable.getField(i, j)==model){
+					parentMineFields[parentMine][0]=i;
+					parentMineFields[parentMine][1]=j;
+					parentMine++;
+				}else 	{if(parentTable.getField(i, j)==(model+1)%2){
+							parentYoursFields[parentYours][0]=i;
+							parentYoursFields[parentYours][1]=j;
+							parentYours++;
+						}else {parentFree++;}
+				}
 			}
 			findField();
 		}
-		/*
-		/**atlon megy vegig
-		k=0;
-		l=0;
-		for(int i=0; i<5; i++){
-			if(table.getField(i, i)==model){
-				mineFields[k][0]=i;
-				mineFields[k][1]=i;
-				k++;
-			}
-			if(table.getField(i, i)==(model+1)%2){
-				yoursFields[l][0]=i;
-				yoursFields[l][1]=i;
-				l++;
-			}
-		}
-		findField();
-		
-		/**mellekatlon megyek vegig
-		k=0;
-		l=0;
-		for(int i=0; i<5; i++){
-			if(table.getField(i, 4-i)==model){
-				mineFields[k][0]=i;
-				mineFields[k][1]=4-i;
-				k++;
-			}
-			if(table.getField(i, 4-i)==(model+1)%2){
-				yoursFields[l][0]=i;
-				yoursFields[l][1]=4-i;
-				l++;
-			}
-		}
-		findField();*/
 	}
 	
 	public void findField(){
-		if(yours<4){
+	/*	if(yours<4){
 			value=value-yours;
-		}
+		}*/
 		if(yours==5){
 			value=-(int) Math.pow(win, yours);
 			return;
@@ -133,7 +136,7 @@ public class Winner {
 				sor=true;
 				for(int i=0; i<3; i++){
 					if(mineFields[i][1]+1!=mineFields[i+1][1] && findStep(mineFields[i][0], mineFields[i][1]+1, (model+1)%2)){
-						value=value-(int) Math.pow(win, yours);
+						value=-(int) Math.pow(win, yours);
 						return;
 					}
 				}
@@ -143,7 +146,7 @@ public class Winner {
 				oszlop=true;
 				for(int i=0; i<3; i++){
 					if(mineFields[i][0]+1!=mineFields[i+1][0] && findStep(mineFields[i][0]+1, mineFields[i][1], (model+1)%2)){
-						value=value-(int) Math.pow(win, yours);
+						value=-(int) Math.pow(win, yours);
 						return;
 					}
 				}
@@ -151,7 +154,7 @@ public class Winner {
 			}
 		}
 		if(mine==5){
-			value=value+(int) Math.pow(win, mine)+nobody;
+			value=(int) Math.pow(win, mine)+nobody;
 			return;
 		}
 		if(mine==4){
@@ -160,7 +163,7 @@ public class Winner {
 				sor=true;
 				for(int i=0; i<3; i++){
 					if(mineFields[i][1]+1!=mineFields[i+1][1] && findStep(mineFields[i][0], mineFields[i][1]+1, model)){
-						value=value+(int) Math.pow(win, mine)+nobody;
+						value=(int) Math.pow(win, mine)+nobody;
 						return;
 					}
 				}
@@ -170,15 +173,27 @@ public class Winner {
 				oszlop=true;
 				for(int i=0; i<3; i++){
 					if(mineFields[i][0]+1!=mineFields[i+1][0] && findStep(mineFields[i][0]+1, mineFields[i][1], model)){
-						value=value+(int) Math.pow(win, mine)+nobody;
+						value=(int) Math.pow(win, mine)+nobody;
 						return;
 					}
 				}
 				oszlop=false;
 			}
 		}
+	/*	if(parentYours<mine){
+			value=value+(mine-parentYours)*me;
+		}
+		if(parentMine<yours){
+			value=value-(yours-parentMine)*you;
+		}*/
+		if(parentYours>yours+nobody){
+			value=value+mine*me;
+		}
+		if(parentYours<yours+nobody){
+			value=value-yours*you;
+		}
 		if(yours>mine){nobody=-nobody;}
-		value=value+(int) (Math.pow(me, mine))+nobody;
+		value=(int) (value+ Math.pow(me, mine)+nobody+Math.pow(you, yours));
 	}
 	
 	/**Ellenorzi, hogy egy lepesbol nyerhet-e valaki*/
