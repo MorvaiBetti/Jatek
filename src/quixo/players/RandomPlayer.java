@@ -6,14 +6,16 @@ import quixo.engine.Move;
 import quixo.engine.QuixoBoard;
 
 public class RandomPlayer extends SimplePlayer{
-	public ArrayList<Move> steps=new ArrayList<Move>();  	/**@steps szabalyos lepesek letarolasara*/
+	/**@steps szabalyos lepesek letarolasara*/
+	public ArrayList<Move> steps=new ArrayList<Move>();  	
 
 	
 	public RandomPlayer(){
 		step=null;
 	}
 	
-	/**Az AI kovetkezo lepese. A legal stepset osszegyujti, osszekeveri oket, es valaszt kozuluk egyet, amit meglep*/
+	/**Az AI kovetkezo lepese. A legal stepset osszegyujti, osszekeveri oket, es valaszt kozuluk egyet, amit meglep
+	 * @param prevStep az ellenfel utolso lepese*/
 	public Move nextMove(Move prevStep) {
 		if(prevStep!=null){
 			table.makeStep(prevStep, (color+1)%2);

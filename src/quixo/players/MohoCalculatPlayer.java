@@ -4,7 +4,9 @@ import quixo.engine.QuixoBoard;
 import quixo.engine.Move;
 
 public class MohoCalculatPlayer extends CalculatPlayer{
+	/**@max a tabla maximalis erteku mezoje*/
 	public int max;
+	/**@id a maximalis erteku mezo sorszama*/
 	public int id;
 
 	public Move nextMove(Move prevStep){
@@ -47,6 +49,7 @@ public class MohoCalculatPlayer extends CalculatPlayer{
 		return step;
 	}
 	
+	/**A maximalis erteku mezot keresi*/
 	public int find(){
 		max=0;
 		for(int i=0; i<25; i++){
@@ -58,6 +61,7 @@ public class MohoCalculatPlayer extends CalculatPlayer{
 		return id;
 	}
 	
+	/**megnezi, hogy tud a maximalis erteku mezore sajat babut tenni*/
 	public void newStep(){
 		/**ha ott mar a sajat figuram van*/
 		if(table.getField(fields[id][0], fields[id][1])==color){

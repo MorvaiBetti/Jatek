@@ -10,9 +10,9 @@ public class Calculater {
 	/**@free az ures minta darabszama*/
 	public int free; 	
 	/**@me sajat babu erteke*/
-	public int me=3; 	
+	public int me=2; 	
 	/**@you ellenfel babu erteke*/
-	public int you=3; 	
+	public int you=5; 	
 	/**@nobody ures mezo erteke*/
 	public int nobody=0;
 	/**@table aktualis tabla*/
@@ -28,10 +28,20 @@ public class Calculater {
 		value=0;
 		calculation(color);
 	}
-
+	/**A szamlalokat kinullazza*/
+	public void empty(){
+			value=0;
+			mine=0;
+			yours=0;
+			free=0;
+	}
+	
+	/**Az adott szin szempontjabol kiszamolja, melyik szinbol mennyi van a tablan.
+	 * @param model ehhez a mintahoz szamitja a tabla erteket*/
 	public void calculation(int model){
 		/**sorokon megy vegig*/
 		for(int i=0; i<5; i++){
+			empty();
 			for(int j=0; j<5; j++){
 				if(table.getField(i, j)==model){
 					mine++;
@@ -97,7 +107,10 @@ public class Calculater {
 		if(mine<yours){
 			free=-free;
 		}
-		result=(int) (Math.pow(mine, me)-Math.pow(yours, you)+free);
+		if(mine>yours){
+			mine=mine*mine;
+		}
+		result=(int) ((mine*me)-Math.pow(yours, you)+free);
 		mine=0;
 		yours=0;
 		free=0;

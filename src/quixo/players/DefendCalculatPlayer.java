@@ -13,6 +13,7 @@ public class DefendCalculatPlayer extends CalculatPlayer{
 		}
 		calculat();
 		step=null;
+		/**Ha egy lepessel nyerhetek*/
 		for(int i=0; i<25; i++){
 			for(int j=2; j<6; j++){
 				/**ha mar csak egy lepes hianyzik hogy nyerjek*/
@@ -65,6 +66,7 @@ public class DefendCalculatPlayer extends CalculatPlayer{
 		return id;
 	}
 	
+	/**megnezem, hogy lephetek a fields[id][]-edik koordinatar*/
 	public void newStep(){
 		/**ha ott mar a sajat figuram van*/
 		if(table.getField(fields[id][0], fields[id][1])==color){

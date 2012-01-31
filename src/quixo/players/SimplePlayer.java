@@ -5,7 +5,9 @@ import quixo.engine.QuixoBoard;
 import quixo.engine.Move;
 
 public abstract class SimplePlayer implements Player{
+	/**@table jatekos tablaja*/
 	public QuixoBoard table;
+	/**@step jatekos kovetkezo lepese*/
 	public Move step;
 	/**@color a jatekos mintaja*/
 	public int color; 
@@ -22,6 +24,9 @@ public abstract class SimplePlayer implements Player{
 		return color;
 	}
 	
+	/**Beallitja a jatekos szinet az ellenfel szinet es a jatekos idejet
+	 * @param sequence a jatekban hanyadik jatekos a jatekos
+	 * @param time a jatekos ideje*/
 	public void datas(int sequence, long time) {
 		maxTime=time;
 		/**A jatekosnak melyik a mintaja, es az ellenfele melyik*/

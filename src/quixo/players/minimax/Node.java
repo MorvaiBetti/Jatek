@@ -6,14 +6,20 @@ import quixo.engine.Move;
 import quixo.engine.QuixoBoard;
 
 public class Node {
+	/**@data a csucspont mintaja es tablaja*/
 	public Pair data;
+	/**@value csucspont erteke*/
 	public int value;
+	/**@parent csucspont apja*/
 	public Node parent;
-	public ArrayList<Node> children=new ArrayList<Node>(80);
+	/**@children csucspont fiai*/
+	public ArrayList<Node> children=new ArrayList<Node>();
+	/**@leaf csucspont level-e. Level ha nincs fia, ha nyert valaki vagy ha n melyen van*/
 	public boolean leaf;
+	/**@index csucspont melysege*/
 	public int index;
+	/**@step csucspont lepese*/
 	public Move step;
-	public Node brother=null;
 
 	public Node(Pair d, Node p, Move s){
 		data=d;
@@ -23,25 +29,6 @@ public class Node {
 		if(data.table.win(QuixoBoard.O) || data.table.win(QuixoBoard.X)){
 			setLeaf(true);
 		}
-	}
-
-	/*public void addChild(Node child, Node parent, int v, Move s){
-		if(child.data.getTable().win(parent.data.getModel())){
-			parent.setLeaf(true);
-			System.out.println("Level vagyok");
-			return;
-		}else parent.setLeaf(false);
-		parent.children.add(child);
-		child.setIndex(parent.getIndex()+1);	
-	}*/
-
-
-	public Node getBrother() {
-		return brother;
-	}
-
-	public void setBrother(Node brother) {
-		this.brother = brother;
 	}
 
 	public Move getStep() {

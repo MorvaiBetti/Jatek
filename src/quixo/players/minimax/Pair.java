@@ -3,7 +3,9 @@ package quixo.players.minimax;
 import quixo.engine.QuixoBoard;
 
 public class Pair {
+	/**@model a kovetkezo lepes szine*/
 	public int model;
+	/**az aktualis tabla, ami mar tartalmazza az aktualis csucshoz vezeto lepest*/
 	public QuixoBoard table;
 
 	public Pair(int model, QuixoBoard qt){

@@ -39,7 +39,7 @@ public class Human extends SimplePlayer{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		/**@move kovetlezo lepes*/
 		Move move=new Move(moveDatas[0], moveDatas[1], moveDatas[2], moveDatas[3]);
 		return move;
 	}

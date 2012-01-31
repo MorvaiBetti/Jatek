@@ -2,10 +2,6 @@ package quixo.players.minimax;
 
 
 public class Minimax{
-	/**@min minimalis ertek*/
-//	public int min;
-	/**@max maximalis ertek*/
-//	public int max;
 	/**@maxNode kovetkezo lepes*/
 	public Node maxNode;
 	/**@value minimax algoritmus eredmenye*/
@@ -23,6 +19,7 @@ public class Minimax{
 		}
 	}
 	
+	/**Maximalis erteket szamolja ki az adott csucspont gyerekeinek, es azt adja at a csucspontnak*/
 	public int maxValue(Node node, int alfa, int beta){
 		if(node.isLeaf() || node.children.isEmpty()){
 			return node.value;
@@ -41,7 +38,8 @@ public class Minimax{
 		node.value=max;
 		return max;
 	}
-	
+
+	/**Minimalis erteket szamolja ki az adott csucspont gyerekeinek, es azt adja at a csucspontnak*/
 	public int minValue(Node node, int alfa, int beta){
 		if(node.isLeaf() || node.children.isEmpty()){
 			return node.value;

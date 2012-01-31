@@ -12,15 +12,13 @@ public class Game{
 	public static BufferedReader reader = new BufferedReader(new InputStreamReader (System.in));
 	/**@move utoljara megtett lepes*/
 	public static Move move;
-	/**@name jatekos neve*/
-	public static String name;
 	/**@p emberi jatekosok*/
 	public static Player[] p=new Player[2];
 	/**@pt gepi jatekosok*/
 	public static PlayerThread[] pt=new PlayerThread[2];
 	/**@j lepes sorszama*/
 	public static int j; 
-	 /**@ai ai-k szama*/
+	 /**@ai gepi jatekosok szama*/
 	public static int ai; 
 	 /** @people emberek szama*/
 	public static int people;
@@ -34,7 +32,18 @@ public class Game{
 	public static int xwin=0;
 	/**@owin az o jatekos nyereseinek szama*/
 	public static int owin=0;
+	/**@player1 az elso jatekos szama*/
+	public int player1;
+	/**@depth1 az elso jatekos melysege*/
+	public int depth1;
+	/**@player2 a masodik jatekos szama*/
+	public int player2;
+	/**@depth2 a masodik jatekos melysege*/
+	public int depth2;
+	/**@runNumber hany jatekot jatszon a ket jatekos*/
+	public int runNumber;
 	
+	/**Jatekos letrehozas es szal inditasa*/
 	public static void player(int i, long maxTime, int playerTipe, int depth)throws Exception{
 			if(playerTipe==1){
 				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.RandomPlayer");
@@ -137,7 +146,9 @@ public class Game{
 		return false;
 	}
 	
-	/**meghivja az ai nextMove()-jat, ellenorzi az ai lepeset es vegrehajtja azt*/
+	/**meghivja az ai nextMove()-jat, ellenorzi az ai lepeset es vegrehajtja azt
+	 * @param i a timb hanyadik jatekosa jon
+	 * @param oTime ellenfel eddig eltelt ideje*/
 	public static boolean aiStep(int i, long oTime){
 		move = pt[i].nextMove(move);
 		//System.out.println("\n"+j+". lepes "+ind+". jatekos lepett | "+ move +" ido: "+pt[i].getElapsedTime()+" szinem: "+pt[i].getColor()+" || "+pt[ind].sequence+" nevem "+pt[i].playerName);
@@ -165,7 +176,9 @@ public class Game{
 				   return false;
 		   		}
 		   }
-		  // System.out.println(table);
+		   if(ai==1){
+			   System.out.println(table);
+		   }
 
 		} else {
 			/** ind jatekos null-t lepett => lepes kenyszer miatt kikapott*/
@@ -180,7 +193,7 @@ public class Game{
 		return true;
 	}
 	
-	/**meghivja a jatekos nextMove()-jat es vegrehajtja azt*/
+	/**meghivja a human jatekos nextMove()-jat es vegrehajtja azt*/
 	public static void humanStep(int i){
 		move = p[i].nextMove(move);
 	//	System.out.println("\n"+j+". lepes "+ind+". jatekos lepett | "+ move +" szinem: "+p[i].getColor());		   
@@ -189,7 +202,7 @@ public class Game{
 		return;
 	}
 	
-	/**Human vs Human*/
+	/**Human vs Human: Ket emberi jatekos felvaltva lep*/
 	public static void people(){
 		while(!table.win(p[0].getColor()) && !table.win(p[1].getColor())){
 			ind=j%2;
@@ -200,7 +213,7 @@ public class Game{
 		}
 	}
 	
-	/**AI vs AI*/
+	/**AI vs AI: ket gepi jatekos felvaltva lep*/
 	public static void ai(){
 		while(!table.win(pt[0].getColor()) && !table.win(pt[1].getColor())){
 			ind=j%2;
@@ -215,8 +228,9 @@ public class Game{
 		}
 	}
 	
-	/**Human vs AI*/
+	/**Human vs AI: ember es gep felvaltva lep. A szan alapjan dol el, hogy melyik jatekos kezd*/
 	public static void humanvsAI(){
+		/**Ha a gepi jatekos van az X-el, akkor o kezd, kulonben az ember*/
 		if(pt[0].getColor()==QuixoBoard.X){
 			while(!table.win(pt[0].getColor()) && !table.win(p[0].getColor())){
 				//System.out.println("----------------------------------");

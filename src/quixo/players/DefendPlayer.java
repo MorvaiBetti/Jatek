@@ -38,6 +38,7 @@ public class DefendPlayer extends RandomPlayer{
 		return step;
 	}
 	
+	/**Kinullazom a line tombot*/
 	public void empty(){
 		for(int k=0; k<4; k++){
 			line[k][0]=0;

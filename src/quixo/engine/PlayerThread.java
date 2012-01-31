@@ -13,9 +13,13 @@ public class PlayerThread extends Thread implements Player {
 	public Move nextStep;
 	/**@t aktualis tabla*/
 	public QuixoBoard t;
+	/**@passive passiv allapotban van a szal*/
 	public static final int passive=0;
+	/**@active active allapotban van a szal*/
 	public static final int active=1;
+	/**@exit vege a szalnak*/
 	public static final int exit=2;
+	/**@status azt jelzi, hogy eppen milyen allapotban van a szal*/
 	public int status=passive;
 	
 	public PlayerThread(int seq, long mT, String n) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
@@ -51,12 +55,14 @@ public class PlayerThread extends Thread implements Player {
 		}
 	}
 	
+	/**kezeli a szalat és ezaltal az idot is tudja merni, hogy mennyi ido alatt allitja be az adott jatekos adatait*/
 	public void datas(int sequence, long time) {
 		status=active;
 		p.datas(sequence, time);
 		status=passive;
 	}
 	
+	/**Meri, hogy mennyi ido alatt szamolja ki az adott jatekos a kovetkezo lepeset*/
 	public Move nextMove(Move prevStep) {
 		status=active;
 		nextStep=p.nextMove(prevStep);
@@ -68,15 +74,21 @@ public class PlayerThread extends Thread implements Player {
 		return sequence;
 	}
 	
+	/**Mennyi ido alatt allitja be az adott jatekos a tablat*/
 	public void setTable(QuixoBoard t) {
 		status=active;
 		p.setTable(t);
 		status=passive;
 	}
+	
+	/**Meri az idot mikozben letarolja a melyseget*/
 	public void setDepth(int d){
+		status=active;
 		p.setDepth(d);
+		status=passive;
 	}
 	
+	/**Szal befejezese*/
 	public void exit(){
 		status=exit;
 	}

@@ -36,11 +36,20 @@ public class QuixoBoard implements Cloneable {
 		return table[x][y];
 	}
 	
+	/**Beallitja a tabla adott mezojet egy adott mintara
+	 * @param x tabla x koordinataja
+	 * @param y tabla y koordinataja
+	 * @param model milyen mintaju legyen a mezo*/
 	public void setField(int x, int y, int model){
 		table[x][y]=model;
 	}
 	
-	/**Az adott lepes helyes-e?*/
+	/**Az adott lepes helyes-e?
+	 * @param x kivetel x koordinataja
+	 * @param y kivetel y koordinataja
+	 * @param model milyen mintaval van a lepes
+	 * @param nx visszatetel x koordinataja
+	 * @param ny visszatetel y koordinataja*/
 	public boolean legal(int x, int y, int model, int nx, int ny){
 		/**csak sajat szinut vagy semlegeset lehet */
 		if(table[x][y]!=model && table[x][y]!=empty){
@@ -130,11 +139,19 @@ public class QuixoBoard implements Cloneable {
 		return false;
 	}
 	
+	/**A jatektablan vegrehajtja a lepest
+	 * @param m lepes
+	 * @param model lepes mintaja*/
 	public void makeStep(Move m, int model){
 		makeStep(m.x, m.y, model, m.nx, m.ny);
 	}
 	
-	/**A jatektablan vegrehajtja a lepest*/
+	/**A jatektablan vegrehajtja a lepest
+	 * @param x kivetel x koordinataja
+	 * @param y kivetel y koordinataja
+	 * @param model milyen mintaval van a lepes
+	 * @param nx visszatetel x koordinataja
+	 * @param ny visszatetel y koordinataja*/
 	public void makeStep(int x, int y, int model, int nx, int ny){
 		/**ha az eredeti sorba rakom vissza*/
 		if(x==nx){
