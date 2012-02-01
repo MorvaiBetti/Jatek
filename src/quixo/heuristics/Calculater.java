@@ -2,7 +2,7 @@ package quixo.heuristics;
 
 import quixo.engine.QuixoBoard;
 
-public class Calculater {
+public class Calculater implements Heuristic{
 	/**@mine az aktualis minta darabszama*/
 	public int mine; 	
 	/**@yours az ellenfel minta darabszama*/
@@ -26,7 +26,7 @@ public class Calculater {
 		model=color;
 		table=t;
 		value=0;
-		calculation(color);
+		calculation();
 	}
 	/**A szamlalokat kinullazza*/
 	public void empty(){
@@ -38,7 +38,7 @@ public class Calculater {
 	
 	/**Az adott szin szempontjabol kiszamolja, melyik szinbol mennyi van a tablan.
 	 * @param model ehhez a mintahoz szamitja a tabla erteket*/
-	public void calculation(int model){
+	public void calculation(){
 		/**sorokon megy vegig*/
 		for(int i=0; i<5; i++){
 			empty();
@@ -115,5 +115,10 @@ public class Calculater {
 		yours=0;
 		free=0;
 		return result;
+	}
+
+	@Override
+	public int setValue() {
+		return value;
 	}
 }

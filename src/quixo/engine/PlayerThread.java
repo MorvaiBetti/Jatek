@@ -88,6 +88,13 @@ public class PlayerThread extends Thread implements Player {
 		status=passive;
 	}
 	
+	/**Meri az idot mikozben letarolja, hogy melyik heurisztikat hasznaljuk*/
+	public void setHeuristic(int h){
+		status=active;
+		p.setHeuristic(h);
+		status=passive;
+	}
+	
 	/**Szal befejezese*/
 	public void exit(){
 		status=exit;

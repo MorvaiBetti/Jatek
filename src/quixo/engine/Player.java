@@ -15,5 +15,11 @@ public interface Player{
 	/**A jatekos szinet/mintajat adja vissza*/
 	public int getColor();
 
+	/**A fat milyen melysegig vizsgalja
+	 * @param d melyseg*/
 	public void setDepth(int d);
+	
+	/**A fanal melyik heurisztika szerint szamol erteket
+	 * @param h heurisztika szama*/
+	public void setHeuristic(int h);
 }

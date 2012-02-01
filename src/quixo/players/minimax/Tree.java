@@ -13,15 +13,18 @@ public class Tree extends SimplePlayer{
 		public static BufferedReader reader = new BufferedReader(new InputStreamReader (System.in));
 		/**@depth milyen melysegig vizsgalja a jatekfat*/
 		public int depth;
+		/**@heuristic melyik heuristikat hasznalja kiertekelesre*/
+		public int heuristic;
 		/**@maxNode kovetkezo lepes*/
 		public Node maxNode=null;
 		
 		public void setDepth(int d){
 			depth=d;
 		}
-		public Tree() throws NumberFormatException, IOException{
-			/*System.out.println("Melyseg??");
-			setDepth(Integer.parseInt(reader.readLine()));*/
+		
+		public void setHeuristic(int h){
+			heuristic=h;
+			System.out.println("tree "+h);
 		}
 		
 		public Move nextMove(Move prevStep) {
@@ -31,7 +34,7 @@ public class Tree extends SimplePlayer{
 			}
 				
 			Pair p=new Pair(getColor(), (QuixoBoard)table.clone());
-			tree = new TreeStructure(p, depth, null, getColor());
+			tree = new TreeStructure(p, depth, heuristic);
 			maxNode=tree.maxNode;
 			
 			table.makeStep(maxNode.step, color);

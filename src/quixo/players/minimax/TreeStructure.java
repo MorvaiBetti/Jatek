@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import quixo.engine.Move;
 import quixo.engine.QuixoBoard;
 import quixo.heuristics.Calculater;
+import quixo.heuristics.Heuristic;
 import quixo.heuristics.Winner;
 
 public class TreeStructure extends Node{
@@ -22,6 +23,8 @@ public class TreeStructure extends Node{
 	public QuixoBoard newTable;
 	/**@depth a fa melysege*/
 	public int depth;
+	/**@heuristic melyik heurisztikat hasznalja*/
+	public int heuristic;
 	/**@actualDepth aktualis melyseg*/
 	public int actualDepth;
 	/**@myColor a jatekos szine*/
@@ -33,12 +36,13 @@ public class TreeStructure extends Node{
 	/**@newRoots uj, lehetseges apak*/
 	public ArrayList<Node> newRoots=new ArrayList<Node>(80);
 
-	public TreeStructure(Pair rootData, int d, Move s, int model){
-		super(rootData, null, s);
+	public TreeStructure(Pair rootData, int d, int h){
+		super(rootData, null, null);
 		childrenOfNumber=0;
 		parentsOfNumber=0;
 		depth=d;
-		root=new Node(rootData, null, s);
+	//	heuristic=h;
+		root=new Node(rootData, null, null);
 		mainRoot=root;
 		newRoots.clear();
 		newRoots.add(root);
@@ -52,6 +56,7 @@ public class TreeStructure extends Node{
 	*/	
 	}
 	
+	/**Ciklussal felepiti a jatekfat depth melysegig*/
 	public void cyrcle(){
 		while(actualDepth<depth){
 			roots.clear();
@@ -75,12 +80,20 @@ public class TreeStructure extends Node{
 	 * @param model az adott minta
 	 * @param node az adott csucspont*/
 	public int sum(int model, Node node){
-		//Calculater result=new Calculater(model, node.data.getTable());
-		Winner result=new Winner(node, model);
-		return result.value;
+	//	Heuristic result = null;
+	//	if(heuristic==1){
+			Calculater result=new Calculater(model, node.data.getTable());
+	//	}
+	//	if(heuristic==2){
+	//		Winner result= new Winner(node, model);
+	//		result=(Heuristic) Class.forName(Winner(node, model)).newInstance();
+	//	}
+		return result.setValue();
 	}
 
-
+	/**A root csomopontbol minden lehetseges lepest megvizsgal es ha szabalyos, akkor meghivja a newChild()-ot.
+	 * @param root aktualis gyoker, az o fiait keresem
+	 * @param model aktualis minta, amivel lepni kell.*/
 	public void nextStep(Node root, int model){
 		newTable=(QuixoBoard) root.data.getTable().clone();
 		for(int a=0; a<5; a++){

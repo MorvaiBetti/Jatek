@@ -4,7 +4,7 @@ package quixo.heuristics;
 import quixo.engine.QuixoBoard;
 import quixo.players.minimax.Node;
 
-public class Winner {
+public class Winner{
 	/**@table az aktualis csomopont tablajas*/
 	public QuixoBoard table;
 	/**@index az aktualis csomopont indexe*/
@@ -298,5 +298,9 @@ public class Winner {
 			}
 		}
 		return false;
+	}
+
+	public int setValue() {
+		return value;
 	}
 }

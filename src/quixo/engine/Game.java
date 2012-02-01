@@ -33,18 +33,22 @@ public class Game{
 	/**@owin az o jatekos nyereseinek szama*/
 	public static int owin=0;
 	/**@player1 az elso jatekos szama*/
-	public int player1;
+	public static int player1;
 	/**@depth1 az elso jatekos melysege*/
-	public int depth1;
+	public static int depth1;
+	/**@player1heuristic az elso jatekos milyen heurisztikat hasznal*/
+	public static int player1heuristic;
 	/**@player2 a masodik jatekos szama*/
-	public int player2;
+	public static int player2;
 	/**@depth2 a masodik jatekos melysege*/
-	public int depth2;
+	public static int depth2;
+	/**@player2heuristic a masodik jatekos milyen heurisztikat hasznal*/
+	public static int player2heuristic;
 	/**@runNumber hany jatekot jatszon a ket jatekos*/
-	public int runNumber;
+	public static int runNumber;
 	
 	/**Jatekos letrehozas es szal inditasa*/
-	public static void player(int i, long maxTime, int playerTipe, int depth)throws Exception{
+	public static void player(int i, long maxTime, int playerTipe, int depth, int heuristic)throws Exception{
 			if(playerTipe==1){
 				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.RandomPlayer");
 				pt[ai].start();
@@ -105,6 +109,7 @@ public class Game{
 				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.minimax.Moho");
 				pt[ai].start();
 				pt[ai].datas(i, maxTime);
+			//	pt[ai].setHeuristic(heuristic);
 				pt[ai].setTable(table);
 				ai++;
 				return;
@@ -114,6 +119,7 @@ public class Game{
 				pt[ai].start();
 				pt[ai].datas(i, maxTime);
 				pt[ai].setDepth(depth);
+			//	pt[ai].setHeuristic(heuristic);
 				pt[ai].setTable(table);
 				ai++;
 				return;
@@ -156,10 +162,12 @@ public class Game{
 		   /** 'lejart-e az ideje?' ellenorzese*/
 		   if (pt[i].getElapsedTime() > maxTime) {
 			   if(pt[i].getColor()==QuixoBoard.X){
-			            //System.out.println("X ideje lejart, ezert O nyert!");
+			            System.out.println("X ideje lejart, ezert O nyert!");
+			            owin++;
 			            return false;
 			          } else {
-			           // System.out.println("O ideje lejart, ezert X nyert!");
+			            System.out.println("O ideje lejart, ezert X nyert!");
+			            xwin++;
 			            return false;
 			          }
 		   }
@@ -169,10 +177,12 @@ public class Game{
 			   table.makeStep(move.x, move.y, pt[i].getColor(), move.nx, move.ny);
 		   } else {
 			   if(pt[i].getColor()==QuixoBoard.X){
-				   //	System.out.println("X csalni probalt, azert O nyert!");
+				   	System.out.println("X csalni probalt, azert O nyert!");
+				   	owin++;
 				   	return false;
 			   } else {
-				  // System.out.println("O csalni probalt, azert X nyert!");
+				   System.out.println("O csalni probalt, azert X nyert!");
+				   xwin++;
 				   return false;
 		   		}
 		   }
@@ -183,10 +193,12 @@ public class Game{
 		} else {
 			/** ind jatekos null-t lepett => lepes kenyszer miatt kikapott*/
 			if(pt[i].getColor()==QuixoBoard.X){
-				//System.out.println("X nem lepett, ezert O nyert!");
+				System.out.println("X nem lepett, ezert O nyert!");
+				owin++;
 				return false;
 		    } else {
-		         // System.out.println("O nem lepett, ezert X nyert!");
+		          System.out.println("O nem lepett, ezert X nyert!");
+		          xwin++;
 		          return false;
 		        }
 			}
@@ -262,15 +274,19 @@ public class Game{
 	}
 	
 
-	/**time=args[0], player1=args[1],  player1depth=args[2], player2=args[3], player2depth=args[4] runNumber=args[5]*/
+	/**time=args[0], player1=args[1],  player1depth=args[2], player1heuristic=args[3], player2=args[4], player2depth=args[5], player2heuristic[6], runNumber=args[7] */
 	public static void main(String[] args) throws Exception{
 		maxTime = Long.parseLong(args[0]);
-		int player1=Integer.parseInt(args[1]);
-		int depth1=Integer.parseInt(args[2]);
+		runNumber=Integer.parseInt(args[7]);
 		
-		int player2=Integer.parseInt(args[3]);
-		int depth2=Integer.parseInt(args[4]);
-		int runNumber=Integer.parseInt(args[5]);
+		player1=Integer.parseInt(args[1]);
+		depth1=Integer.parseInt(args[2]);
+	//	player1heuristic=Integer.parseInt(args[3]);
+		
+		player2=Integer.parseInt(args[4]);
+		depth2=Integer.parseInt(args[5]);
+	//	player2heuristic=Integer.parseInt(args[6]);
+		System.out.println("h1 "+player1heuristic+" h2 "+player2heuristic);
 		
 		j=ai=people=0;
 		move=null;
@@ -293,8 +309,8 @@ public class Game{
 				table=new QuixoBoard();
 				j=ai=people=0;
 				move=null;
-				player(0, maxTime, player1, depth1);
-				player(1, maxTime, player2, depth2);
+				player(0, maxTime, player1, depth1, player1heuristic);
+				player(1, maxTime, player2, depth2, player2heuristic);
 			//	System.out.println(table);
 				if(people==2){
 					people();
