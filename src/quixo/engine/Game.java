@@ -277,16 +277,16 @@ public class Game{
 	/**time=args[0], player1=args[1],  player1depth=args[2], player1heuristic=args[3], player2=args[4], player2depth=args[5], player2heuristic[6], runNumber=args[7] */
 	public static void main(String[] args) throws Exception{
 		maxTime = Long.parseLong(args[0]);
-		runNumber=Integer.parseInt(args[7]);
+		runNumber=Integer.parseInt(args[5]);
 		
 		player1=Integer.parseInt(args[1]);
 		depth1=Integer.parseInt(args[2]);
 	//	player1heuristic=Integer.parseInt(args[3]);
 		
-		player2=Integer.parseInt(args[4]);
-		depth2=Integer.parseInt(args[5]);
+		player2=Integer.parseInt(args[3]);
+		depth2=Integer.parseInt(args[4]);
 	//	player2heuristic=Integer.parseInt(args[6]);
-		System.out.println("h1 "+player1heuristic+" h2 "+player2heuristic);
+	//	System.out.println("h1 "+player1heuristic+" h2 "+player2heuristic);
 		
 		j=ai=people=0;
 		move=null;

@@ -157,10 +157,10 @@ public class Winner{
 	
 	/**Keresem a veszelyesen sorokat, oszlopokat es a szamomra jokat*/
 	public void findField(){
-		/*if(yours<mine){
+		if(yours<mine){
 			value=value+mine*you*me;
-		}*/
-	/*	if(yours<4){
+		}
+		if(yours<4){
 			value=value-yours*yours*you;
 		}
 		if(parentYours<mine){
@@ -168,7 +168,7 @@ public class Winner{
 		}
 		if(parentMine<yours){
 			value=(int) (value-Math.pow(yours,you));
-		}*/
+		}
 /*		if(parentYours>yours+nobody){
 			value=(int) (value+Math.pow(you,yours));
 		}
@@ -181,31 +181,33 @@ public class Winner{
 		if(parentMine<mine+nobody){
 			value=(int) (value+Math.pow(me,mine));
 		}
-		if(yours>mine){nobody=-nobody;}
+	/*	if(yours>mine){nobody=-nobody;}
 		value=(int) (value+ Math.pow(me, mine)+nobody+Math.pow(you, yours));
 		/*if(yours+2==mine){
 			value=(int) (value+Math.pow(yours, mine));
 		}*/
 		
-	/*	if(yours>=3){
-			//value= (int) (value-Math.pow(win, yours*index));
+		if(yours>=3){
+			value= (int) (value-Math.pow(win, yours*index));
 			//return;
 		}
 		if(mine>=4){
-			//value=(int) (value+Math.pow(win, mine*index));
+			value=(int) (value+Math.pow(win, mine*index));
 			//return;
 		}
-	//	value=value+change;*/
+	//	value=value+change;
 
-		if(yours==5){
+	/*	if(yours==5){
 			value=value-(int) Math.pow(win, yours*you);
+			return;
 		}
 		if(yours>=3 && yours<5){
-			/**ha sorban van negy egyforma*/
+			/**ha sorban van negy egyforma
 			if(sor){
 				for(int i=0; i<3; i++){
 					if(yoursFields[i][1]+1!=yoursFields[i+1][1] && findStep(yoursFields[i][0], yoursFields[i][1]+1, (model+1)%2)){
 						value=value-(int) Math.pow(win, yours);
+						return;
 					}
 				}
 			}
@@ -213,18 +215,20 @@ public class Winner{
 				for(int i=0; i<3; i++){
 					if(yoursFields[i][0]+1!=yoursFields[i+1][0] && findStep(yoursFields[i][0]+1, yoursFields[i][1], (model+1)%2)){
 						value=value-(int) Math.pow(win, yours);
+						return;
 					}
 				}
 			}
 		}
 	
 		if(mine==4){
-			/**ha sorban van negy egyforma*/
+			/**ha sorban van negy egyforma
 			if(mineFields[0][0]==mineFields[1][0]){
 				sor=true;
 				for(int i=0; i<3; i++){
 					if(mineFields[i][1]+1!=mineFields[i+1][1] && findStep(mineFields[i][0], mineFields[i][1]+1, model)){
 						value=value+(int) Math.pow(win, mine);
+						return;
 					}
 				}
 				sor=false;
@@ -234,6 +238,7 @@ public class Winner{
 				for(int i=0; i<3; i++){
 					if(mineFields[i][0]+1!=mineFields[i+1][0] && findStep(mineFields[i][0]+1, mineFields[i][1], model)){
 						value=value+(int) Math.pow(win, mine);
+						return;
 					}
 				}
 				oszlop=false;
@@ -241,7 +246,8 @@ public class Winner{
 		}
 		if(mine==5){
 			value=value+(int) Math.pow(win, mine*me);
-		}
+			return;
+		}*/
 		if(yours>mine){nobody=-nobody;}
 		value=(int) (value+ Math.pow(me, mine)+nobody+Math.pow(you, yours));
 
