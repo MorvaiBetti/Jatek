@@ -7,7 +7,8 @@ import quixo.engine.QuixoBoard;
 
 public class Node {
 	/**@data a csucspont mintaja es tablaja*/
-	public Pair data;
+	public int model;
+	public QuixoBoard table;
 	/**@value csucspont erteke*/
 	public int value;
 	/**@parent csucspont apja*/
@@ -20,15 +21,42 @@ public class Node {
 	public int index;
 	/**@step csucspont lepese*/
 	public Move step;
+	
+	public int ind;
 
-	public Node(Pair d, Node p, Move s){
-		data=d;
+	/**Node konstruktora
+	 * @param color a kovetkezo lepes szine
+	 * @param t aktualis tabla
+	 * @param p apa
+	 * @param az aktualis csomoponthoz vezeto lepes*/
+	public Node(QuixoBoard t, Node p, Move s){
+		table=(QuixoBoard) t.clone();
 		parent=p;
 		step=s;
-		if(parent!=null){index=parent.getIndex()+1;}
-		if(data.table.win(QuixoBoard.O) || data.table.win(QuixoBoard.X)){
+		if(parent!=null){
+			index=parent.getIndex()+1;
+			model=(parent.getModel()+1)%2;
+		} else {setIndex(0);}
+		
+		if(table.win(QuixoBoard.O) || table.win(QuixoBoard.X)){
 			setLeaf(true);
-		}
+		}else {setLeaf(false);}
+	}
+
+	public int getModel() {
+		return model;
+	}
+
+	public void setModel(int model) {
+		this.model = model;
+	}
+
+	public QuixoBoard getTable() {
+		return table;
+	}
+
+	public void setTable(QuixoBoard table) {
+		this.table = table;
 	}
 
 	public Move getStep() {
@@ -36,12 +64,6 @@ public class Node {
 	}
 	public void setStep(Move step) {
 		this.step = step;
-	}
-	public Pair getData() {
-		return data;
-	}
-	public void setData(Pair data) {
-		this.data = data;
 	}
 
 	public Node getParent() {
@@ -81,7 +103,7 @@ public class Node {
 
 	public String toString(){
 		String s="";
-		s+=this.index+"-"+this.value+"\n"+this.data.table+"\n\n";
+		s+=this.getIndex()+"-"+this.getValue()+" "+this.getStep();
 		if(this.children.size()>0){
 			s+="(";
 			for(Node n:this.children){

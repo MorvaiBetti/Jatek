@@ -6,7 +6,6 @@ public class DefendPlayer extends RandomPlayer{
 	public int[][] line;
 
 	public DefendPlayer() {
-		super();
 		line=new int[4][2];
 	}
 	

@@ -1,28 +1,36 @@
 package quixo.players.minimax;
 
 import quixo.engine.Move;
-import quixo.engine.QuixoBoard;
-import quixo.players.SimplePlayer;
 
-public class Moho extends SimplePlayer{
-	/**@tree n melysegu fa minimax algoritmussal es alfa-beta vagassal*/
-	public TreeStructure tree;
+public class Moho extends Minimax{
+	public Minimax forbear;
+	public Move step;
 	/**@heuristic melyik heuristikat hasznalja kiertekelesre*/
-	public int heuristic;
+/*	public int heuristic;
 	
 	public void setHeuristic(int h){
 		heuristic=h;
 		System.out.println("moho "+h);
+	}*/
+	
+	public Moho(){
+		super();
+		forbear=new Minimax();
+		forbear.setDepth(1);
 	}
 	
 	public Move nextMove(Move prevStep) {
 		if(prevStep!=null){
-			table.makeStep(prevStep, (color+1)%2);
+			table.makeStep(prevStep, getOpponentColor());
 		}
-		
-		Pair p=new Pair(getColor(), (QuixoBoard)table.clone());
-		tree = new TreeStructure(p, 1, heuristic);
-		table.makeStep(tree.maxNode.step, color);
-		return tree.maxNode.step;
+		forbear.root=new Node(table, null, null);
+		forbear.table=table;
+		forbear.setColor(getColor());
+	
+		forbear.maxValue(forbear.root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+		forbear.root=forbear.find(forbear.root);
+		step=forbear.root.getStep();
+		table=forbear.root.getTable();
+		return step;
 	}
 }

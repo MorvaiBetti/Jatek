@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import quixo.players.Human;
-
 public class Game{
 	/**@table jatektabla*/
 	public static QuixoBoard table=new QuixoBoard();
@@ -44,8 +42,6 @@ public class Game{
 	public static int depth2;
 	/**@player2heuristic a masodik jatekos milyen heurisztikat hasznal*/
 	public static int player2heuristic;
-	/**@runNumber hany jatekot jatszon a ket jatekos*/
-	public static int runNumber;
 	
 	/**Jatekos letrehozas es szal inditasa*/
 	public static void player(int i, long maxTime, int playerTipe, int depth, int heuristic)throws Exception{
@@ -53,7 +49,6 @@ public class Game{
 				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.RandomPlayer");
 				pt[ai].start();
 				pt[ai].datas(i, maxTime);
-				pt[ai].setTable(table);
 				ai++;
 				return;
 			}
@@ -61,7 +56,6 @@ public class Game{
 				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.CheatRandomPlayer");
 				pt[ai].start();
 				pt[ai].datas(i, maxTime);
-				pt[ai].setTable(table);
 				ai++;
 				return;
 			}
@@ -69,7 +63,6 @@ public class Game{
 				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.DefendPlayer");
 				pt[ai].start();
 				pt[ai].datas(i, maxTime);
-				pt[ai].setTable(table);
 				ai++;
 				return;
 			}
@@ -77,7 +70,6 @@ public class Game{
 				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.CollectorPlayer");
 				pt[ai].start();
 				pt[ai].datas(i, maxTime);
-				pt[ai].setTable(table);
 				ai++;
 				return;
 			}
@@ -85,7 +77,6 @@ public class Game{
 				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.CalculatPlayer");
 				pt[ai].start();
 				pt[ai].datas(i, maxTime);
-				pt[ai].setTable(table);
 				ai++;
 				return;
 			}
@@ -93,7 +84,6 @@ public class Game{
 				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.DefendCalculatPlayer");
 				pt[ai].start();
 				pt[ai].datas(i, maxTime);
-				pt[ai].setTable(table);
 				ai++;
 				return;
 			}
@@ -101,7 +91,6 @@ public class Game{
 				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.MohoCalculatPlayer");
 				pt[ai].start();
 				pt[ai].datas(i, maxTime);
-				pt[ai].setTable(table);
 				ai++;
 				return;
 			}
@@ -110,24 +99,21 @@ public class Game{
 				pt[ai].start();
 				pt[ai].datas(i, maxTime);
 			//	pt[ai].setHeuristic(heuristic);
-				pt[ai].setTable(table);
 				ai++;
 				return;
 			}
 			if(playerTipe==9){
-				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.minimax.Tree");
+				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.minimax.Minimax");
 				pt[ai].start();
 				pt[ai].datas(i, maxTime);
 				pt[ai].setDepth(depth);
 			//	pt[ai].setHeuristic(heuristic);
-				pt[ai].setTable(table);
 				ai++;
 				return;
 			}
 			if(playerTipe==0){
-				p[people]=new Human();
+				p[people]=new quixo.players.Human();
 				p[people].datas(i, maxTime);
-				p[people].setTable(table);
 				people++;
 				return;
 			}
@@ -157,7 +143,7 @@ public class Game{
 	 * @param oTime ellenfel eddig eltelt ideje*/
 	public static boolean aiStep(int i, long oTime){
 		move = pt[i].nextMove(move);
-		//System.out.println("\n"+j+". lepes "+ind+". jatekos lepett | "+ move +" ido: "+pt[i].getElapsedTime()+" szinem: "+pt[i].getColor()+" || "+pt[ind].sequence+" nevem "+pt[i].playerName);
+		System.out.println("\n"+j+". lepes "+ind+". jatekos lepett | "+ move +" ido: "+pt[i].getElapsedTime()+" szinem: "+pt[i].getColor()+" || "+pt[ind].sequence+" nevem "+pt[i].playerName);
 		if (move != null) {
 		   /** 'lejart-e az ideje?' ellenorzese*/
 		   if (pt[i].getElapsedTime() > maxTime) {
@@ -186,9 +172,8 @@ public class Game{
 				   return false;
 		   		}
 		   }
-		   if(ai==1){
-			   System.out.println(table);
-		   }
+		   System.out.println(table);
+		  
 
 		} else {
 			/** ind jatekos null-t lepett => lepes kenyszer miatt kikapott*/
@@ -205,10 +190,12 @@ public class Game{
 		return true;
 	}
 	
-	/**meghivja a human jatekos nextMove()-jat es vegrehajtja azt*/
+	/**meghivja a human jatekos nextMove()-jat es vegrehajtja azt
+	 * @param i i-edik human jatekos lep*/
 	public static void humanStep(int i){
+		table.nextSteps(p[i].getColor());
 		move = p[i].nextMove(move);
-	//	System.out.println("\n"+j+". lepes "+ind+". jatekos lepett | "+ move +" szinem: "+p[i].getColor());		   
+		System.out.println("\n"+j+". lepes "+ind+". jatekos lepett | "+ move +" szinem: "+p[i].getColor());		   
 		table.makeStep(move.x, move.y, p[i].getColor(), move.nx, move.ny);
 		System.out.println(table);
 		return;
@@ -274,10 +261,9 @@ public class Game{
 	}
 	
 
-	/**time=args[0], player1=args[1],  player1depth=args[2], player1heuristic=args[3], player2=args[4], player2depth=args[5], player2heuristic[6], runNumber=args[7] */
+	/**time=args[0], player1=args[1],  player1depth=args[2], player1heuristic=args[3], player2=args[4], player2depth=args[5], player2heuristic[6]*/
 	public static void main(String[] args) throws Exception{
 		maxTime = Long.parseLong(args[0]);
-		runNumber=Integer.parseInt(args[5]);
 		
 		player1=Integer.parseInt(args[1]);
 		depth1=Integer.parseInt(args[2]);
@@ -305,13 +291,12 @@ public class Game{
 		System.out.println();
 		
 		try {
-			while(runNumber!=0){
 				table=new QuixoBoard();
 				j=ai=people=0;
 				move=null;
 				player(0, maxTime, player1, depth1, player1heuristic);
 				player(1, maxTime, player2, depth2, player2heuristic);
-			//	System.out.println(table);
+				System.out.println(table);
 				if(people==2){
 					people();
 					return;
@@ -324,12 +309,7 @@ public class Game{
 							pt[0].exit();
 							return;
 						}	
-				runNumber--;
-			}
-			System.out.println("X nyert: "+xwin+" O nyert "+owin+" run "+runNumber);
-			pt[0].exit();
-			pt[1].exit();
-			return;
+		
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

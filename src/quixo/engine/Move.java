@@ -23,5 +23,18 @@ public class Move {
 	public String toString(){
 		return "("+x +" "+ y +" "+ nx +" "+ ny+")";
 	};
+	
+	public boolean as(Move m){
+		if(x==m.x && y==m.y && nx==m.nx && ny==m.ny){
+			return true;
+		}
+		return false;
+	}
 
+	/**Tesztelesre*/
+/*	public static void main(String[] args) {
+		Move m1=new Move(5, 2, 3, 1);
+		Move m2=new Move(5, 2, 4, 1);
+		System.out.println(m1.as(m2));
+	}*/
 }

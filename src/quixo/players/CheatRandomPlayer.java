@@ -3,8 +3,9 @@ package quixo.players;
 import java.util.*;
 
 import quixo.engine.Move;
+import quixo.engine.Player;
 
-public class CheatRandomPlayer extends SimplePlayer{
+public class CheatRandomPlayer extends Player{
 	/**@cheat szabalytalan lepesek letarolasara*/
 	public ArrayList<Move> cheat=new ArrayList<Move>(); 
 	/**@steps szabalyos lepesek letarolasara*/
@@ -12,7 +13,6 @@ public class CheatRandomPlayer extends SimplePlayer{
 	public double epsz;
 	
 	public CheatRandomPlayer() {
-		//super();
 		epsz=5;
 	}
 	

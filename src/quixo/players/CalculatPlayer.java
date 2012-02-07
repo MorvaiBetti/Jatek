@@ -1,8 +1,9 @@
 package quixo.players;
 
+import quixo.engine.Player;
 import quixo.engine.QuixoBoard;
 
-public abstract class CalculatPlayer extends SimplePlayer{
+public abstract class CalculatPlayer extends Player{
 	/**@fields tabla minden mezojenek kulon-kulon az erteke*/
 	public int[][] fields=new int[25][7];
 	/**@my sajat babu erteke*/

@@ -4,12 +4,13 @@ import java.io.*;
 import java.util.*;
 
 import quixo.engine.Move;
+import quixo.engine.Player;
 
-public class Human extends SimplePlayer{
+public class Human extends Player{
 	public static String in;
 	public static StringTokenizer st;
 	public static BufferedReader reader = new BufferedReader(new InputStreamReader (System.in));
-
+	
 	public Move nextMove(Move prevStep) {
 		int i=0;
 		/**@moveDatas lepes adatai*/
@@ -36,7 +37,6 @@ public class Human extends SimplePlayer{
 		    	return nextMove(prevStep);
 		    }
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		/**@move kovetlezo lepes*/

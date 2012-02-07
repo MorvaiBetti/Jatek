@@ -1,4 +1,7 @@
 package quixo.engine;
+
+import java.util.ArrayList;
+
 public class QuixoBoard implements Cloneable {
 	/**(sor; oszlop)
 	 * @empty ures mezo*/
@@ -31,7 +34,9 @@ public class QuixoBoard implements Cloneable {
 		return board;
 	}
 	
-	/**a table egy adott mezojenek erteket adja vissza*/
+	/**a table egy adott mezojenek erteket adja vissza
+	 * @param x koordinata
+	 * @param y koordinata*/
 	public int getField(int x, int y){
 		return table[x][y];
 	}
@@ -89,7 +94,8 @@ public class QuixoBoard implements Cloneable {
 		return false;
 	}
 	
-	/**@param model megnyerte-e a jatekot*/
+	/**Az adott jatekos nyert-e.
+	 * @param model megnyerte-e a jatekot*/
 	public boolean win(int model){
 		int db=0;
 		/**sorokon megy vegig*/
@@ -194,7 +200,7 @@ public class QuixoBoard implements Cloneable {
 		}
 	}
 	
-	/**melyik mintabol hany darab van a tablan*/
+	/**Melyik mintabol hany darab van a tablan*/
 	public void piece(){
 		int x=0, o=0, e=0;
 		for(int i=0; i<5; i++){
@@ -211,6 +217,139 @@ public class QuixoBoard implements Cloneable {
 			}
 		}
 		System.out.println("X="+x+" O="+o+" Empty="+e);
+	}
+	
+	/**Adott minta lehetseges lepeseinek listajat adja vissza.
+	 * @param color a minta, aminek a lepeseit vizsgalom*/
+	public ArrayList<Move> nextSteps(int color){
+		ArrayList<Move> steps=new ArrayList<Move>();
+		Move step;
+		int j=0;
+		for(int i=0; i<5; i++){ 					/**A lehetseges stepsen vegigmegy, es steps-hez hozzaadja a legal stepset*/
+			/**ha az elso sorbol valasztok*/
+			if(getField(0, i)==color || getField(0, i)==empty){
+				if(legal(0, i, color, 0, 4)){
+					step=new Move(0, i, 0, 4);
+					if(!exist(step, steps)){
+						steps.add(step);
+						j++;
+					}
+				}
+				if(legal(0, i, color, 0, 0)){
+					step=new Move(0, i, 0, 0);
+					if(!exist(step, steps)){
+						steps.add(step);
+						j++;
+					}
+				}
+				if(legal(0, i, color, 4, i)){
+					step=new Move(0, i, 4, i);
+					if(!exist(step, steps)){
+						steps.add(step);
+						j++;
+					}
+				}
+			}
+			/**ha az utolso sorbol valasztok*/
+			if(getField(4, i)==color || getField(4, i)==empty){
+				if(legal(4, i, color, 4, 0)){
+					step=new Move(4, i, 4, 0);
+					if(!exist(step, steps)){
+						steps.add(step);
+						j++;
+					}
+				}
+				if(legal(4, i, color, 4, 4)){
+					step=new Move(4, i, 4, 4);
+					if(!exist(step, steps)){
+						steps.add(step);
+						j++;
+					}
+				}
+				if(legal(4, i, color, 0, i)){
+					step=new Move(4, i, 0, i);
+					if(!exist(step, steps)){
+						steps.add(step);
+						j++;
+					}
+				}
+			}
+			
+			/**ha az elso oszlopbol valasztok*/
+			if(getField(i, 0)==color || getField(i, 0)==empty){
+				if(legal(i, 0, color, 4, 0)){
+					step=new Move(i, 0, 4, 0);
+					if(!exist(step, steps)){
+						steps.add(step);
+						j++;
+					}
+				}
+				if(legal(i, 0, color, 0, 0)){
+					step=new Move(i, 0, 0, 0);
+					if(!exist(step, steps)){
+						steps.add(step);
+						j++;
+					}
+				}
+				if(legal(i, 0, color, i, 4)){
+					step=new Move(i, 0, i, 4);
+					if(!exist(step, steps)){
+						steps.add(step);
+						j++;
+					}
+				}
+			}
+			/**ha az utolso oszlopbol valasztok*/
+			if(getField(i, 4)==color || getField(i, 4)==empty){
+				if(legal(i, 4, color, 0, 4)){
+					step=new Move(i, 4, 0, 4);
+					if(!exist(step, steps)){
+						steps.add(step);
+						j++;
+					}
+				}
+				if(legal(i, 4, color, 4, 4)){
+					step=new Move(i, 4, 4, 4);
+					if(!exist(step, steps)){
+						steps.add(step);
+						j++;
+					}
+				}
+				if(legal(i, 4, color, i, 0)){
+					step=new Move(i, 4, i, 0);
+					if(!exist(step, steps)){
+						steps.add(step);
+						j++;
+					}
+				}
+			}
+		}
+		return steps;
+	}
+	
+	/**Az adott lepes letezik-e mar az adott listaban?
+	 * @param m a lepes, amit keresek
+	 * @param steps a lista, amiben keresek*/
+	public boolean exist(Move m, ArrayList<Move> steps){
+		for(Move move: steps){
+			if(steps.indexOf(m)!=steps.indexOf(move) && move.as(m)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**Ket tabla egyenlo-e
+	 * @param t a tabla, amit osszehasonlitok az eredetivel*/
+	public boolean as(QuixoBoard t){
+		for(int i=0; i<5; i++){
+			for(int j=0; j<5; j++){
+				if(getField(i, j)!=t.getField(i, j)){
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 	
 	public String toString(){
@@ -234,4 +373,27 @@ public class QuixoBoard implements Cloneable {
 		}
 		return s;
 	}
+	
+	/**tesztelesre*/
+	/*public static void main(String[] args) {
+		QuixoBoard t=new QuixoBoard();
+		/*t.setField(0, 0, 0);
+		t.setField(0, 1, 0);
+		t.setField(0, 2, 0);
+		t.setField(0, 3, 0);
+		t.setField(0, 4, 0);
+		t.setField(1, 0, 0);
+		t.setField(2, 0, 0);
+		t.setField(3, 0, 0);
+		t.setField(4, 0, 0);
+		t.setField(1, 4, 0);
+		t.setField(2, 4, 0);
+		t.setField(3, 4, 0);
+		t.setField(4, 4, 0);
+		t.setField(4, 3, 0);
+		t.setField(4, 2, 0);
+		t.setField(4, 1, 0);
+		System.out.println(t);
+		t.nextSteps(0);
+	}*/
 }

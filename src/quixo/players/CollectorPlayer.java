@@ -10,7 +10,6 @@ public class CollectorPlayer extends RandomPlayer{
 	public int db; 		
 	
 	public CollectorPlayer() {
-		super();
 		line=new int[25][2];
 	}
 
@@ -64,7 +63,6 @@ public class CollectorPlayer extends RandomPlayer{
 				}
 			}
 		}
-	//	System.out.println("db: "+db);
 		if(db>0){
 			return true;
 		}

@@ -8,7 +8,7 @@ public class MohoCalculatPlayer extends CalculatPlayer{
 	public int max;
 	/**@id a maximalis erteku mezo sorszama*/
 	public int id;
-
+	
 	public Move nextMove(Move prevStep){
 		if(prevStep!=null){
 			table.makeStep(prevStep, (color+1)%2);

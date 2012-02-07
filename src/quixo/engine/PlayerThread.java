@@ -1,7 +1,7 @@
 package quixo.engine;
 import java.lang.management.ManagementFactory;
 
-public class PlayerThread extends Thread implements Player {
+public class PlayerThread extends Thread {
 	/**@playerName jatekos fajtaja*/
 	public String playerName;
 	/**@sequence hanyadiknak lep a jatekos*/
@@ -55,14 +55,17 @@ public class PlayerThread extends Thread implements Player {
 		}
 	}
 	
-	/**kezeli a szalat és ezaltal az idot is tudja merni, hogy mennyi ido alatt allitja be az adott jatekos adatait*/
+	/**kezeli a szalat és ezaltal az idot is tudja merni, hogy mennyi ido alatt allitja be az adott jatekos adatait
+	 * @param sequence hanyadiknak lephet a jatekos es egyben melyik mintaval van.
+	 * @param time mennyi ideje van a jatekosnak*/
 	public void datas(int sequence, long time) {
 		status=active;
 		p.datas(sequence, time);
 		status=passive;
 	}
 	
-	/**Meri, hogy mennyi ido alatt szamolja ki az adott jatekos a kovetkezo lepeset*/
+	/**Meri, hogy mennyi ido alatt szamolja ki az adott jatekos a kovetkezo lepeset
+	 * @param prevStep az ellenfel utolso lepese*/
 	public Move nextMove(Move prevStep) {
 		status=active;
 		nextStep=p.nextMove(prevStep);
@@ -74,21 +77,16 @@ public class PlayerThread extends Thread implements Player {
 		return sequence;
 	}
 	
-	/**Mennyi ido alatt allitja be az adott jatekos a tablat*/
-	public void setTable(QuixoBoard t) {
-		status=active;
-		p.setTable(t);
-		status=passive;
-	}
-	
-	/**Meri az idot mikozben letarolja a melyseget*/
+	/**Meri az idot mikozben letarolja a melyseget
+	 * @param depth melyseg*/
 	public void setDepth(int d){
 		status=active;
 		p.setDepth(d);
 		status=passive;
 	}
 	
-	/**Meri az idot mikozben letarolja, hogy melyik heurisztikat hasznaljuk*/
+	/**Meri az idot mikozben letarolja, hogy melyik heurisztikat hasznaljuk
+	 * @param h melyik heurisztikat hasznaljuk.*/
 	public void setHeuristic(int h){
 		status=active;
 		p.setHeuristic(h);
