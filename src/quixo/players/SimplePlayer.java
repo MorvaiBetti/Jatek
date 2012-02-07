@@ -39,6 +39,4 @@ public abstract class SimplePlayer implements Player{
 	}
 	
 	public void setDepth(int d) {}
-	
-	public void setHeuristic(int h){}
 }
