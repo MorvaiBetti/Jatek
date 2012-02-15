@@ -149,6 +149,7 @@ public class QuixoBoard implements Cloneable {
 	 * @param m lepes
 	 * @param model lepes mintaja*/
 	public void makeStep(Move m, int model){
+		m.setPrevModel(getField(m.x, m.y));
 		makeStep(m.x, m.y, model, m.nx, m.ny);
 	}
 	
@@ -198,6 +199,12 @@ public class QuixoBoard implements Cloneable {
 				return;
 			}
 		}
+	}
+	
+	/**A jatektablan visszavonja a megadott lepest
+	 * @move a lepes, amit visszavonok*/
+	public void undoStep(Move move){
+		makeStep(move.nx, move.ny, move.getPrevModel(), move.x, move.y);
 	}
 	
 	/**Melyik mintabol hany darab van a tablan*/
@@ -341,7 +348,7 @@ public class QuixoBoard implements Cloneable {
 	
 	/**Ket tabla egyenlo-e
 	 * @param t a tabla, amit osszehasonlitok az eredetivel*/
-	public boolean as(QuixoBoard t){
+	public boolean equals(QuixoBoard t){
 		for(int i=0; i<5; i++){
 			for(int j=0; j<5; j++){
 				if(getField(i, j)!=t.getField(i, j)){
@@ -375,25 +382,29 @@ public class QuixoBoard implements Cloneable {
 	}
 	
 	/**tesztelesre*/
-	/*public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		QuixoBoard t=new QuixoBoard();
-		/*t.setField(0, 0, 0);
-		t.setField(0, 1, 0);
+		t.setField(0, 0, 0);
+		t.setField(0, 1, 1);
 		t.setField(0, 2, 0);
-		t.setField(0, 3, 0);
+		t.setField(0, 3, 1);
 		t.setField(0, 4, 0);
-		t.setField(1, 0, 0);
+		t.setField(1, 0, 1);
 		t.setField(2, 0, 0);
-		t.setField(3, 0, 0);
+		t.setField(3, 0, 1);
 		t.setField(4, 0, 0);
-		t.setField(1, 4, 0);
+		t.setField(1, 4, 1);
 		t.setField(2, 4, 0);
-		t.setField(3, 4, 0);
+		t.setField(3, 4, 1);
 		t.setField(4, 4, 0);
-		t.setField(4, 3, 0);
+		t.setField(4, 3, 1);
 		t.setField(4, 2, 0);
-		t.setField(4, 1, 0);
+		t.setField(4, 1, 1);
 		System.out.println(t);
-		t.nextSteps(0);
+		Move m=new Move(0, 0, 0, 4);
+		t.makeStep(m, 0);
+		System.out.println(t);
+		t.undoStep(m);
+		System.out.println(t);
 	}*/
 }

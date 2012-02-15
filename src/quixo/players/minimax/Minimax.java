@@ -1,6 +1,7 @@
 package quixo.players.minimax;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import quixo.engine.Move;
 import quixo.engine.Player;
@@ -18,6 +19,10 @@ public class Minimax extends Player{
 	public Node child;
 	/**@opponent az ellenfel lepeset keresem-e*/
 	public boolean opponent;
+	/**@random hogy ne mindig az elso megtalalt lepest adja vissza a find() metodus*/
+	public Random random=new Random();
+	/**@prevTable elozo lepesem utani tabla*/
+	public QuixoBoard prevTable=new QuixoBoard();
 	
 	public Minimax(){}
 	
@@ -32,6 +37,8 @@ public class Minimax extends Player{
 			root.setModel(getColor());
 			maxValue(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
 			root=find(root);
+			table.makeStep(root.getStep(), getColor());
+			prevTable=(QuixoBoard) table.clone();
 			return root.getStep();
 		}
 		if(prevStep==null){
@@ -39,6 +46,8 @@ public class Minimax extends Player{
 			root.setModel(getColor());
 			maxValue(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
 			root=find(root);
+			table.makeStep(root.getStep(), getColor());
+			prevTable=(QuixoBoard) table.clone();
 			return root.getStep();
 		}
 		table.makeStep(prevStep, getOpponentColor());
@@ -47,34 +56,55 @@ public class Minimax extends Player{
 			root.setModel(getColor());
 			maxValue(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
 			root=find(root);
+			table.makeStep(root.getStep(), getColor());
+			prevTable=(QuixoBoard) table.clone();
 			return root.getStep();
 		}
 		/**Azert kell, mert az ellenfel valaszthatott olyan lepest, amit en korabban az alfa-beta miatt levagtam.*/
-		opponent=true;
-		maxValue(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
-		opponent=false;
+		Node possible=null;
 		for(Node child:root.children){	
-			if(child.getTable().as(table)){
-				root=child;
-				root.setLeaf(false);
-				maxValue(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
-				root=find(root);
-				return root.getStep();
+			if(child.getTable().equals(table)){
+				possible=child;
+				break;
 			}
 		}
-		return null;
+		if(possible==null){
+			QuixoBoard t=(QuixoBoard) root.getTable().clone();
+			t.makeStep(prevStep, opponentColor);
+			root=new Node(t, null, null);
+			root.setModel(getColor());
+		}else {
+			root=possible;
+			root.setLeaf(false);
+			root.setParent(null);
+			root.setStep(null);
+			root.setModel(getColor());
+		}
+		maxValue(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+		root=find(root);
+		table.makeStep(root.getStep(), getColor());
+		prevTable=(QuixoBoard) table.clone();
+		return root.getStep();
 	}
 	
 	/**Megkeresi, hogy a gyoker erteke melyik fianak ertekevel egyezik meg, az a fiu tartalmazza a kovetkezo lepest
 	 * @param node a gyoker, akinek a fiai kozott keresek*/
 	public Node find(Node node){
+		Node found=null;
 		for(Node child: node.children){
 			if(child.getValue()==node.getValue()){
-				table.makeStep(child.getStep(), node.getModel());
-				return child;
+				if(child.table.equals(prevTable)){
+					continue;
+				}
+				if(found!=null && random.nextBoolean()){
+					found=child;
+				}else {
+					found=child;
+				}
+				
 			}
 		}
-		return null;
+		return found;
 	}
 	
 	/**Az aktualis csomopont uj fiat letrehozza es hozzaadja az apa gyerekeinek listajahoz
@@ -83,16 +113,20 @@ public class Minimax extends Player{
 	public Node newChild(Move step, Node parent){
 		QuixoBoard newTable=(QuixoBoard) parent.table.clone();
 		newTable.makeStep(step, parent.getModel());
+		if(newTable.equals(prevTable)){
+			return null;
+		}
 		Node child=new Node(newTable, parent, step);
 		/**Ha az adott tablaallassal mar letezik node*/
 		for(Node node: parent.children){
-			if(node.getTable().as(child.getTable())){
+			if(node.getTable().equals(child.getTable())){
 				if(child.getIndex()-root.getIndex()!=depth && !node.getTable().win(QuixoBoard.O) && !node.getTable().win(QuixoBoard.X)){
 					node.setLeaf(false);
 				}
 				return node;
 			}
 		}
+
 		parent.children.add(child);
 		if(child.getIndex()-root.getIndex()==depth){
 			child.setLeaf(true);
@@ -109,11 +143,12 @@ public class Minimax extends Player{
 	/**Kiszamolja adott node erteket az adott heurisztika alapjan
 	 * @param node ennek a csomopontnak az erteket szamolom ki*/
 	public int sum(Node node){
+//		System.out.println(heuristic);
 		double result = 0;
-		HeuristicDirective heuristic=new HeuristicDirective(node, 1); 	/**Az utoljara lepett jatekos szemszogebol mennyi a tabla erteke*/
+		HeuristicDirective valueOfTable=new HeuristicDirective(node, heuristic, me, you, nobody); 	/**Az utoljara lepett jatekos szemszogebol mennyi a tabla erteke*/
 		if((node.getModel()+1)%2!=getColor()){
-			result=-heuristic.calculation();
-		}else {result=heuristic.calculation();}
+			result=-valueOfTable.calculation();
+		}else {result=valueOfTable.calculation();}
 		return (int) result;
 	}
 	
@@ -129,6 +164,9 @@ public class Minimax extends Player{
 		nextMoves=node.table.nextSteps(node.getModel());
 		for(Move move: nextMoves){
 			child=newChild(move, node);
+			if(child==null){
+				continue;
+			}
 			max=Math.max(max, minValue(child, alfa, beta));
 			if(!opponent){
 				if(max>=beta){
@@ -154,6 +192,9 @@ public class Minimax extends Player{
 		nextMoves=node.table.nextSteps(node.getModel());
 		for(Move move: nextMoves){
 			child=newChild(move, node);
+			if(child==null){
+				continue;
+			}
 			min=Math.min(min, maxValue(child, alfa, beta));
 			if(alfa>=min){
 				node.value=min;

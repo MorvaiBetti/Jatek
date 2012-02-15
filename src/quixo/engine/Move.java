@@ -13,16 +13,14 @@ public class Move {
 	/**@ny a tabla y koordinataja, ahova a babut teszem*/
 	public final int ny;
 	
+	public int prevModel;
+	
 	public Move(int x, int y, int nx, int ny){
 		this.x=x;
 		this.y=y;
 		this.nx=nx;
 		this.ny=ny;
 	}
-	
-	public String toString(){
-		return "("+x +" "+ y +" "+ nx +" "+ ny+")";
-	};
 	
 	public boolean as(Move m){
 		if(x==m.x && y==m.y && nx==m.nx && ny==m.ny){
@@ -31,6 +29,17 @@ public class Move {
 		return false;
 	}
 
+	public int getPrevModel() {
+		return prevModel;
+	}
+
+	public void setPrevModel(int prevModel) {
+		this.prevModel = prevModel;
+	}
+	
+	public String toString(){
+		return "("+x +" "+ y +" "+ nx +" "+ ny+")";
+	};
 	/**Tesztelesre*/
 /*	public static void main(String[] args) {
 		Move m1=new Move(5, 2, 3, 1);

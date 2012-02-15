@@ -17,13 +17,21 @@ public abstract class Player{
 	public int depth;
 	/**@root jatekfa eseten ez a gyoker*/
 	public Node root;
+	/**@rand random erteke*/
+	public int rand;
+	/**@heuristic az adott jatekos melyik heurisztika alapjan szamolja a tabla ertekeket*/
+	public int heuristic;
+	public int me;
+	public int you;
+	public int nobody;
 	
 	/**Beallitja a jatekos szinet az ellenfel szinet es a jatekos idejet
 	 * @param sequence a jatekban hanyadik jatekos a jatekos
 	 * @param time a jatekos ideje*/
-	public void datas(int sequence, long time) {
+	public void datas(int sequence, long time, int random) {
 		table=new QuixoBoard();
 		maxTime=time;
+		rand=random;
 		/**A jatekosnak melyik a mintaja, es az ellenfele melyik*/
 		if(sequence==QuixoBoard.X){ 				
 			color=QuixoBoard.X;
@@ -41,7 +49,12 @@ public abstract class Player{
 		depth=d;
 	}
 	
-	public void setHeuristic(int h){}
+	public void setHeuristic(int h, int me, int you, int nobody){
+		heuristic=h;
+		this.me=me;
+		this.you=you;
+		this.nobody=nobody;
+	}
 
 	public QuixoBoard getTable() {
 		return table;

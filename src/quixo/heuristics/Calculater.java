@@ -13,43 +13,47 @@ public class Calculater{
 	/**@value az adott tabla erteke*/
 	public int value;
 	/**@mine az aktualis minta darabszama*/
-	public static int mine; 	
+	public int mine; 	
 	/**@yours az ellenfel minta darabszama*/
-	public static int yours; 
+	public int yours; 
 	/**@free az ures minta darabszama*/
-	public static int free; 	
+	public int free; 	
 	/**@me sajat babu erteke*/
-	public static int me=2; 	
+	public int me; 	
 	/**@you ellenfel babu erteke*/
-	public static int you=6; 	
-	/**@nobody ures mezo erteke*/
-	public int nobody=0;
-	public int win=7;
+	public int you;
+	public int nobody;
 	
 	/**Konstruktor
 	 * @param node amibol megkapom 
 	 * @param h melyik heurisztika alapjan szamolja az erteket*/
-	public Calculater(Node node){
+	public Calculater(Node node, int me, int you, int nobody){
 		this.node=node;
+		this.me=me;
+		this.you=you;
+		this.nobody=nobody;
 		table=(QuixoBoard) node.getTable().clone();
 		color=(node.getModel()+1)%2;
 		value=0;
+		empty();
 	}
 	
 	/**A szamlalokat kinullazza*/
-	public static void empty(){
+	public void empty(){
 			mine=0;
 			yours=0;
 			free=0;
 	}
 	
 	/**Az adott szin szempontjabol kiszamolja, melyik szinbol mennyi van a tablan.*/
-	public double calculation(){
+	public int calculation(){
 		if(table.win(color)){
-			return Integer.MAX_VALUE;
+			value=Integer.MAX_VALUE;
+			return value;
 		}
 		if(table.win((color+1)%2)){
-			return Integer.MIN_VALUE;
+			value=Integer.MIN_VALUE;
+			return value;
 		}
 		/**sorokon megy vegig*/
 		for(int i=0; i<5; i++){
@@ -117,7 +121,7 @@ public class Calculater{
 	}
 
 	/**osszegzi a tabla tartalmat*/
-	public static int sum(){
+	public int sum(){
 		int result;
 		if(mine<yours){
 			free=-free;
@@ -134,19 +138,19 @@ public class Calculater{
 	}
 	
 		/**Tesztelesre*/
-/*		public static void main(String[] args){
+/*	public static void main(String[] args){
 		QuixoBoard t=new QuixoBoard();
-		t.setField(0, 0, 0);
-	/*	t.setField(0, 1, 1);
+	/*	t.setField(0, 0, 0);
+		t.setField(0, 1, 0);
 		t.setField(0, 2, 0);
-		t.setField(0, 3, 1);
-		t.setField(0, 4, 0);
+		t.setField(0, 3, 0);
+		t.setField(0, 4, 1);
 		t.setField(1, 0, 1);
 		t.setField(2, 0, 0);
 		t.setField(3, 0, 1);
 		t.setField(4, 0, 0);
-		t.setField(1, 4, 1);
-		t.setField(2, 4, 0);
+		t.setField(1, 4, 0);
+	/*	t.setField(2, 4, 0);
 		t.setField(3, 4, 1);
 		t.setField(4, 4, 0);
 		t.setField(4, 3, 1);
@@ -155,15 +159,15 @@ public class Calculater{
 		System.out.println(t);
 		
 		Node rootx=new Node(t, null, null);
-		rootx.setModel(0);
-		Calculater testx=new Calculater(rootx);
+		rootx.setModel(1);
+		Calculater testx=new Calculater(rootx, 4, 6, 0);
 		testx.calculation();
-		System.out.println("x: "+testx.getValue());
+		System.out.println("x: "+testx.value);
 		
 		Node rooto=new Node(t, null, null);
-		rooto.setModel(1);
-		Calculater testo=new Calculater(rooto);
+		rooto.setModel(0);
+		Calculater testo=new Calculater(rooto, 4, 6, 0);
 		testo.calculation();
-		System.out.println(" o: "+testo.getValue());
+		System.out.println(" o: "+testo.value);
 	}*/
 }

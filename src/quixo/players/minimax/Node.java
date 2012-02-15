@@ -25,10 +25,9 @@ public class Node {
 	public int ind;
 
 	/**Node konstruktora
-	 * @param color a kovetkezo lepes szine
 	 * @param t aktualis tabla
 	 * @param p apa
-	 * @param az aktualis csomoponthoz vezeto lepes*/
+	 * @param s az aktualis csomoponthoz vezeto lepes*/
 	public Node(QuixoBoard t, Node p, Move s){
 		table=(QuixoBoard) t.clone();
 		parent=p;

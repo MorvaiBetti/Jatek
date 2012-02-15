@@ -58,9 +58,9 @@ public class PlayerThread extends Thread {
 	/**kezeli a szalat és ezaltal az idot is tudja merni, hogy mennyi ido alatt allitja be az adott jatekos adatait
 	 * @param sequence hanyadiknak lephet a jatekos es egyben melyik mintaval van.
 	 * @param time mennyi ideje van a jatekosnak*/
-	public void datas(int sequence, long time) {
+	public void datas(int sequence, long time, int random) {
 		status=active;
-		p.datas(sequence, time);
+		p.datas(sequence, time, random);
 		status=passive;
 	}
 	
@@ -87,9 +87,9 @@ public class PlayerThread extends Thread {
 	
 	/**Meri az idot mikozben letarolja, hogy melyik heurisztikat hasznaljuk
 	 * @param h melyik heurisztikat hasznaljuk.*/
-	public void setHeuristic(int h){
+	public void setHeuristic(int h, int me, int you, int nobody){
 		status=active;
-		p.setHeuristic(h);
+		p.setHeuristic(h, me, you, nobody);
 		status=passive;
 	}
 	

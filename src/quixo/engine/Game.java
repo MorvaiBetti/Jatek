@@ -34,86 +34,99 @@ public class Game{
 	public static int player1;
 	/**@depth1 az elso jatekos melysege*/
 	public static int depth1;
-	/**@player1heuristic az elso jatekos milyen heurisztikat hasznal*/
-	public static int player1heuristic;
+	/**@random1 az elso jatekos milyen seed-et hasznal*/
+	public static int random1;
 	/**@player2 a masodik jatekos szama*/
 	public static int player2;
 	/**@depth2 a masodik jatekos melysege*/
 	public static int depth2;
-	/**@player2heuristic a masodik jatekos milyen heurisztikat hasznal*/
-	public static int player2heuristic;
+	/**@random2 a masodik jatekos milyen seed-et hasznal*/
+	public static int random2;
+	
+	public static int heuristic1;
+	public static int heuristic2;
+	/**@me sajat babu erteke*/
+	public static int me1; 	
+	/**@you ellenfel babu erteke*/
+	public static int you1;
+	public static int nobody1;
+	/**@me sajat babu erteke*/
+	public static int me2; 	
+	/**@you ellenfel babu erteke*/
+	public static int you2;
+	public static int nobody2;
 	
 	/**Jatekos letrehozas es szal inditasa*/
-	public static void player(int i, long maxTime, int playerTipe, int depth, int heuristic)throws Exception{
+	public static void player(int i, long maxTime, int playerTipe, int depth, int random, int heuristic, int me, int you, int nobody)throws Exception{
 			if(playerTipe==1){
 				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.RandomPlayer");
 				pt[ai].start();
-				pt[ai].datas(i, maxTime);
+				pt[ai].datas(i, maxTime, random);
 				ai++;
 				return;
 			}
 			if(playerTipe==2){
 				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.CheatRandomPlayer");
 				pt[ai].start();
-				pt[ai].datas(i, maxTime);
+				pt[ai].datas(i, maxTime, random);
 				ai++;
 				return;
 			}
 			if(playerTipe==3){
 				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.DefendPlayer");
 				pt[ai].start();
-				pt[ai].datas(i, maxTime);
+				pt[ai].datas(i, maxTime, random);
 				ai++;
 				return;
 			}
 			if(playerTipe==4){
 				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.CollectorPlayer");
 				pt[ai].start();
-				pt[ai].datas(i, maxTime);
+				pt[ai].datas(i, maxTime, random);
 				ai++;
 				return;
 			}
 			if(playerTipe==5){
 				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.CalculatPlayer");
 				pt[ai].start();
-				pt[ai].datas(i, maxTime);
+				pt[ai].datas(i, maxTime, random);
 				ai++;
 				return;
 			}
 			if(playerTipe==6){
 				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.DefendCalculatPlayer");
 				pt[ai].start();
-				pt[ai].datas(i, maxTime);
+				pt[ai].datas(i, maxTime, random);
 				ai++;
 				return;
 			}
 			if(playerTipe==7){
 				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.MohoCalculatPlayer");
 				pt[ai].start();
-				pt[ai].datas(i, maxTime);
+				pt[ai].datas(i, maxTime, random);
 				ai++;
 				return;
 			}
 			if(playerTipe==8){
 				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.minimax.Moho");
 				pt[ai].start();
-				pt[ai].datas(i, maxTime);
-			//	pt[ai].setHeuristic(heuristic);
+				pt[ai].datas(i, maxTime, random);
+				pt[ai].setHeuristic(heuristic, me, you, nobody);
 				ai++;
 				return;
 			}
 			if(playerTipe==9){
 				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.minimax.Minimax");
 				pt[ai].start();
-				pt[ai].datas(i, maxTime);
+				pt[ai].datas(i, maxTime, random);
 				pt[ai].setDepth(depth);
-			//	pt[ai].setHeuristic(heuristic);
+				pt[ai].setHeuristic(heuristic, me, you, nobody);
 				ai++;
 				return;
 			}
 			if(playerTipe==0){
 				p[people]=new quixo.players.Human();
-				p[people].datas(i, maxTime);
+				p[people].datas(i, maxTime, random);
 				people++;
 				return;
 			}
@@ -261,18 +274,27 @@ public class Game{
 	}
 	
 
-	/**time=args[0], player1=args[1],  player1depth=args[2], player1heuristic=args[3], player2=args[4], player2depth=args[5], player2heuristic[6]*/
+	/**time=args[0], 
+	 * player1=args[1],  player1depth=args[2], heuristic1[3], random1=args[4], me1=args[5], you1=args[6], nobody1=args[7]
+	 * player2=args[8], player2depth=args[9], heuristic2[10], random2[11], me2=args[12], you2=args[13], nobody2=args[14]*/
 	public static void main(String[] args) throws Exception{
 		maxTime = Long.parseLong(args[0]);
 		
 		player1=Integer.parseInt(args[1]);
 		depth1=Integer.parseInt(args[2]);
-	//	player1heuristic=Integer.parseInt(args[3]);
+		heuristic1=Integer.parseInt(args[3]);
+		random1=Integer.parseInt(args[4]);
+		me1=Integer.parseInt(args[5]); 
+		you1=Integer.parseInt(args[6]);
+		nobody1=Integer.parseInt(args[7]);
 		
-		player2=Integer.parseInt(args[3]);
-		depth2=Integer.parseInt(args[4]);
-	//	player2heuristic=Integer.parseInt(args[6]);
-	//	System.out.println("h1 "+player1heuristic+" h2 "+player2heuristic);
+		player2=Integer.parseInt(args[8]);
+		depth2=Integer.parseInt(args[9]);
+		heuristic2=Integer.parseInt(args[10]);
+		random2=Integer.parseInt(args[11]);
+		me2=Integer.parseInt(args[12]); 
+		you2=Integer.parseInt(args[13]);
+		nobody2=Integer.parseInt(args[14]);
 		
 		j=ai=people=0;
 		move=null;
@@ -294,8 +316,8 @@ public class Game{
 				table=new QuixoBoard();
 				j=ai=people=0;
 				move=null;
-				player(0, maxTime, player1, depth1, player1heuristic);
-				player(1, maxTime, player2, depth2, player2heuristic);
+				player(0, maxTime, player1, depth1, random1, heuristic1, me1, you1, nobody1);
+				player(1, maxTime, player2, depth2, random2, heuristic2, me2, you2, nobody2);
 				System.out.println(table);
 				if(people==2){
 					people();

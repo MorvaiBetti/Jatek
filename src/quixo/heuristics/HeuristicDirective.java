@@ -5,23 +5,39 @@ import quixo.players.minimax.Node;
 public class HeuristicDirective {
 	/**@node adott csomopont, aminek a tablajat kiertekelem*/
 	public Node node;
+	/**@me sajat babu erteke*/
+	public int me; 	
+	/**@you ellenfel babu erteke*/
+	public int you;
+	public int nobody;
 	/**@heuristic melyik heurisztikat akarom hasznalni*/
 	public int heuristic;
 	
-	/**Konstruktor
+	/**@HeuristicDirective A megadott heurisztikat hozza letre es a konstruktoranak atadja az adott csomopontot.
 	 * @param node amibol megkapom 
 	 * @param h melyik heurisztika alapjan szamolja az erteket*/
-	public HeuristicDirective(Node n, int h){
+	public HeuristicDirective(Node n, int h, int me, int you, int nobody){
 		node=n;
 		heuristic=h;
+		this.me=me;
+		this.you=you;
+		this.nobody=nobody;
 	}
 	/**Kiszamolja az adott tabla erteket*/
 	public double calculation(){
 		switch (heuristic){
-			case 1:	Calculater calculater=new Calculater(node);
-					return (int) calculater.calculation();
-			case 2: Winner winner=new Winner(node);
-					return (int) winner.calculation();
+			case 1:	Calculater calculater=new Calculater(node, me, you, nobody);
+				//	System.out.println("calculater");
+					return calculater.calculation();
+			case 2: PrevTable prevTable=new PrevTable(node, me, you, nobody);
+				//	System.out.println("prevStep");
+					return prevTable.calculation();
+			case 3: Winner winner=new Winner(node, me, you, nobody);
+				//	System.out.println("winner");
+					return winner.calculation();
+			case 4: Index index=new Index(node, me, you, nobody);
+				//	System.out.println("index");
+					return index.calculation();
 		}
 		return 0;
 	}
