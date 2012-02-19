@@ -6,29 +6,28 @@ import java.util.Random;
 import quixo.engine.Move;
 import quixo.engine.Player;
 import quixo.engine.QuixoBoard;
-import quixo.heuristics.HeuristicDirective;
 
 public class Minimax extends Player{
 	/**@nextMoves adott tabla es minta eseten a szabalyos lepesek listaja*/
-	public ArrayList<Move> nextMoves=new ArrayList<Move>();
+	protected ArrayList<Move> nextMoves=new ArrayList<Move>();
 	/**@alfa hasznossag legalabb alfa*/
-	static int alfa;
+	protected static int alfa;
 	/**@beta hasznossag legfeljebb beta*/
-	static int beta;
+	protected static int beta;
 	/**@child aktualis csomopont uj fia*/
-	public Node child;
+	protected Node child;
 	/**@opponent az ellenfel lepeset keresem-e*/
-	public boolean opponent;
+	protected boolean opponent;
 	/**@random hogy ne mindig az elso megtalalt lepest adja vissza a find() metodus*/
-	public Random random=new Random();
+	protected Random random=new Random();
 	/**@prevTable elozo lepesem utani tabla*/
-	public QuixoBoard prevTable=new QuixoBoard();
+	protected QuixoBoard prevTable=new QuixoBoard();
 	
 	public Minimax(){}
 	
 	/**Kovetkezo lepest szamitja ki
 	 * @param prevStep elozo lepes*/
-	public Move nextMove(Move prevStep){
+	protected Move nextMove(Move prevStep){
 		if(depth==1){
 			if(prevStep!=null){
 				table.makeStep(prevStep, getOpponentColor());
@@ -89,7 +88,7 @@ public class Minimax extends Player{
 	
 	/**Megkeresi, hogy a gyoker erteke melyik fianak ertekevel egyezik meg, az a fiu tartalmazza a kovetkezo lepest
 	 * @param node a gyoker, akinek a fiai kozott keresek*/
-	public Node find(Node node){
+	private Node find(Node node){
 		Node found=null;
 		for(Node child: node.children){
 			if(child.getValue()==node.getValue()){
@@ -110,7 +109,7 @@ public class Minimax extends Player{
 	/**Az aktualis csomopont uj fiat letrehozza es hozzaadja az apa gyerekeinek listajahoz
 	 * @param step a lepes, ami az uj csomoponthoz tartozik
 	 * @param parent az uj csomopont apja*/
-	public Node newChild(Move step, Node parent){
+	private Node newChild(Move step, Node parent){
 		QuixoBoard newTable=(QuixoBoard) parent.table.clone();
 		newTable.makeStep(step, parent.getModel());
 		if(newTable.equals(prevTable)){
@@ -142,13 +141,12 @@ public class Minimax extends Player{
 	
 	/**Kiszamolja adott node erteket az adott heurisztika alapjan
 	 * @param node ennek a csomopontnak az erteket szamolom ki*/
-	public int sum(Node node){
-//		System.out.println(heuristic);
+	private int sum(Node node){
 		double result = 0;
-		HeuristicDirective valueOfTable=new HeuristicDirective(node, heuristic, me, you, nobody); 	/**Az utoljara lepett jatekos szemszogebol mennyi a tabla erteke*/
+		heuristic.calculation(node); 	/**Az utoljara lepett jatekos szemszogebol mennyi a tabla erteke*/
 		if((node.getModel()+1)%2!=getColor()){
-			result=-valueOfTable.calculation();
-		}else {result=valueOfTable.calculation();}
+			result=-heuristic.getValue();
+		}else {result=heuristic.getValue();}
 		return (int) result;
 	}
 	
@@ -156,7 +154,7 @@ public class Minimax extends Player{
 	 * @param node az a csomopont, aminek a fiainak a minimumat kell venni
 	 * @param alfa hasznossag legalabb alfa
 	 * @param beta hasznossag legfeljebb beta*/
-	public int maxValue(Node node, int alfa, int beta){
+	private int maxValue(Node node, int alfa, int beta){
 		if(node.isLeaf()){
 			return node.value;
 		}
@@ -184,7 +182,7 @@ public class Minimax extends Player{
 	 * @param node az a csomopont, aminek a fiainak a minimumat kell venni
 	 * @param alfa hasznossag legalabb alfa
 	 * @param beta hasznossag legfeljebb beta*/
-	public int minValue(Node node, int alfa, int beta){
+	private int minValue(Node node, int alfa, int beta){
 		if(node.isLeaf()){
 			return node.value;
 		}

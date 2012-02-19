@@ -1,26 +1,24 @@
 package quixo.players;
 
-import java.util.*;
+import java.util.ArrayList;
 
 import quixo.engine.Move;
 import quixo.engine.Player;
 
 public class CheatRandomPlayer extends Player{
 	/**@cheat szabalytalan lepesek letarolasara*/
-	public ArrayList<Move> cheat=new ArrayList<Move>(); 
+	private ArrayList<Move> cheat=new ArrayList<Move>(); 
 	/**@steps szabalyos lepesek letarolasara*/
-	public ArrayList<Move> steps=new ArrayList<Move>(); 
-	public double epsz;
+	private ArrayList<Move> steps=new ArrayList<Move>();
 	
-	public CheatRandomPlayer() {
-		epsz=5;
+	private CheatRandomPlayer() {
 	}
 	
 	public String toString(){
 		return "CheatRandomPlayer";
 	}
 	
-	public Move nextMove(Move prevStep){
+	protected Move nextMove(Move prevStep){
 		int db=0, j=0;
 		int rand;
 		Move m=null;

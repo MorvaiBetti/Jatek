@@ -1,17 +1,19 @@
 package quixo.players;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 import quixo.engine.Move;
 import quixo.engine.Player;
 
 public class Human extends Player{
-	public static String in;
-	public static StringTokenizer st;
-	public static BufferedReader reader = new BufferedReader(new InputStreamReader (System.in));
+	private static String in;
+	private static StringTokenizer st;
+	private static BufferedReader reader = new BufferedReader(new InputStreamReader (System.in));
 	
-	public Move nextMove(Move prevStep) {
+	protected Move nextMove(Move prevStep) {
 		int i=0;
 		/**@moveDatas lepes adatai*/
 		int[] moveDatas=new int[4];

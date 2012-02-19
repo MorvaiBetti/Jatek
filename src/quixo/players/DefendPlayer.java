@@ -3,13 +3,13 @@ package quixo.players;
 import quixo.engine.Move;
 
 public class DefendPlayer extends RandomPlayer{
-	public int[][] line;
+	private int[][] line;
 
 	public DefendPlayer() {
 		line=new int[4][2];
 	}
 	
-	public Move nextMove(Move prevStep, long oTime) {
+	protected Move nextMove(Move prevStep, long oTime) {
 		if(prevStep!=null){
 			table.makeStep(prevStep, (color+1)%2);
 		}
@@ -38,7 +38,7 @@ public class DefendPlayer extends RandomPlayer{
 	}
 	
 	/**Kinullazom a line tombot*/
-	public void empty(){
+	private void empty(){
 		for(int k=0; k<4; k++){
 			line[k][0]=0;
 			line[k][1]=0;
@@ -46,7 +46,7 @@ public class DefendPlayer extends RandomPlayer{
 	}
 	
 	/**Adott szinbol van-e negy egy vonalban*/
-	public boolean winner(int model){
+	private boolean winner(int model){
 		int db=0;
 		/**sorokon megy vegig*/
 		for(int i=0; i<5; i++){
@@ -106,7 +106,7 @@ public class DefendPlayer extends RandomPlayer{
 	}
 	
 	/**Az ellenfelemet megakadajozom a nyeresben*/
-	public void defendStep(){
+	private void defendStep(){
 		/**sor*/
 		if(line[0][0]==line[1][0]){
 			for(int i=0; i<4; i++){
@@ -158,7 +158,7 @@ public class DefendPlayer extends RandomPlayer{
 	}
 	
 	/**A nyero lepes*/
-	public void winnerStep(){
+	private void winnerStep(){
 		/**sor*/
 		if(line[0][0]==line[1][0]){
 			for(int i=1; i<4; i++){

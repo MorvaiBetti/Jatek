@@ -3,26 +3,27 @@ import java.lang.management.ManagementFactory;
 
 public class PlayerThread extends Thread {
 	/**@playerName jatekos fajtaja*/
-	public String playerName;
+	protected String playerName;
 	/**@sequence hanyadiknak lep a jatekos*/
-	public int sequence;
-	public Player p;
+	protected int sequence;
+	/**@p jatekos*/
+	protected Player p;
 	/**@maxTime jatekos maximalis ideje*/
-	public long maxTime;
+	protected long maxTime;
 	/**@nextStep jatekos kovetkezo lepese*/
-	public Move nextStep;
+	protected Move nextStep;
 	/**@t aktualis tabla*/
-	public QuixoBoard t;
+	protected QuixoBoard t;
 	/**@passive passiv allapotban van a szal*/
-	public static final int passive=0;
+	protected static final int passive=0;
 	/**@active active allapotban van a szal*/
-	public static final int active=1;
+	protected static final int active=1;
 	/**@exit vege a szalnak*/
-	public static final int exit=2;
+	protected static final int exit=2;
 	/**@status azt jelzi, hogy eppen milyen allapotban van a szal*/
-	public int status=passive;
+	protected int status=passive;
 	
-	public PlayerThread(int seq, long mT, String n) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
+	protected PlayerThread(int seq, long mT, String n) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
 		super();
 		this.sequence=seq;
 		this.maxTime=mT;
@@ -31,7 +32,7 @@ public class PlayerThread extends Thread {
 	}
 	
 	/**Az adott szal adott futasa mennyi idot vett igenybe*/
-	public long getElapsedTime(){
+	protected long getElapsedTime(){
 		return ManagementFactory.getThreadMXBean().getThreadUserTime(getId())/1000000000;
 	}
 	
@@ -57,44 +58,39 @@ public class PlayerThread extends Thread {
 	
 	/**kezeli a szalat és ezaltal az idot is tudja merni, hogy mennyi ido alatt allitja be az adott jatekos adatait
 	 * @param sequence hanyadiknak lephet a jatekos es egyben melyik mintaval van.
-	 * @param time mennyi ideje van a jatekosnak*/
-	public void datas(int sequence, long time, int random) {
+	 * @param time mennyi ideje van a jatekosnak
+	 * @throws ClassNotFoundException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException */
+	protected void datas(int sequence, long time, long random, String h, int me, int you, int nobody) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 		status=active;
-		p.datas(sequence, time, random);
+		p.datas(sequence, time, random, h, me, you, nobody);
 		status=passive;
 	}
 	
 	/**Meri, hogy mennyi ido alatt szamolja ki az adott jatekos a kovetkezo lepeset
 	 * @param prevStep az ellenfel utolso lepese*/
-	public Move nextMove(Move prevStep) {
+	protected Move nextMove(Move prevStep) {
 		status=active;
 		nextStep=p.nextMove(prevStep);
 		status=passive;
 		return nextStep;
 	}
 	
-	public int getColor() {
+	protected int getColor() {
 		return sequence;
 	}
 	
 	/**Meri az idot mikozben letarolja a melyseget
 	 * @param depth melyseg*/
-	public void setDepth(int d){
+	protected void setDepth(int d){
 		status=active;
 		p.setDepth(d);
 		status=passive;
 	}
 	
-	/**Meri az idot mikozben letarolja, hogy melyik heurisztikat hasznaljuk
-	 * @param h melyik heurisztikat hasznaljuk.*/
-	public void setHeuristic(int h, int me, int you, int nobody){
-		status=active;
-		p.setHeuristic(h, me, you, nobody);
-		status=passive;
-	}
-	
 	/**Szal befejezese*/
-	public void exit(){
+	protected void exit(){
 		status=exit;
 	}
 }

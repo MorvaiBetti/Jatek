@@ -5,17 +5,17 @@ import quixo.engine.QuixoBoard;
 
 public abstract class CalculatPlayer extends Player{
 	/**@fields tabla minden mezojenek kulon-kulon az erteke*/
-	public int[][] fields=new int[25][7];
+	protected int[][] fields=new int[25][7];
 	/**@my sajat babu erteke*/
-	public int my=3;
+	protected int my=3;
 	/**@your ellenfel babujanak erteke*/
-	public int your=-3;
+	protected int your=-3;
 	/**@nobody ures mezo erteke*/
-	public int nobody=1;
+	protected int nobody=1;
 	
 	/**Kiszamolja, melyik babubol hany darab van az adott mezo soraban, oszlopaban atlokban. A babuk erteket hozzaadja a mezo ertekehez. 
 	 * sorSzam, oszlopSzam, oszlopVonal, sorVonal, foatloVonal, mellekatloVonal, mezoErtek*/
-	public void calculat(){
+	protected void calculat(){
 		empty();
 		int k=0;
 		for(int i=0; i<5; i++){
@@ -83,7 +83,7 @@ public abstract class CalculatPlayer extends Player{
 	}
 	
 	/**kinullazza a fields tombot*/
-	public void empty(){
+	protected void empty(){
 		for(int i=0; i<25; i++){
 			for(int j=2; j<7; j++){
 				fields[i][j]=0;

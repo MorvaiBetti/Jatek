@@ -4,32 +4,35 @@ package quixo.heuristics;
 import java.util.ArrayList;
 
 import quixo.engine.Move;
+import quixo.engine.QuixoBoard;
 import quixo.players.minimax.Node;
 
 /**@Winner A 3-as szamu heurisztika.
  * Azt vizsgalja, hogy az adott tablan valamelyik jatekosnak van-e 4 egy vonalban es tud-e a kovetkezo lepesben nyerni.*/
-public class Winner extends Calculater{
-	
-	/**Konstruktor*/
-	public Winner(Node node, int me, int you, int nobody){
-		super(node, me, you, nobody);
+public class Winner extends SimpleHeuristic{
+
+	public void init(int me, int you, int nobody){
+		super.init(me, you, nobody);
 	}
 	
 	/**Kiszamolja, hogy egy voanlban melyik babubol mennyi van es a koordinatajukat letarolja*/
-	public int calculation(){
-		if(table.win((color+1)%2)){
-			return Integer.MIN_VALUE;
-		}
-		if(table.win(color)){
-			return Integer.MAX_VALUE;
-		}
+	public int calculation(Node node){
+		this.node=node;
+		table=(QuixoBoard) node.getTable().clone();
+		color=(node.getModel()+1)%2;
 		if(findStep((color+1)%2)){
 			return Integer.MIN_VALUE;
 		}
 		if(findStep(color)){
 			return Integer.MAX_VALUE;
 		}
-		value=super.calculation();
+		if(table.win((color+1)%2)){
+			return Integer.MIN_VALUE;
+		}
+		if(table.win(color)){
+			return Integer.MAX_VALUE;
+		}
+		value=super.calculation(node);
 		return value;
 	}
 	

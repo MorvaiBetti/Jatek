@@ -1,37 +1,50 @@
 package quixo.engine;
 
+import java.util.Random;
+
+import quixo.engine.Move;
+import quixo.engine.QuixoBoard;
+import quixo.heuristics.Heuristics;
 import quixo.players.minimax.Node;
 
 public abstract class Player{
 	/**@table jatekos tablaja*/
-	public QuixoBoard table;
+	protected QuixoBoard table;
 	/**@step jatekos kovetkezo lepese*/
-	public Move step;
+	protected Move step;
 	/**@color a jatekos mintaja*/
-	public int color; 
+	protected int color; 
 	/**@opponentColor az ellenfel mintaja*/
-	public int opponentColor; 
+	protected int opponentColor; 
 	/**@maxTime a jatekos ideje*/
-	public long maxTime;
+	protected long maxTime;
 	/**@depth jatekfa eseten hany lepest nezzen meg elore*/
-	public int depth;
+	protected int depth;
 	/**@root jatekfa eseten ez a gyoker*/
-	public Node root;
+	protected Node root;
 	/**@rand random erteke*/
-	public int rand;
+	protected Random rand;
 	/**@heuristic az adott jatekos melyik heurisztika alapjan szamolja a tabla ertekeket*/
-	public int heuristic;
-	public int me;
-	public int you;
-	public int nobody;
+	protected Heuristics heuristic;
 	
 	/**Beallitja a jatekos szinet az ellenfel szinet es a jatekos idejet
 	 * @param sequence a jatekban hanyadik jatekos a jatekos
-	 * @param time a jatekos ideje*/
-	public void datas(int sequence, long time, int random) {
+	 * @param time a jatekos ideje
+	 * @throws ClassNotFoundException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException */
+	protected void datas(int sequence, long time, long random, String h, int me, int you, int nobody) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 		table=new QuixoBoard();
 		maxTime=time;
-		rand=random;
+		rand=new Random(random);
+		System.out.println(h);
+		if(!h.equals("null")){
+			String nameH="quixo.heuristics.";
+			nameH=nameH+h;
+			System.out.println(nameH);
+			heuristic= (Heuristics) Class.forName(nameH).newInstance();
+			heuristic.init(me, you, nobody);
+		}
 		/**A jatekosnak melyik a mintaja, es az ellenfele melyik*/
 		if(sequence==QuixoBoard.X){ 				
 			color=QuixoBoard.X;
@@ -43,44 +56,37 @@ public abstract class Player{
 	
 	/**A kovetkezo lepest szamolja ki.
 	 * @param prevStep az ellenfel utolso lepese*/
-	public Move nextMove(Move prevStep){return null;}
+	protected Move nextMove(Move prevStep){return null;}
 	
-	public void setDepth(int d) {
+	protected void setDepth(int d) {
 		depth=d;
 	}
-	
-	public void setHeuristic(int h, int me, int you, int nobody){
-		heuristic=h;
-		this.me=me;
-		this.you=you;
-		this.nobody=nobody;
-	}
 
-	public QuixoBoard getTable() {
+	protected QuixoBoard getTable() {
 		return table;
 	}
 	
-	public int getColor() {
+	protected int getColor() {
 		return color;
 	}
 	
-	public Move getStep() {
+	protected Move getStep() {
 		return step;
 	}
 
-	public void setStep(Move step) {
+	protected void setStep(Move step) {
 		this.step = step;
 	}
 
-	public int getOpponentColor() {
+	protected int getOpponentColor() {
 		return opponentColor;
 	}
 
-	public void setOpponentColor(int opponentColor) {
+	protected void setOpponentColor(int opponentColor) {
 		this.opponentColor = opponentColor;
 	}
 
-	public void setColor(int color) {
+	protected void setColor(int color) {
 		this.color = color;
 	}
 	

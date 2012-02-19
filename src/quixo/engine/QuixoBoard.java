@@ -11,7 +11,7 @@ public class QuixoBoard implements Cloneable {
 	/**@O a mezon O egy babuja van*/
 	public static final int O=1;
 	/**@table jatektabla*/
-	public int[][] table;
+	private int[][] table;
 	
 	/**konstruktor*/
 	public QuixoBoard(){
@@ -159,7 +159,7 @@ public class QuixoBoard implements Cloneable {
 	 * @param model milyen mintaval van a lepes
 	 * @param nx visszatetel x koordinataja
 	 * @param ny visszatetel y koordinataja*/
-	public void makeStep(int x, int y, int model, int nx, int ny){
+	private void makeStep(int x, int y, int model, int nx, int ny){
 		/**ha az eredeti sorba rakom vissza*/
 		if(x==nx){
 			/**jobbrol tolok*/
@@ -337,9 +337,9 @@ public class QuixoBoard implements Cloneable {
 	/**Az adott lepes letezik-e mar az adott listaban?
 	 * @param m a lepes, amit keresek
 	 * @param steps a lista, amiben keresek*/
-	public boolean exist(Move m, ArrayList<Move> steps){
+	private boolean exist(Move m, ArrayList<Move> steps){
 		for(Move move: steps){
-			if(steps.indexOf(m)!=steps.indexOf(move) && move.as(m)){
+			if(steps.indexOf(m)!=steps.indexOf(move) && move.equals(m)){
 				return true;
 			}
 		}

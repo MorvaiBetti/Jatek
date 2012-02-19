@@ -5,15 +5,15 @@ import quixo.engine.Move;
 
 public class CollectorPlayer extends RandomPlayer{
 	/**@line szabalyos lepesek letarolasara*/
-	public int[][] line; 	 	
+	private int[][] line; 	 	
 	/**@db szabalyos lepesek szama*/
-	public int db; 		
+	private int db; 		
 	
 	public CollectorPlayer() {
 		line=new int[25][2];
 	}
 
-	public Move nextMove(Move prevStep) {
+	protected Move nextMove(Move prevStep) {
 		int rand;
 		if(prevStep!=null){
 			table.makeStep(prevStep, (color+1)%2);
@@ -52,7 +52,7 @@ public class CollectorPlayer extends RandomPlayer{
 	}
 	
 	/**adott jatekosnak van-e meg szabalyos lepese*/
-	public boolean existEmptyField(){
+	private boolean existEmptyField(){
 		db=0;
 		for(int i=0; i<5; i++){
 			for(int j=0; j<5; j++){
@@ -68,5 +68,4 @@ public class CollectorPlayer extends RandomPlayer{
 		}
 		return false;
 	}
-
 }

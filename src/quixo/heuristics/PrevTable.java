@@ -5,22 +5,18 @@ import quixo.players.minimax.Node;
 /**@PrevTable A 2-es szamu heuristika. 
  * Az aktualis csomopont tablajat az apa tablajaval hasonlitja ossze.
  * Ez alapjan szamolja ki a sorok, oszlopok es atlok erteket, majd ezeket osszeadja*/
-public class PrevTable extends Calculater{
+public class PrevTable extends SimpleHeuristic implements Heuristics{
 	/**@parentMine Szulo tablan a sajat babuim*/
-	public int parentMine;
+	private int parentMine;
 	/**@parentYours Szulo tablan az ellenfel babui*/
-	public int parentYours;
+	private int parentYours;
 	/**@parentFree Szulo tablan az ures babuk*/
-	public int parentFree;
+	private int parentFree;
 	/**@parentTable Szulo tablaja*/
-	public QuixoBoard parentTable;
+	private QuixoBoard parentTable;
 	
-	/**Konstruktor*/
-	public PrevTable(Node node, int me, int you, int nobody){
-		super(node, me, you, nobody);		
-		parentTable=(QuixoBoard) node.parent.getTable().clone();
-		value=0;
-		empty();
+	public void init(int me, int you, int nobody){		
+		super.init(me, you, nobody);
 	}
 	
 	/**A tomboket es a szamlalokat kinullazza*/
@@ -32,7 +28,12 @@ public class PrevTable extends Calculater{
 	}
 	
 	/**Kiszamolja, hogy egy voanlban melyik babubol mennyi van es a koordinatajukat letarolja*/
-	public int calculation(){
+	public int calculation(Node node){
+		this.node=node;
+		table=(QuixoBoard) node.getTable().clone();
+		color=(node.getModel()+1)%2;
+		parentTable=(QuixoBoard) node.parent.getTable().clone();
+		empty();
 		/**Soronkent megy vegig*/
 		for(int i=0; i<5; i++){
 			for(int j=0; j<5; j++){
@@ -57,7 +58,7 @@ public class PrevTable extends Calculater{
 				value=Integer.MAX_VALUE;
 				return value;
 			}
-			compareField();
+			value=value+sum();
 			empty();
 		}
 		
@@ -85,7 +86,7 @@ public class PrevTable extends Calculater{
 				value=Integer.MAX_VALUE;
 				return value;
 			}
-			compareField();
+			value=value+sum();
 			empty();
 		}
 		
@@ -104,7 +105,7 @@ public class PrevTable extends Calculater{
 				}else {parentFree++;}
 			}
 		}
-		compareField();
+		value=value+sum();
 		empty();
 		
 		/**Mellekatlo atvizsgalasa*/
@@ -122,36 +123,24 @@ public class PrevTable extends Calculater{
 				}else {parentFree++;}
 			}
 		}
-		compareField();
+		value=value+sum();
 		empty();
 		return value;
 	}
 	
 	/**Az apa tablajahoz kepset milyen az aktualis tabla*/
-	public void compareField(){
-		System.out.println(mine+" "+yours+" "+free);
-		if(parentYours<mine){
-			value=(int) (value+Math.pow(me,mine));
-		}
-		if(parentMine<yours){
-			value=(int) (value-Math.pow(you,yours));
-		}
-		/**Ha az ellenfel mintainak aranya romlott*/
-		if(parentYours>yours){
-			value=(int) (value+you*yours);
-		}
-		/**Ha az ellenfel mintainak aranya javult*/
-		if(parentYours<yours){
-			value=(int) (value-you*yours);
-		}
-		/**Ha a sajat mintaim aranya romlott*/
-		if(parentMine>mine){
-			value=(int) (value-me*mine);
-		}
-		/**Ha a sajat mintaim aranya javult*/
-		if(parentMine<mine){
-			value=(int) (value+me*mine);
-		}
+	public int sum(){
+		int result=0;
+		mine=mine-parentMine;
+		yours=yours-parentYours;
+		free=free-parentFree;
+		
+		result=mine*me-yours*you+free*nobody;		
+		return result;
+	}
+	
+	public int getValue(){
+		return value;
 	}
 	
 /*	public static void main(String[] args){
@@ -159,9 +148,9 @@ public class PrevTable extends Calculater{
 		parentTable=(QuixoBoard) t.clone();
 		System.out.println(parentTable);
 		t.setField(0, 0, 0);
-	/*	t.setField(0, 1, 0);
+		t.setField(0, 1, 0);
 		t.setField(0, 2, 0);
-		t.setField(0, 3, 0);
+	/*	t.setField(0, 3, 0);
 		t.setField(0, 4, 0);
 	/*	t.setField(1, 0, 1);
 		t.setField(2, 0, 0);
@@ -179,17 +168,19 @@ public class PrevTable extends Calculater{
 		father.setModel(0);
 		Node rootx=new Node(t, father, null);
 		rootx.setModel(1);
-		PrevTable testx=new PrevTable(rootx);
+		PrevTable testx=new PrevTable();
+		testx.init(1, 2, 0);
 		testx.value=0;
-		testx.calculation();
+		testx.calculation(rootx);
 		System.out.println("x: "+testx.value);
 		
 		father.setModel(1);
 		Node rooto=new Node(t, father, null);
 		rooto.setModel(0);
-		PrevTable testo=new PrevTable(rooto);
+		PrevTable testo=new PrevTable();
+		testo.init(1, 2, 0);
 		testo.value=0;
-		testo.calculation();
+		testo.calculation(rooto);
 		System.out.println(" o: "+testo.value);
 	}*/
 }

@@ -7,22 +7,23 @@ import quixo.engine.QuixoBoard;
 
 public class Node {
 	/**@data a csucspont mintaja es tablaja*/
-	public int model;
-	public QuixoBoard table;
+	protected int model;
+	/**@table a csomopont tablaja*/
+	protected QuixoBoard table;
 	/**@value csucspont erteke*/
-	public int value;
+	protected int value;
 	/**@parent csucspont apja*/
 	public Node parent;
 	/**@children csucspont fiai*/
-	public ArrayList<Node> children=new ArrayList<Node>();
+	protected ArrayList<Node> children=new ArrayList<Node>();
 	/**@leaf csucspont level-e. Level ha nincs fia, ha nyert valaki vagy ha n melyen van*/
-	public boolean leaf;
+	protected boolean leaf;
 	/**@index csucspont melysege*/
-	public int index;
+	protected int index;
 	/**@step csucspont lepese*/
-	public Move step;
+	protected Move step;
 	
-	public int ind;
+	protected int ind;
 
 	/**Node konstruktora
 	 * @param t aktualis tabla
@@ -54,49 +55,53 @@ public class Node {
 		return table;
 	}
 
-	public void setTable(QuixoBoard table) {
+	protected void setTable(QuixoBoard table) {
 		this.table = table;
 	}
 
 	public Move getStep() {
 		return step;
 	}
-	public void setStep(Move step) {
+	protected void setStep(Move step) {
 		this.step = step;
 	}
 
 	public Node getParent() {
 		return parent;
 	}
-	public void setParent(Node parent) {
+	
+	protected void setParent(Node parent) {
 		this.parent = parent;
 	}
 
 	public ArrayList<Node> getChildren() {
 		return children;
 	}
-	public void setChildren(Node child) {
+	
+	protected void setChildren(Node child) {
 		this.children.add(child);
 	}
 
 	public boolean isLeaf() {
 		return leaf;
 	}
-	public void setLeaf(boolean leaf) {
+	protected void setLeaf(boolean leaf) {
 		this.leaf = leaf;
 	}
 
 	public int getValue() {
 		return value;
 	}
-	public void setValue(int value) {
+	
+	protected void setValue(int value) {
 		this.value = value;
 	}
 
 	public int getIndex() {
 		return index;
 	}
-	public void setIndex(int index) {
+	
+	protected void setIndex(int index) {
 		this.index = index;
 	}
 

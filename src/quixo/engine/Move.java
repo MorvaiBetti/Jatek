@@ -3,17 +3,17 @@ public class Move {
 	
 	/**honnan veszem el a babut*/
 	/**@x a tabla x koordinataja, ahonnan a babut elveszem*/
-	public final int x;
+	int x;
 	/**@y a tabla y koordinataja, ahonnan a babut elveszem*/
-	public final int y;
+	int y;
 	
 	/**hova teszem a babut*/
 	/**@nx a tabla x koordinataja, ahova a babut teszem*/
-	public final int nx;
+	int nx;
 	/**@ny a tabla y koordinataja, ahova a babut teszem*/
-	public final int ny;
+	int ny;
 	
-	public int prevModel;
+	int prevModel;
 	
 	public Move(int x, int y, int nx, int ny){
 		this.x=x;
@@ -22,7 +22,7 @@ public class Move {
 		this.ny=ny;
 	}
 	
-	public boolean as(Move m){
+	public boolean equals(Move m){
 		if(x==m.x && y==m.y && nx==m.nx && ny==m.ny){
 			return true;
 		}

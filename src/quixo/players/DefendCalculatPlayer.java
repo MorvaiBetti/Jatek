@@ -4,10 +4,10 @@ import quixo.engine.QuixoBoard;
 import quixo.engine.Move;
 
 public class DefendCalculatPlayer extends CalculatPlayer{
-	public int min;
-	public int id;
+	private int min;
+	private int id;
 
-	public Move nextMove(Move prevStep){	
+	protected Move nextMove(Move prevStep){	
 		if(prevStep!=null){
 			table.makeStep(prevStep, (color+1)%2);
 		}
@@ -46,16 +46,14 @@ public class DefendCalculatPlayer extends CalculatPlayer{
 				fields[i][6]+=fields[i][j];
 			}
 		}
-	//	if(step==null){
-			find();
-			newStep();
-		//}
+		find();
+		newStep();
 		table.makeStep(step, color);
 		return step;
 	}
 	
 	/**megkeresi a legveszelyesebb koordinatat*/
-	public int find(){
+	private int find(){
 		min=100;
 		for(int i=0; i<25; i++){
 			if(min>fields[i][6]){
@@ -67,7 +65,7 @@ public class DefendCalculatPlayer extends CalculatPlayer{
 	}
 	
 	/**megnezem, hogy lephetek a fields[id][]-edik koordinatar*/
-	public void newStep(){
+	private void newStep(){
 		/**ha ott mar a sajat figuram van*/
 		if(table.getField(fields[id][0], fields[id][1])==color){
 			fields[id][6]=1000;

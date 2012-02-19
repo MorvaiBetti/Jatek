@@ -1,15 +1,19 @@
 package quixo.heuristics;
 
+import quixo.engine.QuixoBoard;
 import quixo.players.minimax.Node;
 /**@Index A 4-as szamu heurisztika.
  * Ha nyert valamelyik jatekos, a tabla erteke maximalis/minimalis szam osztva a csomopont indexevel.*/
-public class Index extends Calculater{
+public class Index extends SimpleHeuristic{
 
-	public Index(Node node, int me, int you, int nobody) {
-		super(node, me, you, nobody);
+	public void init(Node node, int me, int you, int nobody) {
+		super.init( me, you, nobody);
 	}
 	
-	public int calculation(){
+	public int calculation(Node node){
+		this.node=node;
+		table=(QuixoBoard) node.getTable().clone();
+		color=(node.getModel()+1)%2;
 		if(table.win(color)){
 			if(node.getIndex()!=0){
 				value=Integer.MAX_VALUE/node.getIndex();
@@ -22,7 +26,7 @@ public class Index extends Calculater{
 			}else {value=Integer.MIN_VALUE;}
 			return value;
 		}
-		return super.calculation();
+		return super.calculation(node);
 	}
 
 /*	public static void main(String[] args){
