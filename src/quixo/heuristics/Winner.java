@@ -16,7 +16,7 @@ public class Winner extends SimpleHeuristic{
 	}
 	
 	/**Kiszamolja, hogy egy voanlban melyik babubol mennyi van es a koordinatajukat letarolja*/
-	public int calculation(Node node){
+	public double calculation(Node node){
 		this.node=node;
 		table=(QuixoBoard) node.getTable().clone();
 		color=(node.getModel()+1)%2;

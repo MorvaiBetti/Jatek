@@ -28,7 +28,7 @@ public class PrevTable extends SimpleHeuristic implements Heuristics{
 	}
 	
 	/**Kiszamolja, hogy egy voanlban melyik babubol mennyi van es a koordinatajukat letarolja*/
-	public int calculation(Node node){
+	public double calculation(Node node){
 		this.node=node;
 		table=(QuixoBoard) node.getTable().clone();
 		color=(node.getModel()+1)%2;
@@ -129,8 +129,8 @@ public class PrevTable extends SimpleHeuristic implements Heuristics{
 	}
 	
 	/**Az apa tablajahoz kepset milyen az aktualis tabla*/
-	public int sum(){
-		int result=0;
+	public double sum(){
+		double result=0;
 		mine=mine-parentMine;
 		yours=yours-parentYours;
 		free=free-parentFree;
@@ -139,7 +139,7 @@ public class PrevTable extends SimpleHeuristic implements Heuristics{
 		return result;
 	}
 	
-	public int getValue(){
+	public double getValue(){
 		return value;
 	}
 	

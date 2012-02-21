@@ -54,6 +54,8 @@ public class Game{
 	/**@nobody2 az elso jatekos eseten az ures babuk erteke*/
 	private static int nobody2;
 	
+	private static int text;
+	
 	/**Jatekos letrehozas es szal inditasa*/
 	private static void player(int i, long maxTime, int playerTipe, int depth, int random, String heuristic, int me, int you, int nobody)throws Exception{
 			if(playerTipe==1){
@@ -131,15 +133,21 @@ public class Game{
 	/**nyert-e valamelyik jatekos*/
 	private static boolean winner(){
 		if(table.win(QuixoBoard.X) && table.win(QuixoBoard.O)){
-			System.out.println("Dontetlen!");
+			if(text==1){
+				System.out.println("Dontetlen!");
+			} else {System.out.println(2);}
 			return true;
 		}
 		if(table.win(QuixoBoard.X)){
-			System.out.println("X nyert");
+			if(text==1){
+				System.out.println("X nyert");
+			}else {System.out.println(QuixoBoard.X);}
 			return true;
 		}
 		if(table.win(QuixoBoard.O)){
-			System.out.println("O nyert");
+			if(text==1){
+				System.out.println("O nyert");
+			} else {System.out.println(QuixoBoard.O);}
 			return true;
 		}
 		return false;
@@ -150,15 +158,18 @@ public class Game{
 	 * @param oTime ellenfel eddig eltelt ideje*/
 	private static boolean aiStep(int i, long oTime){
 		move = pt[i].nextMove(move);
-		System.out.println("\n"+j+". lepes "+ind+". jatekos lepett | "+ move +" ido: "+pt[i].getElapsedTime()+" szinem: "+pt[i].getColor()+" || "+pt[ind].sequence+" nevem "+pt[i].playerName);
 		if (move != null) {
 		   /** 'lejart-e az ideje?' ellenorzese*/
 		   if (pt[i].getElapsedTime() > maxTime) {
 			   if(pt[i].getColor()==QuixoBoard.X){
-			            System.out.println("X ideje lejart, ezert O nyert!");
+				   		if(text==1){
+				   			System.out.println("X ideje lejart, ezert O nyert!");
+				   		} else {System.out.println(QuixoBoard.O);}
 			            return false;
 			          } else {
-			            System.out.println("O ideje lejart, ezert X nyert!");
+			        	  if(text==1){
+			        		  System.out.println("O ideje lejart, ezert X nyert!");
+			        	  }else {System.out.println(QuixoBoard.X);}
 			            return false;
 			          }
 		   }
@@ -168,23 +179,33 @@ public class Game{
 			   table.makeStep(move, pt[i].getColor());
 		   } else {
 			   if(pt[i].getColor()==QuixoBoard.X){
-				   	System.out.println("X csalni probalt, azert O nyert!");
+				   if(text==1){
+					   System.out.println("X csalni probalt, azert O nyert!");
+				   }else {System.out.println(QuixoBoard.O);}
 				   	return false;
 			   } else {
-				   System.out.println("O csalni probalt, azert X nyert!");
+				   if(text==1){
+					   System.out.println("O csalni probalt, azert X nyert!");
+				   }else {System.out.println(QuixoBoard.X);}
 				   return false;
 		   		}
 		   }
-		   System.out.println(table);
-		  
+		   if(text==1){
+			   System.out.println("\n"+j+". lepes "+ind+". jatekos lepett | "+ move +" ido: "+pt[i].getElapsedTime()+" szinem: "+pt[i].getColor()+" || "+pt[ind].sequence+" nevem "+pt[i].playerName);
+			   System.out.println(table);
+		   }
 
 		} else {
 			/** ind jatekos null-t lepett => lepes kenyszer miatt kikapott*/
 			if(pt[i].getColor()==QuixoBoard.X){
-				System.out.println("X nem lepett, ezert O nyert!");
+				if(text==1){
+					System.out.println("X nem lepett, ezert O nyert!");
+				}else {System.out.println(QuixoBoard.O);}
 				return false;
 		    } else {
-		          System.out.println("O nem lepett, ezert X nyert!");
+		    	if(text==1){
+		    		System.out.println("O nem lepett, ezert X nyert!");
+		    	}else {System.out.println(QuixoBoard.X);}
 		          return false;
 		        }
 			}
@@ -195,10 +216,12 @@ public class Game{
 	 * @param i i-edik human jatekos lep*/
 	private static void humanStep(int i){
 		table.nextSteps(p[i].getColor());
-		move = p[i].nextMove(move);
-		System.out.println("\n"+j+". lepes "+ind+". jatekos lepett | "+ move +" szinem: "+p[i].getColor());		   
+		move = p[i].nextMove(move);	   
 		table.makeStep(move, p[i].getColor());
-		System.out.println(table);
+		if(text==1){
+			System.out.println("\n"+j+". lepes "+ind+". jatekos lepett | "+ move +" szinem: "+p[i].getColor());	
+			System.out.println(table);
+		}
 		return;
 	}
 	
@@ -218,8 +241,6 @@ public class Game{
 		while(!table.win(pt[0].getColor()) && !table.win(pt[1].getColor())){
 			ind=j%2;
 			nextInd=(j+1)%2;
-			
-			//System.out.println("----------------------------------");
 			if(!aiStep(ind, pt[nextInd].getElapsedTime())){
 				return;
 			}
@@ -232,9 +253,7 @@ public class Game{
 	private  static void humanvsAI(){
 		/**Ha a gepi jatekos van az X-el, akkor o kezd, kulonben az ember*/
 		if(pt[0].getColor()==QuixoBoard.X){
-			while(!table.win(pt[0].getColor()) && !table.win(p[0].getColor())){
-				//System.out.println("----------------------------------");
-				
+			while(!table.win(pt[0].getColor()) && !table.win(p[0].getColor())){			
 				aiStep(0, 0);
 				if(winner()){
 					return;
@@ -246,7 +265,6 @@ public class Game{
 			}
 		}else {
 			while(!table.win(pt[0].getColor()) && !table.win(p[0].getColor())){
-				//System.out.println("----------------------------------");
 				humanStep(0);
 				if(winner()){
 					return;
@@ -263,23 +281,25 @@ public class Game{
 	
 
 	/**time=args[0], 
-	 * player1=args[1],  player1depth=args[2], heuristic1[3], random1=args[4], me1=args[5], you1=args[6], nobody1=args[7]
-	 * player2=args[8], player2depth=args[9], heuristic2[10], random2=args[11], me2=args[12], you2=args[13], nobody2=args[14]*/
+	 * player1=args[1], random1=args[2],  player1depth=args[3], heuristic1[4], me1=args[5], you1=args[6], nobody1=args[7]
+	 * player2=args[8], random2=args[9], player2depth=args[10], heuristic2[11], me2=args[12], you2=args[13], nobody2=args[14]
+	 * text=args[15]*/
 	public static void main(String[] args) throws Exception{
 		maxTime = Long.parseLong(args[0]);
+		text=Integer.parseInt(args[15]);
 		
 		player1=Integer.parseInt(args[1]);
-		depth1=Integer.parseInt(args[2]);
-		heuristic1=args[3];
-		random1=Integer.parseInt(args[4]);
+		random1=Integer.parseInt(args[2]);
+		depth1=Integer.parseInt(args[3]);
+		heuristic1=args[4];
 		me1=Integer.parseInt(args[5]); 
 		you1=Integer.parseInt(args[6]);
 		nobody1=Integer.parseInt(args[7]);
 		
 		player2=Integer.parseInt(args[8]);
-		depth2=Integer.parseInt(args[9]);
-		heuristic2=args[10];
-		random2=Integer.parseInt(args[11]);
+		random2=Integer.parseInt(args[9]);
+		depth2=Integer.parseInt(args[10]);
+		heuristic2=args[11];
 		me2=Integer.parseInt(args[12]); 
 		you2=Integer.parseInt(args[13]);
 		nobody2=Integer.parseInt(args[14]);
@@ -287,18 +307,20 @@ public class Game{
 		j=ai=people=0;
 		move=null;
 		
-		System.out.println("Lehetseges jatekosok:");
-		System.out.println("0 Human: Emberi jatekos");
-		System.out.println("1 RandomPlayer: Gepi jatekos, aki veletlen valaszt egy szabalyos lepest.");
-		System.out.println("2 CheatRandomPlayer: Gepi jatekos, aki veletlen valaszt egy szabalyos lepest, elofordulhat, hogy csalni probal.");
-		System.out.println("3 DefendPlayer: Ha az ellenfelnek egy babu hianyzik, hogy nyerjen, akkor vedekezik. Egyebkent random lep.");
-		System.out.println("4 CollectorPlayer: Ha van lehetosege, akkor egy uj babut tesz le, egyebkent random.");
-	//	System.out.println("5 CalculatPlayer: Kiszamol egy tablat, hogy hova mennyire erdemes lepni. Kiirja a tablat, majd random lep.");
-		System.out.println("6 DefendCalculatPlayer: A legveszelyesebb mezore probal lepni. Azaz probalja minel jobban gatolni az ellenfelet");
-		System.out.println("7 MohoCalculatPlayer: A legjobb helyre probal lepni.");
-		System.out.println("8 Moho: Egy melysegig nezi a fat.");
-		System.out.println("9 Tree: parameterben megadott melysegig vizsgalja a jatekfat.");
-		System.out.println();
+		if(text==1){
+			System.out.println("Lehetseges jatekosok:");
+			System.out.println("0 Human: Emberi jatekos");
+			System.out.println("1 RandomPlayer: Gepi jatekos, aki veletlen valaszt egy szabalyos lepest.");
+			System.out.println("2 CheatRandomPlayer: Gepi jatekos, aki veletlen valaszt egy szabalyos lepest, elofordulhat, hogy csalni probal.");
+			System.out.println("3 DefendPlayer: Ha az ellenfelnek egy babu hianyzik, hogy nyerjen, akkor vedekezik. Egyebkent random lep.");
+			System.out.println("4 CollectorPlayer: Ha van lehetosege, akkor egy uj babut tesz le, egyebkent random.");
+		//	System.out.println("5 CalculatPlayer: Kiszamol egy tablat, hogy hova mennyire erdemes lepni. Kiirja a tablat, majd random lep.");
+			System.out.println("6 DefendCalculatPlayer: A legveszelyesebb mezore probal lepni. Azaz probalja minel jobban gatolni az ellenfelet");
+			System.out.println("7 MohoCalculatPlayer: A legjobb helyre probal lepni.");
+			System.out.println("8 Moho: Egy melysegig nezi a fat.");
+			System.out.println("9 Tree: parameterben megadott melysegig vizsgalja a jatekfat.");
+			System.out.println();
+		}
 		
 		try {
 				table=new QuixoBoard();
@@ -306,7 +328,9 @@ public class Game{
 				move=null;
 				player(0, maxTime, player1, depth1, random1, heuristic1, me1, you1, nobody1);
 				player(1, maxTime, player2, depth2, random2, heuristic2, me2, you2, nobody2);
-				System.out.println(table);
+				if(text==1){
+					System.out.println(table);
+				}
 				if(people==2){
 					people();
 					return;

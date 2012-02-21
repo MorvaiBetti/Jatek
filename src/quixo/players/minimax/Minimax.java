@@ -1,7 +1,6 @@
 package quixo.players.minimax;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import quixo.engine.Move;
 import quixo.engine.Player;
@@ -11,15 +10,13 @@ public class Minimax extends Player{
 	/**@nextMoves adott tabla es minta eseten a szabalyos lepesek listaja*/
 	protected ArrayList<Move> nextMoves=new ArrayList<Move>();
 	/**@alfa hasznossag legalabb alfa*/
-	protected static int alfa;
+	protected static double alfa;
 	/**@beta hasznossag legfeljebb beta*/
-	protected static int beta;
+	protected static double beta;
 	/**@child aktualis csomopont uj fia*/
 	protected Node child;
 	/**@opponent az ellenfel lepeset keresem-e*/
 	protected boolean opponent;
-	/**@random hogy ne mindig az elso megtalalt lepest adja vissza a find() metodus*/
-	protected Random random=new Random();
 	/**@prevTable elozo lepesem utani tabla*/
 	protected QuixoBoard prevTable=new QuixoBoard();
 	
@@ -95,7 +92,7 @@ public class Minimax extends Player{
 				if(child.table.equals(prevTable)){
 					continue;
 				}
-				if(found!=null && random.nextBoolean()){
+				if(found!=null && rand.nextBoolean()){
 					found=child;
 				}else {
 					found=child;
@@ -154,11 +151,11 @@ public class Minimax extends Player{
 	 * @param node az a csomopont, aminek a fiainak a minimumat kell venni
 	 * @param alfa hasznossag legalabb alfa
 	 * @param beta hasznossag legfeljebb beta*/
-	private int maxValue(Node node, int alfa, int beta){
+	private double maxValue(Node node, double alfa, double beta){
 		if(node.isLeaf()){
 			return node.value;
 		}
-		int max=-Integer.MAX_VALUE;
+		double max=-Integer.MAX_VALUE;
 		nextMoves=node.table.nextSteps(node.getModel());
 		for(Move move: nextMoves){
 			child=newChild(move, node);
@@ -182,11 +179,11 @@ public class Minimax extends Player{
 	 * @param node az a csomopont, aminek a fiainak a minimumat kell venni
 	 * @param alfa hasznossag legalabb alfa
 	 * @param beta hasznossag legfeljebb beta*/
-	private int minValue(Node node, int alfa, int beta){
+	private double minValue(Node node, double alfa, double beta){
 		if(node.isLeaf()){
 			return node.value;
 		}
-		int min=Integer.MAX_VALUE;
+		double min=Integer.MAX_VALUE;
 		nextMoves=node.table.nextSteps(node.getModel());
 		for(Move move: nextMoves){
 			child=newChild(move, node);

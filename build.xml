@@ -1,0 +1,55 @@
+<project name="Jatek" default="dist" basedir=".">
+  <description>
+    Build file of Jatek project. 
+  </description>
+  <!-- set global properties for this build -->
+  <property name="bin"  location="bin"/>
+  <property name="doc" location="doc"/>
+  <property name="apidoc" location="doc/api"/>
+  <property name="build" location="build"/>
+  <property name="config" location="config"/>
+  <property name="dist" location="dist"/>
+  <property name="lib"  location="lib"/>
+  <property name="src" location="src"/>
+  <property name="resources" location="resources"/>
+  
+  <property name="projectName" value="Jatek"/>
+  <property name="jarName" value="jatek.jar"/>
+  
+  <property environment="env"/>
+  
+  <target name="init">
+    <!-- Initialize -->
+    <mkdir dir="${bin}"/>
+    <mkdir dir="${build}"/>
+    <mkdir dir="${doc}"/>
+    <mkdir dir="${apidoc}"/>
+  </target>
+
+  <target name="compile" depends="init" description="compile the source">
+    <!-- Compile the java -->
+    <javac classpath="" srcdir="${src}" destdir="${build}" includeantruntime="false"/>
+  </target>
+  
+  <target name="dist" depends="compile" description="generate jar">
+    <!-- Create jar -->
+    <jar jarfile="${bin}/${jarName}" basedir="${build}"/>
+  </target>
+
+  <target name="clean" description="clean up">
+    <!-- Clean-->
+    <delete dir="${build}"/>
+    <delete dir="${apidoc}"/>
+    <delete dir="${dist}"/>
+  </target>
+  
+  <target name="doc" depends="init" description="generate api doc">
+    <!-- Generate doc -->
+    <javadoc packagenames="quixo.*" sourcepath="${src}" excludepackagenames="" defaultexcludes="yes" destdir="${apidoc}" extdirs="${lib}" author="true" version="true" use="true" windowtitle="${projectName}">
+	  <tag name="todo" scope="all" description="To do:" enabled="true"/>
+	  <tag name="fixme" scope="all" description="Fix me:" enabled="true"/>
+      <doctitle><![CDATA[<h1>Jatek</h1>]]></doctitle>
+      <bottom><![CDATA[<i>Copyright &#169; ..., Szeged. All Rights Reserved.</i>]]></bottom>
+    </javadoc>
+  </target>
+</project>

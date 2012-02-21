@@ -11,7 +11,7 @@ public class Node {
 	/**@table a csomopont tablaja*/
 	protected QuixoBoard table;
 	/**@value csucspont erteke*/
-	protected int value;
+	protected double value;
 	/**@parent csucspont apja*/
 	public Node parent;
 	/**@children csucspont fiai*/
@@ -89,11 +89,11 @@ public class Node {
 		this.leaf = leaf;
 	}
 
-	public int getValue() {
+	public double getValue() {
 		return value;
 	}
 	
-	protected void setValue(int value) {
+	protected void setValue(double value) {
 		this.value = value;
 	}
 

@@ -11,7 +11,7 @@ public abstract class SimpleHeuristic implements Heuristics {
 	/**@color az utolso lepes mintaja, ebbol a szemszogbol szamolom a tabla erteket*/
 	protected int color;
 	/**@value az adott tabla erteke*/
-	protected int value;
+	protected double value;
 	/**@mine az aktualis minta darabszama*/
 	protected int mine; 	
 	/**@yours az ellenfel minta darabszama*/
@@ -44,7 +44,7 @@ public abstract class SimpleHeuristic implements Heuristics {
 	}
 	
 	/**Az adott szin szempontjabol kiszamolja, melyik szinbol mennyi van a tablan.*/
-	public int calculation(Node node){
+	public double calculation(Node node){
 		this.node=node;
 		table=(QuixoBoard) node.getTable().clone();
 		color=(node.getModel()+1)%2;
@@ -122,8 +122,8 @@ public abstract class SimpleHeuristic implements Heuristics {
 	}
 
 	/**osszegzi a tabla tartalmat*/
-	public int sum(){
-		int result;
+	public double sum(){
+		double result;
 		if(mine<yours){
 			free=-free;
 		}
@@ -138,7 +138,7 @@ public abstract class SimpleHeuristic implements Heuristics {
 		return result;
 	}
 	
-	public int getValue(){
+	public double getValue(){
 		return value;
 	}
 }

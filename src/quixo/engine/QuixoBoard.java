@@ -231,7 +231,6 @@ public class QuixoBoard implements Cloneable {
 	public ArrayList<Move> nextSteps(int color){
 		ArrayList<Move> steps=new ArrayList<Move>();
 		Move step;
-		int j=0;
 		for(int i=0; i<5; i++){ 					/**A lehetseges stepsen vegigmegy, es steps-hez hozzaadja a legal stepset*/
 			/**ha az elso sorbol valasztok*/
 			if(getField(0, i)==color || getField(0, i)==empty){
@@ -239,21 +238,18 @@ public class QuixoBoard implements Cloneable {
 					step=new Move(0, i, 0, 4);
 					if(!exist(step, steps)){
 						steps.add(step);
-						j++;
 					}
 				}
 				if(legal(0, i, color, 0, 0)){
 					step=new Move(0, i, 0, 0);
 					if(!exist(step, steps)){
 						steps.add(step);
-						j++;
 					}
 				}
 				if(legal(0, i, color, 4, i)){
 					step=new Move(0, i, 4, i);
 					if(!exist(step, steps)){
 						steps.add(step);
-						j++;
 					}
 				}
 			}
@@ -263,21 +259,18 @@ public class QuixoBoard implements Cloneable {
 					step=new Move(4, i, 4, 0);
 					if(!exist(step, steps)){
 						steps.add(step);
-						j++;
 					}
 				}
 				if(legal(4, i, color, 4, 4)){
 					step=new Move(4, i, 4, 4);
 					if(!exist(step, steps)){
 						steps.add(step);
-						j++;
 					}
 				}
 				if(legal(4, i, color, 0, i)){
 					step=new Move(4, i, 0, i);
 					if(!exist(step, steps)){
 						steps.add(step);
-						j++;
 					}
 				}
 			}
@@ -288,21 +281,18 @@ public class QuixoBoard implements Cloneable {
 					step=new Move(i, 0, 4, 0);
 					if(!exist(step, steps)){
 						steps.add(step);
-						j++;
 					}
 				}
 				if(legal(i, 0, color, 0, 0)){
 					step=new Move(i, 0, 0, 0);
 					if(!exist(step, steps)){
 						steps.add(step);
-						j++;
 					}
 				}
 				if(legal(i, 0, color, i, 4)){
 					step=new Move(i, 0, i, 4);
 					if(!exist(step, steps)){
 						steps.add(step);
-						j++;
 					}
 				}
 			}
@@ -312,21 +302,18 @@ public class QuixoBoard implements Cloneable {
 					step=new Move(i, 4, 0, 4);
 					if(!exist(step, steps)){
 						steps.add(step);
-						j++;
 					}
 				}
 				if(legal(i, 4, color, 4, 4)){
 					step=new Move(i, 4, 4, 4);
 					if(!exist(step, steps)){
 						steps.add(step);
-						j++;
 					}
 				}
 				if(legal(i, 4, color, i, 0)){
 					step=new Move(i, 4, i, 0);
 					if(!exist(step, steps)){
 						steps.add(step);
-						j++;
 					}
 				}
 			}

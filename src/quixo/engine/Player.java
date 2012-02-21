@@ -37,11 +37,9 @@ public abstract class Player{
 		table=new QuixoBoard();
 		maxTime=time;
 		rand=new Random(random);
-		System.out.println(h);
 		if(!h.equals("null")){
 			String nameH="quixo.heuristics.";
 			nameH=nameH+h;
-			System.out.println(nameH);
 			heuristic= (Heuristics) Class.forName(nameH).newInstance();
 			heuristic.init(me, you, nobody);
 		}
