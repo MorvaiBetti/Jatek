@@ -33,8 +33,6 @@ public class Minimax extends Player{
 			root.setModel(getColor());
 			maxValue(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
 			root=find(root);
-			System.out.println(root.getStep());
-			System.out.println(getColor());
 			table.makeStep(root.getStep(), getColor());
 			prevTable=(QuixoBoard) table.clone();
 			return root.getStep();
@@ -89,13 +87,9 @@ public class Minimax extends Player{
 	 * @param node a gyoker, akinek a fiai kozott keresek*/
 	private Node find(Node node){
 		Node found=null;
-		System.out.println(node.getValue());
 		for(Node child: node.children){
-			System.out.println(child.getValue());
 			if(node.getValue()==child.getValue()){
-				System.out.println("megvan");
 				if(child.table.equals(prevTable)){
-					System.out.println("ismetles");
 					continue;
 				}
 				if(found!=null && rand.nextBoolean()){
@@ -105,7 +99,6 @@ public class Minimax extends Player{
 				}	
 			}
 		}
-		System.out.println(found.getStep());
 		return found;
 	}
 	
