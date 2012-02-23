@@ -49,11 +49,11 @@ public abstract class SimpleHeuristic implements Heuristics {
 		table=(QuixoBoard) node.getTable().clone();
 		color=(node.getModel()+1)%2;
 		if(table.win(color)){
-			value=Integer.MAX_VALUE;
+			value=Double.MAX_VALUE;
 			return value;
 		}
 		if(table.win((color+1)%2)){
-			value=Integer.MIN_VALUE;
+			value=Double.MIN_VALUE;
 			return value;
 		}
 		/**sorokon megy vegig*/

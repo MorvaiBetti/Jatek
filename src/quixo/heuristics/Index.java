@@ -16,14 +16,14 @@ public class Index extends SimpleHeuristic{
 		color=(node.getModel()+1)%2;
 		if(table.win(color)){
 			if(node.getIndex()!=0){
-				value=Integer.MAX_VALUE/node.getIndex();
-			}else {value=Integer.MAX_VALUE;}
+				value=Double.MAX_VALUE/node.getIndex();
+			}else {value=Double.MAX_VALUE;}
 			return value;
 		}
 		if(table.win((color+1)%2)){
 			if(node.getIndex()!=0){
-				value=Integer.MIN_VALUE/node.getIndex();
-			}else {value=Integer.MIN_VALUE;}
+				value=Double.MIN_VALUE/node.getIndex();
+			}else {value=Double.MIN_VALUE;}
 			return value;
 		}
 		return super.calculation(node);

@@ -51,11 +51,11 @@ public class PrevTable extends SimpleHeuristic implements Heuristics{
 				}
 			}
 			if(yours==5){
-				value=Integer.MIN_VALUE;
+				value=Double.MIN_VALUE;
 				return value;
 			}
 			if(mine==5){
-				value=Integer.MAX_VALUE;
+				value=Double.MAX_VALUE;
 				return value;
 			}
 			value=value+sum();
@@ -79,11 +79,11 @@ public class PrevTable extends SimpleHeuristic implements Heuristics{
 				}
 			}
 			if(yours==5){
-				value=Integer.MIN_VALUE;
+				value=Double.MIN_VALUE;
 				return value;
 			}
 			if(mine==5){
-				value=Integer.MAX_VALUE;
+				value=Double.MAX_VALUE;
 				return value;
 			}
 			value=value+sum();

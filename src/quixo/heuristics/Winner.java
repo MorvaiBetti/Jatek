@@ -21,16 +21,16 @@ public class Winner extends SimpleHeuristic{
 		table=(QuixoBoard) node.getTable().clone();
 		color=(node.getModel()+1)%2;
 		if(findStep((color+1)%2)){
-			return Integer.MIN_VALUE;
+			return Double.MIN_VALUE;
 		}
 		if(findStep(color)){
-			return Integer.MAX_VALUE;
+			return Double.MAX_VALUE;
 		}
 		if(table.win((color+1)%2)){
-			return Integer.MIN_VALUE;
+			return Double.MIN_VALUE;
 		}
 		if(table.win(color)){
-			return Integer.MAX_VALUE;
+			return Double.MAX_VALUE;
 		}
 		value=super.calculation(node);
 		return value;
