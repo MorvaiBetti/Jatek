@@ -31,7 +31,7 @@ public class Minimax extends Player{
 			}
 			root=new Node(table, null, null);
 			root.setModel(getColor());
-			maxValue(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+			maxValue(root, Double.MIN_VALUE, Double.MAX_VALUE);
 			root=find(root);
 			table.makeStep(root.getStep(), getColor());
 			prevTable=(QuixoBoard) table.clone();
@@ -40,7 +40,7 @@ public class Minimax extends Player{
 		if(prevStep==null){
 			root=new Node(table, null, null);
 			root.setModel(getColor());
-			maxValue(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+			maxValue(root, Double.MIN_VALUE, Double.MAX_VALUE);
 			root=find(root);
 			table.makeStep(root.getStep(), getColor());
 			prevTable=(QuixoBoard) table.clone();
@@ -50,7 +50,7 @@ public class Minimax extends Player{
 		if(root==null){
 			root=new Node(table, null, null);
 			root.setModel(getColor());
-			maxValue(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+			maxValue(root, Double.MIN_VALUE, Double.MAX_VALUE);
 			root=find(root);
 			table.makeStep(root.getStep(), getColor());
 			prevTable=(QuixoBoard) table.clone();
@@ -76,7 +76,7 @@ public class Minimax extends Player{
 			root.setStep(null);
 			root.setModel(getColor());
 		}
-		maxValue(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+		maxValue(root, Double.MIN_VALUE, Double.MAX_VALUE);
 		root=find(root);
 		table.makeStep(root.getStep(), getColor());
 		prevTable=(QuixoBoard) table.clone();
@@ -92,11 +92,11 @@ public class Minimax extends Player{
 				if(child.table.equals(prevTable)){
 					continue;
 				}
-				if(found!=null && rand.nextBoolean()){
+				if(found==null){
 					found=child;
-				}else {
+				}else if(rand.nextBoolean()){
 					found=child;
-				}	
+					}
 			}
 		}
 		return found;
@@ -154,7 +154,7 @@ public class Minimax extends Player{
 		if(node.isLeaf()){
 			return node.value;
 		}
-		double max=-Integer.MAX_VALUE;
+		double max=-Double.MAX_VALUE;
 		nextMoves=node.table.nextSteps(node.getModel());
 		for(Move move: nextMoves){
 			child=newChild(move, node);
@@ -182,7 +182,7 @@ public class Minimax extends Player{
 		if(node.isLeaf()){
 			return node.value;
 		}
-		double min=Integer.MAX_VALUE;
+		double min=Double.MAX_VALUE;
 		nextMoves=node.table.nextSteps(node.getModel());
 		for(Move move: nextMoves){
 			child=newChild(move, node);
