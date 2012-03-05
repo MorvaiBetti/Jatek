@@ -87,28 +87,28 @@ public class Game{
 				return;
 			}
 			if(playerTipe==5){
-				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.CalculatPlayer");
+				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.CalculatingPlayer");
 				pt[ai].start();
 				pt[ai].datas(i, maxTime, random, heuristic, me, you, nobody);
 				ai++;
 				return;
 			}
 			if(playerTipe==6){
-				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.DefendCalculatPlayer");
+				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.DefendCalculatingPlayer");
 				pt[ai].start();
 				pt[ai].datas(i, maxTime, random, heuristic, me, you, nobody);
 				ai++;
 				return;
 			}
 			if(playerTipe==7){
-				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.MohoCalculatPlayer");
+				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.GreedyCalculatingPlayer");
 				pt[ai].start();
 				pt[ai].datas(i, maxTime, random, heuristic, me, you, nobody);
 				ai++;
 				return;
 			}
 			if(playerTipe==8){
-				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.minimax.Moho");
+				pt[ai]=new PlayerThread(i, maxTime, "quixo.players.minimax.Greedy");
 				pt[ai].start();
 				pt[ai].datas(i, maxTime, random, heuristic, me, you, nobody);
 				ai++;
@@ -134,19 +134,19 @@ public class Game{
 	private static boolean winner(){
 		if(table.win(QuixoBoard.X) && table.win(QuixoBoard.O)){
 			if(text==1){
-				System.out.println("Dontetlen!");
+				System.out.println("Drawn!");
 			} else {System.out.println(2);}
 			return true;
 		}
 		if(table.win(QuixoBoard.X)){
 			if(text==1){
-				System.out.println("X nyert");
+				System.out.println("X won");
 			}else {System.out.println(QuixoBoard.X);}
 			return true;
 		}
 		if(table.win(QuixoBoard.O)){
 			if(text==1){
-				System.out.println("O nyert");
+				System.out.println("O won");
 			} else {System.out.println(QuixoBoard.O);}
 			return true;
 		}
@@ -163,12 +163,12 @@ public class Game{
 		   if (pt[i].getElapsedTime() > maxTime) {
 			   if(pt[i].getColor()==QuixoBoard.X){
 				   		if(text==1){
-				   			System.out.println("X ideje lejart, ezert O nyert!");
+				   			System.out.println("X's time is expired so O won!");
 				   		} else {System.out.println(QuixoBoard.O);}
 			            return false;
 			          } else {
 			        	  if(text==1){
-			        		  System.out.println("O ideje lejart, ezert X nyert!");
+			        		  System.out.println("O's time is expired so X won!");
 			        	  }else {System.out.println(QuixoBoard.X);}
 			            return false;
 			          }
@@ -180,18 +180,18 @@ public class Game{
 		   } else {
 			   if(pt[i].getColor()==QuixoBoard.X){
 				   if(text==1){
-					   System.out.println("X csalni probalt, azert O nyert!");
+					   System.out.println("X cheated so O won!");
 				   }else {System.out.println(QuixoBoard.O);}
 				   	return false;
 			   } else {
 				   if(text==1){
-					   System.out.println("O csalni probalt, azert X nyert!");
+					   System.out.println("O cheated so X won!");
 				   }else {System.out.println(QuixoBoard.X);}
 				   return false;
 		   		}
 		   }
 		   if(text==1){
-			   System.out.println("\n"+j+". lepes "+ind+". jatekos lepett | "+ move +" ido: "+pt[i].getElapsedTime()+" szinem: "+pt[i].getColor()+" || "+pt[ind].sequence+" nevem "+pt[i].playerName);
+			   System.out.println("\n"+j+". step "+ind+". player stepped | "+ move +" time: "+pt[i].getElapsedTime()+" figure: "+pt[i].getColor()+" || "+pt[ind].sequence+" my name is "+pt[i].playerName);
 			   System.out.println(table);
 		   }
 
@@ -199,12 +199,12 @@ public class Game{
 			/** ind jatekos null-t lepett => lepes kenyszer miatt kikapott*/
 			if(pt[i].getColor()==QuixoBoard.X){
 				if(text==1){
-					System.out.println("X nem lepett, ezert O nyert!");
+					System.out.println("X didn't step so O won!");
 				}else {System.out.println(QuixoBoard.O);}
 				return false;
 		    } else {
 		    	if(text==1){
-		    		System.out.println("O nem lepett, ezert X nyert!");
+		    		System.out.println("O didn't step so X won!");
 		    	}else {System.out.println(QuixoBoard.X);}
 		          return false;
 		        }
@@ -219,7 +219,7 @@ public class Game{
 		move = p[i].nextMove(move);	   
 		table.makeStep(move, p[i].getColor());
 		if(text==1){
-			System.out.println("\n"+j+". lepes "+ind+". jatekos lepett | "+ move +" szinem: "+p[i].getColor());	
+			System.out.println("\n"+j+". step "+ind+". player stepped | "+ move +" figure: "+p[i].getColor());	
 			System.out.println(table);
 		}
 		return;
@@ -314,11 +314,11 @@ public class Game{
 			System.out.println("2 CheatRandomPlayer: Gepi jatekos, aki veletlen valaszt egy szabalyos lepest, elofordulhat, hogy csalni probal.");
 			System.out.println("3 DefendPlayer: Ha az ellenfelnek egy babu hianyzik, hogy nyerjen, akkor vedekezik. Egyebkent random lep.");
 			System.out.println("4 CollectorPlayer: Ha van lehetosege, akkor egy uj babut tesz le, egyebkent random.");
-		//	System.out.println("5 CalculatPlayer: Kiszamol egy tablat, hogy hova mennyire erdemes lepni. Kiirja a tablat, majd random lep.");
-			System.out.println("6 DefendCalculatPlayer: A legveszelyesebb mezore probal lepni. Azaz probalja minel jobban gatolni az ellenfelet");
-			System.out.println("7 MohoCalculatPlayer: A legjobb helyre probal lepni.");
-			System.out.println("8 Moho: Egy melysegig nezi a fat.");
-			System.out.println("9 Tree: parameterben megadott melysegig vizsgalja a jatekfat.");
+		//	System.out.println("5 CalculatingPlayer: Kiszamol egy tablat, hogy hova mennyire erdemes lepni. Kiirja a tablat, majd random lep.");
+			System.out.println("6 DefendCalculatingPlayer: A legveszelyesebb mezore probal lepni. Azaz probalja minel jobban gatolni az ellenfelet");
+			System.out.println("7 GreedyCalculatingPlayer: A legjobb helyre probal lepni.");
+			System.out.println("8 Greedy: Egy melysegig nezi a fat.");
+			System.out.println("9 Minimax: parameterben megadott melysegig vizsgalja a jatekfat.");
 			System.out.println();
 		}
 		

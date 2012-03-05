@@ -20,8 +20,6 @@ public class CheatRandomPlayer extends Player{
 	
 	protected Move nextMove(Move prevStep){
 		int db=0, j=0;
-		int rand;
-		Move m=null;
 		steps.clear();
 		cheat.clear();
 		if(prevStep!=null){
@@ -45,13 +43,14 @@ public class CheatRandomPlayer extends Player{
 			if(table.legal(i, 4, color, 4, 4)){steps.add(new Move(i, 4, 4, 4)); db++;}else {cheat.add(new Move(i, 4, 4, 4)); j++;}
 			if(table.legal(i, 4, color, i, 0)){steps.add(new Move(i, 4, i, 0)); db++;}else {cheat.add(new Move(i, 4, i, 0)); j++;}
 		}
-		if((db%2)==1){
-			rand=(int) (Math.random()*(j-1));
-			m=cheat.remove(rand);
-		}else {rand=(int) (Math.random()*(db-1));
-				m=steps.remove(rand);
-			}
-		table.makeStep(m, color);
-	    return m;
+		if(rand.nextBoolean()){
+			int ran=(int) (Math.random()*(j-1));
+			step=cheat.remove(ran);
+		}else {
+			int ran=(int) (Math.random()*(db-1));
+			step=steps.remove(ran);
+		}
+		table.makeStep(step, color);
+	    return step;
 	}
 }
