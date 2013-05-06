@@ -7,7 +7,7 @@ public class PlayerThread extends Thread {
 	/**@sequence hanyadiknak lep a jatekos*/
 	protected int sequence;
 	/**@p jatekos*/
-	protected Player p;
+	protected QuixoPlayer p;
 	/**@maxTime jatekos maximalis ideje*/
 	protected long maxTime;
 	/**@nextStep jatekos kovetkezo lepese*/
@@ -28,7 +28,7 @@ public class PlayerThread extends Thread {
 		this.sequence=seq;
 		this.maxTime=mT;
 		this.playerName=n;
-		p= (Player) Class.forName(playerName).newInstance();
+		p= (QuixoPlayer) Class.forName(playerName).newInstance();
 	}
 	
 	/**Az adott szal adott futasa mennyi idot vett igenybe*/
@@ -56,7 +56,7 @@ public class PlayerThread extends Thread {
 		}
 	}
 	
-	/**kezeli a szalat és ezaltal az idot is tudja merni, hogy mennyi ido alatt allitja be az adott jatekos adatait
+	/**kezeli a szalat es ezaltal az idot is tudja merni, hogy mennyi ido alatt allitja be az adott jatekos adatait
 	 * @param sequence hanyadiknak lephet a jatekos es egyben melyik mintaval van.
 	 * @param time mennyi ideje van a jatekosnak
 	 * @throws ClassNotFoundException 

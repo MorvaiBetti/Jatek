@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import quixo.engine.Move;
-import quixo.engine.Player;
+import quixo.engine.QuixoPlayer;
 
-public class RandomPlayer extends Player{
+public class RandomPlayer extends QuixoPlayer{
 	/**@steps szabalyos lepesek letarolasara*/
 	protected ArrayList<Move> steps=new ArrayList<Move>();  	
 	

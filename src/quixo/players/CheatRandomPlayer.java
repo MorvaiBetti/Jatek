@@ -3,15 +3,15 @@ package quixo.players;
 import java.util.ArrayList;
 
 import quixo.engine.Move;
-import quixo.engine.Player;
+import quixo.engine.QuixoPlayer;
 
-public class CheatRandomPlayer extends Player{
+public class CheatRandomPlayer extends QuixoPlayer{
 	/**@cheat szabalytalan lepesek letarolasara*/
 	private ArrayList<Move> cheat=new ArrayList<Move>(); 
 	/**@steps szabalyos lepesek letarolasara*/
 	private ArrayList<Move> steps=new ArrayList<Move>();
 	
-	private CheatRandomPlayer() {
+	public CheatRandomPlayer() {
 	}
 	
 	public String toString(){

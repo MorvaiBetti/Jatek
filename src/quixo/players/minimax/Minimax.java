@@ -3,10 +3,10 @@ package quixo.players.minimax;
 import java.util.ArrayList;
 
 import quixo.engine.Move;
-import quixo.engine.Player;
 import quixo.engine.QuixoBoard;
+import quixo.engine.QuixoPlayer;
 
-public class Minimax extends Player{
+public class Minimax extends QuixoPlayer{
 	/**@nextMoves adott tabla es minta eseten a szabalyos lepesek listaja*/
 	protected ArrayList<Move> nextMoves=new ArrayList<Move>();
 	/**@alfa hasznossag legalabb alfa*/
@@ -200,7 +200,7 @@ public class Minimax extends Player{
 		return min;
 	}
 	
-	/**tesztelésre*/
+	/**tesztelesre*/
 /*	public static void main(String[] args){
 		Minimax mini=new Minimax();
 		QuixoBoard table=new QuixoBoard();

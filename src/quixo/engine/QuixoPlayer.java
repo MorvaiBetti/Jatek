@@ -7,7 +7,7 @@ import quixo.engine.QuixoBoard;
 import quixo.heuristics.Heuristics;
 import quixo.players.minimax.Node;
 
-public abstract class Player{
+public abstract class QuixoPlayer{
 	/**@table jatekos tablaja*/
 	protected QuixoBoard table;
 	/**@step jatekos kovetkezo lepese*/
@@ -33,22 +33,34 @@ public abstract class Player{
 	 * @throws ClassNotFoundException 
 	 * @throws IllegalAccessException 
 	 * @throws InstantiationException */
-	protected void datas(int sequence, long time, long random, String h, int me, int you, int nobody) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+	protected void datas(int sequence, long time, long random, String h, int me, int you, int nobody){
 		table=new QuixoBoard();
 		maxTime=time;
 		rand=new Random(random);
 		if(!h.equals("null")){
 			String nameH="quixo.heuristics.";
 			nameH=nameH+h;
-			heuristic= (Heuristics) Class.forName(nameH).newInstance();
+			try {
+				heuristic= (Heuristics) Class.forName(nameH).newInstance();
+			} catch (InstantiationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			heuristic.init(me, you, nobody);
 		}
 		/**A jatekosnak melyik a mintaja, es az ellenfele melyik*/
 		if(sequence==QuixoBoard.X){ 				
 			color=QuixoBoard.X;
 			opponentColor=QuixoBoard.O;
-		}else if(sequence==QuixoBoard.O){color=QuixoBoard.O;
-		opponentColor=QuixoBoard.X;
+		}else if(sequence==QuixoBoard.O){
+			color=QuixoBoard.O;
+			opponentColor=QuixoBoard.X;
 		}
 	}
 	
@@ -60,15 +72,15 @@ public abstract class Player{
 		depth=d;
 	}
 
-	protected QuixoBoard getTable() {
+	public QuixoBoard getTable() {
 		return table;
 	}
 	
-	protected int getColor() {
+	public int getColor() {
 		return color;
 	}
 	
-	protected Move getStep() {
+	public Move getStep() {
 		return step;
 	}
 
@@ -76,7 +88,7 @@ public abstract class Player{
 		this.step = step;
 	}
 
-	protected int getOpponentColor() {
+	public int getOpponentColor() {
 		return opponentColor;
 	}
 

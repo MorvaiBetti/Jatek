@@ -1,6 +1,7 @@
 package quixo.engine;
 
-import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class Game{
 	/**@table jatektabla*/
@@ -8,7 +9,7 @@ public class Game{
 	/**@move utoljara megtett lepes*/
 	private static Move move;
 	/**@p emberi jatekosok*/
-	private static Player[] p=new Player[2];
+	private static QuixoPlayer[] p=new QuixoPlayer[2];
 	/**@pt gepi jatekosok*/
 	private static PlayerThread[] pt=new PlayerThread[2];
 	/**@j lepes sorszama*/
@@ -53,7 +54,7 @@ public class Game{
 	private static int you2;
 	/**@nobody2 az elso jatekos eseten az ures babuk erteke*/
 	private static int nobody2;
-	
+	private static BufferedReader reader = new BufferedReader(new InputStreamReader (System.in));
 	private static int text;
 	
 	/**Jatekos letrehozas es szal inditasa*/
@@ -123,7 +124,7 @@ public class Game{
 				return;
 			}
 			if(playerTipe==0){
-				p[people]=new quixo.players.Human();
+				p[people]=new quixo.players.Human(people);
 				p[people].datas(i, maxTime, random, heuristic, me, you, nobody);
 				people++;
 				return;
@@ -175,7 +176,7 @@ public class Game{
 		   }
 		   
 		   /** 'csalt-e valaki?' ellenorzese*/
-		   if(table.legal(move.x, move.y, pt[i].getColor(), move.nx, move.ny)){
+		   if(table.legal(move.getX(), move.getY(), pt[i].getColor(), move.getNx(), move.getNy())){
 			   table.makeStep(move, pt[i].getColor());
 		   } else {
 			   if(pt[i].getColor()==QuixoBoard.X){
@@ -284,29 +285,12 @@ public class Game{
 	 * player1=args[1], random1=args[2],  player1depth=args[3], heuristic1[4], me1=args[5], you1=args[6], nobody1=args[7]
 	 * player2=args[8], random2=args[9], player2depth=args[10], heuristic2[11], me2=args[12], you2=args[13], nobody2=args[14]
 	 * text=args[15]*/
-	public static void main(String[] args) throws Exception{
-		maxTime = Long.parseLong(args[0]);
-		text=Integer.parseInt(args[15]);
-		
-		player1=Integer.parseInt(args[1]);
-		random1=Integer.parseInt(args[2]);
-		depth1=Integer.parseInt(args[3]);
-		heuristic1=args[4];
-		me1=Integer.parseInt(args[5]); 
-		you1=Integer.parseInt(args[6]);
-		nobody1=Integer.parseInt(args[7]);
-		
-		player2=Integer.parseInt(args[8]);
-		random2=Integer.parseInt(args[9]);
-		depth2=Integer.parseInt(args[10]);
-		heuristic2=args[11];
-		me2=Integer.parseInt(args[12]); 
-		you2=Integer.parseInt(args[13]);
-		nobody2=Integer.parseInt(args[14]);
+	/*public static void main(String[] args) throws Exception{
 		
 		j=ai=people=0;
 		move=null;
-		
+
+		text=1;
 		if(text==1){
 			System.out.println("Lehetseges jatekosok:");
 			System.out.println("0 Human: Emberi jatekos");
@@ -320,12 +304,96 @@ public class Game{
 			System.out.println("8 Greedy: Egy melysegig nezi a fat.");
 			System.out.println("9 Minimax: parameterben megadott melysegig vizsgalja a jatekfat.");
 			System.out.println();
+			System.out.println("Mindenhova szamot kell megadni, kiveve heurisztika megadasakor. Lehetseges heurisztikak: Index, PrevTable, Winner.");
+			System.out.println();
 		}
 		
 		try {
 				table=new QuixoBoard();
 				j=ai=people=0;
 				move=null;
+				
+				System.out.println("Game time:");
+				maxTime= Integer.parseInt(reader.readLine());
+				
+				
+				System.out.println("First player:");
+				player1= Integer.parseInt(reader.readLine());
+				if(player1>0){
+					System.out.println("First player's random:");
+					random1= Integer.parseInt(reader.readLine());
+					
+					if(player1==9){
+						System.out.println("First player's depth:");
+						depth1= Integer.parseInt(reader.readLine());
+					}else {
+						depth1=0;
+					}
+					if(player1>7){	
+						System.out.println("First player's heuristic:");
+						heuristic1= reader.readLine();
+						
+						System.out.println("First player's me:");
+						me1= Integer.parseInt(reader.readLine());
+						
+						System.out.println("First player's you:");
+						you1= Integer.parseInt(reader.readLine());
+						
+						System.out.println("First player's nobody:");
+						nobody1= Integer.parseInt(reader.readLine());
+					}else {
+						heuristic1="null";
+						me1=0;
+						you1=0;
+						nobody1=0;
+					}
+				}else{
+					random1=0;
+					heuristic1="null";
+					me1=0;
+					you1=0;
+					nobody1=0;
+				}
+				
+				System.out.println("Second player:");
+				player2= Integer.parseInt(reader.readLine());
+				if(player2>0){
+					System.out.println("Second player's random:");
+					random2= Integer.parseInt(reader.readLine());
+					
+					if(player2==9){
+						System.out.println("Second player's depth:");
+						depth2= Integer.parseInt(reader.readLine());
+					}else {
+						depth2=0;
+					}
+	
+					if(player2>7){
+						System.out.println("Second player's heuristic:");
+						heuristic2= reader.readLine();
+						
+						System.out.println("Second player's me:");
+						me2= Integer.parseInt(reader.readLine());
+						
+						System.out.println("Second player's you:");
+						you2= Integer.parseInt(reader.readLine());
+						
+						System.out.println("Second player's nobody:");
+						nobody2= Integer.parseInt(reader.readLine());
+					}else {
+						heuristic2="null";
+						me2=0;
+						you2=0;
+						nobody2=0;
+					}
+				}else{
+					random2=0;
+					heuristic2="null";
+					me2=0;
+					you2=0;
+					nobody2=0;
+				}
+				
 				player(0, maxTime, player1, depth1, random1, heuristic1, me1, you1, nobody1);
 				player(1, maxTime, player2, depth2, random2, heuristic2, me2, you2, nobody2);
 				if(text==1){
@@ -347,5 +415,5 @@ public class Game{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 }

@@ -149,8 +149,8 @@ public class QuixoBoard implements Cloneable {
 	 * @param m lepes
 	 * @param model lepes mintaja*/
 	public void makeStep(Move m, int model){
-		m.setPrevModel(getField(m.x, m.y));
-		makeStep(m.x, m.y, model, m.nx, m.ny);
+		m.setPrevModel(getField(m.getX(), m.getY()));
+		makeStep(m.getX(), m.getY(), model, m.getNx(), m.getNy());
 	}
 	
 	/**A jatektablan vegrehajtja a lepest
@@ -204,7 +204,7 @@ public class QuixoBoard implements Cloneable {
 	/**A jatektablan visszavonja a megadott lepest
 	 * @move a lepes, amit visszavonok*/
 	public void undoStep(Move move){
-		makeStep(move.nx, move.ny, move.getPrevModel(), move.x, move.y);
+		makeStep(move.getNx(), move.getNy(), move.getPrevModel(), move.getX(), move.getY());
 	}
 	
 	/**Melyik mintabol hany darab van a tablan*/
